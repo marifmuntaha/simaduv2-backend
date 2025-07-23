@@ -28,7 +28,7 @@ class InstitutionController extends Controller
     {
         try {
             if ($request->hasFile('image')) {
-                $path = $request->image->storeAs('images', 'public');
+                $path = Storage::disk('public')->putFileAs('images', $request->file('image'), $request->file('image')->hashName());
                 $request->merge(['logo' => $path]);
             }
             return ($institution = Institution::create($request->all()))

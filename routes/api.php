@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Institution\ProgramController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\Master\LadderController;
 use App\Http\Controllers\Master\LevelController;
@@ -26,6 +27,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('/master/level', LevelController::class);
     Route::apiResource('/master/major', MajorController::class);
     Route::apiResource('/master/year', YearController::class);
-    Route::apiResource('institution', InstitutionController::class);
+    Route::apiResource('/institution/program', ProgramController::class);
+    Route::apiResource('/institution', InstitutionController::class);
     Route::apiResource('/notifications', NotificationController::class)->only(['index', 'update']);
 });

@@ -42,6 +42,14 @@ class InstitutionResource extends JsonResource
             'logo' => $this->logo,
             'ladder' => $this->ladder
         ];
-        return parent::toArray($request);
+        if ($request->has('type')) {
+            if ($request->type == 'select') {
+                $resource = [
+                    'value' => $this->id,
+                    'label' => $this->name,
+                ];
+            }
+        }
+        return $resource;
     }
 }
