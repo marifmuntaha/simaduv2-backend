@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Institution;
 
+use App\Http\Resources\InstitutionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -12,6 +13,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $alias
  * @property mixed $year
  * @property mixed $institution
+ * @property mixed $id
  */
 class ProgramResource extends JsonResource
 {
@@ -23,12 +25,13 @@ class ProgramResource extends JsonResource
     public function toArray(Request $request): array
     {
         $resource = [
+            'id' => $this->id,
             'yearId' => $this->yearId,
             'institutionId' => $this->institutionId,
             'name' => $this->name,
             'alias' => $this->alias,
             'year' => $this->year,
-            'institution' => $this->institution
+            'institution' => new InstitutionResource($this->institution)
         ];
 
         if ($request->has('type')) {

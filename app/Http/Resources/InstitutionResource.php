@@ -42,11 +42,22 @@ class InstitutionResource extends JsonResource
             'logo' => $this->logo,
             'ladder' => $this->ladder
         ];
+        if ($request->has('ladder')) {
+            if ($request->ladder == 'alias') {
+                $resource['name'] = $this->ladder->alias. '. ' .$this->name;
+            }
+            elseif ($request->ladder == 'name') {
+                $resource['name'] = $this->ladder->name. ' ' .$this->name;
+            }
+            else {
+                $resource['name'] = $this->name;
+            }
+        }
         if ($request->has('type')) {
             if ($request->type == 'select') {
                 $resource = [
                     'value' => $this->id,
-                    'label' => $this->name,
+                    'label' => $resource['name'],
                 ];
             }
         }
