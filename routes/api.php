@@ -9,6 +9,7 @@ use App\Http\Controllers\Master\MajorController;
 use App\Http\Controllers\Master\YearController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,5 +32,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('/institution/program', ProgramController::class);
     Route::apiResource('/institution', InstitutionController::class);
     Route::apiResource('/student', StudentController::class);
+    Route::apiResource('/teacher', TeacherController::class);
     Route::apiResource('/notifications', NotificationController::class)->only(['index', 'update']);
 });
