@@ -23,6 +23,7 @@ class UpdateTeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'userId' => 'required|exists:users,id',
             'institution' => 'array',
             'name' => 'required|string',
             'pageID' => 'required|string',
@@ -40,6 +41,7 @@ class UpdateTeacherRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'userId' => 'ID Pengguna',
             'institution' => 'ID Lembaga',
             'name' => 'Nama Guru',
             'pageID' => 'PageID',

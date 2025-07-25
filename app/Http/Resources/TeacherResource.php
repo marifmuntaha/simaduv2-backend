@@ -8,7 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  * @property mixed $id
  * @property mixed $name
- * @property mixed $pageID
+ * @property mixed $pegId
  * @property mixed $birthplace
  * @property mixed $birthdate
  * @property mixed $gender
@@ -28,10 +28,20 @@ class TeacherResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $fullName = '';
+
+        if ($this->frontTitle != '') {
+            $fullName .= $this->frontTitle. '. ';
+        }
+        $fullName .= $this->name;
+        if ($this->backTitle != '') {
+            $fullName .= '. ' .$this->backTitle;
+        }
+
         $resource = [
             'id' => $this->id,
             'name' => $this->name,
-            'pageID' => $this->pageID,
+            'pegId' => $this->pegId,
             'birthplace' => $this->birthplace,
             'birthdate' => $this->birthdate,
             'gender' => $this->gender,
@@ -40,9 +50,10 @@ class TeacherResource extends JsonResource
             'phone' => $this->phone,
             'email' => $this->email,
             'address' => $this->address,
-            'fullName' => $this->frontTitle. ' ' .$this->name. ' '. $this->backTitle,
+            'fullName' => $fullName,
             'institution' => $this->institution
         ];
+
         if ($request->has('type')) {
             if ($request->type == 'select') {
                 $resource = [

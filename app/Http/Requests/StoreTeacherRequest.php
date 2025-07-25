@@ -23,9 +23,10 @@ class StoreTeacherRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'userId' => 'required|exists:users,id',
             'institution' => 'array',
             'name' => 'required|string',
-            'pageID' => 'required|string',
+            'pegId' => 'required|string',
             'birthplace' => 'required|string',
             'birthdate' => 'required|date',
             'gender' => 'required|string',
@@ -40,9 +41,10 @@ class StoreTeacherRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'userId' => 'ID Pengguna',
             'institution' => 'ID Lembaga',
             'name' => 'Nama Guru',
-            'pageID' => 'PageID',
+            'pegId' => 'PageID',
             'birthplace' => "Tempat Lahir",
             'birthdate' => 'Tanggal Lahir',
             'gender' => 'Jenis Kelamin',

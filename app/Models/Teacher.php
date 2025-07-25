@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Teacher extends Model
 {
     protected $fillable = [
+        'userId',
         'name',
-        'pageID',
+        'pegId',
         'birthplace',
         'birthdate',
         'gender',
@@ -20,6 +22,10 @@ class Teacher extends Model
         'address'
     ];
 
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'userId');
+    }
     public function institution(): BelongsToMany
     {
         return $this->belongsToMany(

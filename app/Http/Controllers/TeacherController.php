@@ -6,6 +6,7 @@ use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
 use App\Http\Resources\TeacherResource;
 use App\Models\Teacher;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -27,11 +28,14 @@ class TeacherController extends Controller
     public function store(StoreTeacherRequest $request)
     {
         try {
-            return ($teacher = Teacher::create($request->all()))
-                ? response([
+            $teacher = Teacher::create($request->all());
+            if ($teacher) {
+                $teacher->institution()->attach($request->institution);
+                return response([
                     'message' => 'Teacher created successfully.',
                     'result' => new TeacherResource($teacher),
-                ], 201) : throw new Exception("Failed to create Teacher");
+                ], 201);
+            }
         } catch (Exception $e) {
             return response([
                 'message' => $e->getMessage(),
