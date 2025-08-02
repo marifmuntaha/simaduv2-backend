@@ -19,7 +19,8 @@ class Teacher extends Model
         'backTitle',
         'phone',
         'email',
-        'address'
+        'address',
+        'status',
     ];
 
     public function user(): HasOne

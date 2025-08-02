@@ -34,7 +34,7 @@ class MajorResource extends JsonResource
             if ($request->type == 'select') {
                 $resource = [
                     'value' => $this->id,
-                    'label' => $this->name,
+                    'label' => $this->alias,
                 ];
             }
         }

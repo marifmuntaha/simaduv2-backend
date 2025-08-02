@@ -26,7 +26,7 @@ class UpdateTeacherRequest extends FormRequest
             'userId' => 'required|exists:users,id',
             'institution' => 'array',
             'name' => 'required|string',
-            'pageID' => 'required|string',
+            'pegId' => 'required|string',
             'birthplace' => 'required|string',
             'birthdate' => 'required|date',
             'gender' => 'required|string',

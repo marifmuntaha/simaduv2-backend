@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Institution\ProgramController;
+use App\Http\Controllers\Institution\RombelController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\Master\LadderController;
 use App\Http\Controllers\Master\LevelController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+//sleep(1);
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
@@ -30,6 +32,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('/master/level', LevelController::class);
     Route::apiResource('/master/major', MajorController::class);
     Route::apiResource('/master/year', YearController::class);
+    Route::apiResource('institution/rombel', RombelController::class);
     Route::apiResource('/institution/program', ProgramController::class);
     Route::apiResource('/institution', InstitutionController::class);
     Route::apiResource('/student', StudentController::class);

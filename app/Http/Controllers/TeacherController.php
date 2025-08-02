@@ -15,8 +15,17 @@ class TeacherController extends Controller
     public function index(Request $request)
     {
         try {
+            $teachers = new Teacher();
+            if ($request->has('institutionId')) {
+                $teachers = $teachers->whereHas('institution', function ($item) use ($request) {
+                    $item->where('institutionId', $request->institutionId);
+                });
+            }
+            if ($request->has('status')) {
+                $teachers = $teachers->where('status', $request->status);
+            }
             return response([
-                'result' => TeacherResource::collection(Teacher::all()),
+                'result' => TeacherResource::collection($teachers->get()),
             ]);
         } catch (Exception $e) {
             return response([
@@ -59,11 +68,15 @@ class TeacherController extends Controller
     public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
         try {
-            return ($teacher->update(array_filter($request->all())))
-                ? response([
+            if ($teacher->update(array_filter($request->all()))) {
+                $teacher->institution()->sync($request->institution);
+                return response([
                     'message' => 'Teacher updated successfully.',
                     'result' => new TeacherResource($teacher),
-                ]) : throw new Exception("Failed to update Teacher");
+                ]);
+            } else {
+                throw new Exception("Failed to update Teacher");
+            }
         } catch (Exception $e) {
             return response([
                 'message' => $e->getMessage(),
@@ -74,10 +87,13 @@ class TeacherController extends Controller
     public function destroy(Teacher $teacher)
     {
         try {
-            return ($teacher->delete())
-                ? response([
+            if ($teacher->delete()) {
+                $teacher->institution()->detach();
+                $teacher->user->delete();
+                return response([
                     'message' => 'Teacher deleted successfully.',
-                ]) : throw new Exception("Failed to delete Teacher");
+                ]);
+            }
         } catch (Exception $e) {
             return response([
                 'message' => $e->getMessage(),

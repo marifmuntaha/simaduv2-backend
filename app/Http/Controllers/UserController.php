@@ -14,8 +14,15 @@ class UserController extends Controller
     public function index(Request $request)
     {
         try {
+            $users = new User();
+            if ($request->has('username')) {
+                $users = $users->where('username', $request->username)->get();
+            }
+            else {
+                $users = $users->get();
+            }
             return response([
-                'result' => UserResource::collection(User::all()),
+                'result' => UserResource::collection($users),
             ]);
         } catch (Exception $e) {
             return response([

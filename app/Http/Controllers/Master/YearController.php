@@ -16,7 +16,7 @@ class YearController extends Controller
     {
         try {
             return response([
-                'result' => YearResource::collection(Year::all()),
+                'result' => YearResource::collection(Year::orderBy('created_at', 'desc')->get()),
             ]);
         } catch (Exception $e) {
             return response([

@@ -15,8 +15,15 @@ class ProgramController extends Controller
     public function index(Request $request)
     {
         try {
+            $programs = new Program();
+            if ($request->has('yearId')) {
+                $programs = $programs->whereYearid($request->yearId);
+            }
+            if ($request->has('institutionId')) {
+                $programs = $programs->whereInstitutionid($request->institutionId);
+            }
             return response([
-                'result' => ProgramResource::collection(Program::all()),
+                'result' => ProgramResource::collection($programs->get()),
             ]);
         } catch (Exception $e) {
             return response([

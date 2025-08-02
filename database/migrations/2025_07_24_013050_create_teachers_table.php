@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email');
             $table->string('address');
+            $table->boolean('status')->default(true);
             $table->timestamps();
         });
 
@@ -39,6 +40,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('teacher_institution');
         Schema::dropIfExists('teachers');
     }
 };

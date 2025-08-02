@@ -18,6 +18,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $email
  * @property mixed $address
  * @property mixed $institution
+ * @property mixed $status
+ * @property mixed $userId
  */
 class TeacherResource extends JsonResource
 {
@@ -30,18 +32,19 @@ class TeacherResource extends JsonResource
     {
         $fullName = '';
 
-        if ($this->frontTitle != '') {
+        if ($this->frontTitle != '' || $this->frontTitle != null) {
             $fullName .= $this->frontTitle. '. ';
         }
         $fullName .= $this->name;
         if ($this->backTitle != '') {
-            $fullName .= '. ' .$this->backTitle;
+            $fullName .= ', ' .$this->backTitle;
         }
 
         $resource = [
             'id' => $this->id,
-            'name' => $this->name,
+            'userId' => $this->userId,
             'pegId' => $this->pegId,
+            'name' => $this->name,
             'birthplace' => $this->birthplace,
             'birthdate' => $this->birthdate,
             'gender' => $this->gender,
@@ -51,7 +54,8 @@ class TeacherResource extends JsonResource
             'email' => $this->email,
             'address' => $this->address,
             'fullName' => $fullName,
-            'institution' => $this->institution
+            'institution' => $this->institution,
+            'status' => $this->status
         ];
 
         if ($request->has('type')) {

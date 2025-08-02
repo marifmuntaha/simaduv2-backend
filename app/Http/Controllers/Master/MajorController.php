@@ -15,8 +15,14 @@ class MajorController extends Controller
     public function index(Request $request)
     {
         try {
+            $majors = new Major();
+            if ($request->has('ladderId')) {
+                $majors = $majors->whereLadderid($request->ladderId)->get();
+            } else {
+                $majors = $majors->get();
+            }
             return response([
-                'result' => MajorResource::collection(Major::all()),
+                'result' => MajorResource::collection($majors),
             ]);
         } catch (Exception $e) {
             return response([

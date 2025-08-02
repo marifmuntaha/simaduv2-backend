@@ -15,8 +15,14 @@ class LevelController extends Controller
     public function index(Request $request)
     {
         try {
+            $levels = new Level();
+            if ($request->has('ladderId')) {
+                $levels = $levels->whereLadderid($request->ladderId)->get();
+            } else {
+                $levels = $levels->get();
+            }
             return response([
-                'result' => LevelResource::collection(Level::all()),
+                'result' => LevelResource::collection($levels),
             ]);
         } catch (Exception $e) {
             return response([
