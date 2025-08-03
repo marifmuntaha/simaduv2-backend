@@ -2,16 +2,15 @@
 
 namespace App\Models;
 
-use App\Models\Institution\Program;
-use App\Models\Institution\Rombel;
-use App\Models\Master\Year;
+use App\Models\Student\Activity;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Student extends Model
 {
     protected $fillable = [
+        'id',
         'userId',
         'nisn',
         'nism',
@@ -28,24 +27,8 @@ class Student extends Model
         return $this->hasOne(User::class, 'id', 'userId');
     }
 
-    public function years(): BelongsToMany
+    public function activities(): hasMany
     {
-        return $this->belongsToMany(Year::class, 'student_activity', 'studentId', 'yearId');
+        return $this->hasMany(Activity::class, 'studentId', 'id');
     }
-
-    public function institutions(): BelongsToMany
-    {
-        return $this->belongsToMany(Institution::class, 'student_activity', 'studentId', 'institutionId');
-    }
-
-    public function rombels(): BelongsToMany
-    {
-        return $this->belongsToMany(Rombel::class, 'student_activity', 'studentId', 'rombelId');
-    }
-
-    public function programs(): BelongsToMany
-    {
-        return $this->belongsToMany(Program::class, 'student_activity', 'studentId', 'programId');
-    }
-
 }

@@ -24,9 +24,6 @@ class UpdateStudentRequest extends FormRequest
     {
         return [
             'userId' => 'required|integer|exists:users,id',
-            'yearId' => 'required|integer|exists:years,id',
-            'institutionId' => 'required|integer|exists:institutions,id',
-            'rombelId' => 'required|integer|exists:rombels,id',
             'nisn' => 'required|string',
             'nism' => 'required|string',
             'nama' => 'required|string',
@@ -42,9 +39,6 @@ class UpdateStudentRequest extends FormRequest
     {
         return [
             'userId' => 'ID Pengguna',
-            'yearId' => 'ID Tahun Pelajaran',
-            'institutionId' => 'ID Lembaga',
-            'rombelId' => 'ID Rombel',
             'nisn' => 'NISN',
             'nism' => 'NISM',
             'nama' => 'Nama Lengkap',

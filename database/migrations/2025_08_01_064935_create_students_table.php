@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('UserId');
+            $table->unsignedInteger('userId');
             $table->string('nisn')->unique();
             $table->string('nism')->unique();
             $table->string('name');
@@ -25,14 +25,60 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('student_activity', function (Blueprint $table) {
+        Schema::create('student_parents', function (Blueprint $table) {
             $table->id();
+            $table->string('numberKk')->unique();
+            $table->string('headFamily')->nullable();
+            $table->string('fatherName')->nullable();
+            $table->string('fatherNIK')->nullable();
+            $table->enum('fatherStatus', [1, 2, 3])->comment('1. Hidup, 2. Meninggal, 3. Tidak Diketahui');
+            $table->string('fatherBirthplace')->nullable();
+            $table->string('fatherBirthdate')->nullable();
+            $table->string('fatherEmail')->nullable();
+            $table->string('fatherPhone')->nullable();
+            $table->string('motherName')->nullable();
+            $table->string('motherNIK')->nullable();
+            $table->enum('motherStatus', [1, 2, 3])->comment('1. Hidup, 2. Meninggal, 3. Tidak Diketahui');
+            $table->string('motherBirthplace')->nullable();
+            $table->string('motherBirthdate')->nullable();
+            $table->string('motherEmail')->nullable();
+            $table->string('motherPhone')->nullable();
+            $table->string('guardName')->nullable();
+            $table->string('guardNIK')->nullable();
+            $table->enum('guardStatus', [1, 2, 3])->comment('1. Sama dengan Ayah, 2. Sama dengan Ibu, 3. Lainnya');
+            $table->string('guardBirthplace')->nullable();
+            $table->string('guardBirthdate')->nullable();
+            $table->string('guardEmail')->nullable();
+            $table->string('guardPhone')->nullable();
+        });
+
+        Schema::create('student_parent', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('studentId');
+            $table->unsignedBigInteger('parentId');
+        });
+
+        Schema::create('student_addresses', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedInteger('studentId');
+            $table->integer('provinceId')->nullable();
+            $table->integer('cityId')->nullable();
+            $table->integer('districtId')->nullable();
+            $table->integer('villageId')->nullable();
+            $table->string('address');
+            $table->timestamps();
+        });
+
+        Schema::create('student_activities', function (Blueprint $table) {
+            $table->id();
+            $table->enum('status', [1, 2, 3])->comment('1. Aktif, 2. Keluar, 3. Alumni');
             $table->unsignedBigInteger('studentId')->nullable();
             $table->unsignedBigInteger('yearId')->nullable();
             $table->unsignedBigInteger('institutionId')->nullable();
             $table->unsignedBigInteger('rombelId')->nullable();
             $table->unsignedBigInteger('programId')->nullable();
             $table->unsignedBigInteger('boardingId')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -41,7 +87,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('student_activity');
+        Schema::dropIfExists('student_activities');
+        Schema::dropIfExists('student_addresses');
+        Schema::dropIfExists('student_parent');
+        Schema::dropIfExists('student_parents');
         Schema::dropIfExists('students');
     }
 };

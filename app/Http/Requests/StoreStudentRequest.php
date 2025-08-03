@@ -24,10 +24,6 @@ class StoreStudentRequest extends FormRequest
     {
         return [
             'userId' => 'required|integer|exists:users,id',
-            'yearId' => 'required|array|exists:years,id',
-//            'institutionId' => 'required|integer|exists:institutions,id',
-//            'rombelId' => 'required|integer|exists:rombels,id',
-//            'programId' => 'required|integer|exists:programs,id',
             'nisn' => 'required|string',
             'nism' => 'required|string',
             'name' => 'required|string',
@@ -43,10 +39,6 @@ class StoreStudentRequest extends FormRequest
     {
         return [
             'userId' => 'ID Pengguna',
-//            'yearId' => 'ID Tahun Pelajaran',
-//            'institutionId' => 'ID Lembaga',
-//            'rombelId' => 'ID Rombel',
-//            'programId' => 'ID Program',
             'nisn' => 'NISN',
             'nism' => 'NISM',
             'nama' => 'Nama Lengkap',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\Student\ActivityResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,6 +17,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $birthdate
  * @property mixed $email
  * @property mixed $phone
+ * @method activities()
  */
 class StudentResource extends JsonResource
 {
@@ -37,6 +39,7 @@ class StudentResource extends JsonResource
             'birthdate' => $this->birthdate,
             'email' => $this->email,
             'phone' => $this->phone,
+            'activity' => new ActivityResource($this->activities()->latest()->first()),
         ];
         return $resource;
     }

@@ -28,15 +28,11 @@ class StudentController extends Controller
     public function store(StoreStudentRequest $request)
     {
         try {
-            if ($student = Student::create($request->all())) {
-                $student->years()->attach($request->yearId);
-                return response([
-                    'result' => new StudentResource($student),
-                    'message' => 'Data berhasil ditambahkan!'
-                ], 201);
-            } else {
-                throw new Exception("Data gagal ditambahkan!");
-            }
+            return ($student = Student::create($request->all()))
+            ? response([
+                'result' => new StudentResource($student),
+                'message' => 'Data berhasil ditambahkan!'
+            ], 201) : throw new Exception("Data gagal ditambahkan!");
 
         } catch (Exception $e) {
             return response([
@@ -81,7 +77,6 @@ class StudentController extends Controller
     {
         try {
             if ($student->delete()) {
-                $student->years()->detach();
                 return response([
                     'result' => new StudentResource($student),
                     'message' => 'Data berhasil dihapus!'
