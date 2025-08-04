@@ -1,4 +1,4 @@
-<?php
+<?php /** @noinspection DuplicatedCode */
 
 namespace App\Http\Requests\Student;
 
@@ -27,6 +27,7 @@ class StoreParentRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
+            'userId' => 'required|integer|exists:users,id',
             'numberKk' => 'required|string',
             'headFamily' => 'required|string',
             'fatherStatus' => 'required|string',

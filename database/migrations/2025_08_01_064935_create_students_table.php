@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('userId');
+            $table->unsignedBigInteger('userId');
+            $table->unsignedBigInteger('parentId');
             $table->string('nisn')->unique();
             $table->string('nism')->unique();
             $table->string('name');
@@ -51,12 +52,7 @@ return new class extends Migration
             $table->string('guardBirthdate')->nullable();
             $table->string('guardEmail')->nullable();
             $table->string('guardPhone')->nullable();
-        });
-
-        Schema::create('student_parent', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('studentId');
-            $table->unsignedBigInteger('parentId');
+            $table->timestamps();
         });
 
         Schema::create('student_addresses', function (Blueprint $table) {
@@ -90,7 +86,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('student_activities');
         Schema::dropIfExists('student_addresses');
-        Schema::dropIfExists('student_parent');
         Schema::dropIfExists('student_parents');
         Schema::dropIfExists('students');
     }

@@ -16,6 +16,9 @@ class ParentController extends Controller
     {
         try {
             $parent = new Parents();
+            if ($request->has('numberKk')) {
+                $parent = $parent->whereNumberKk($request->numberKK);
+            }
             return response([
                 'result' => ParentResource::collection($parent->get()),
             ]);
@@ -29,15 +32,11 @@ class ParentController extends Controller
     public function store(StoreParentRequest $request)
     {
         try {
-            if($parent = Parents::create($request->all())) {
-                $parent->students()->attach([$request->studentId]);
-                return response([
-                    'result' => new ParentResource($parent),
-                    'message' => 'Data Orangtua berhasil ditambahkan!'
-                ]);
-            } else {
-                throw new Exception('Data Orangtua gagal ditambahkan!');
-            }
+            return ($parent = Parents::create($request->all()))
+            ? response([
+                'result' => new ParentResource($parent),
+                'message' => 'Data Orangtua berhasil ditambahkan!'
+            ]) : throw new Exception('Data Orangtua gagal ditambahkan!');
         } catch (Exception $e) {
             return response([
                 'message' => $e->getMessage(),
