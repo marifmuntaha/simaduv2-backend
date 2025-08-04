@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
+ * @property mixed $id
+ * @property mixed $userId
  * @property mixed $numberKk
  * @property mixed $headFamily
  * @property mixed $fatherName
@@ -40,6 +42,8 @@ class ParentResource extends JsonResource
     public function toArray(Request $request): array
     {
         $resource = [
+            'id' => $this->id,
+            'userId' => $this->userId,
             'numberKk' => $this->numberKk,
             'headFamily' => $this->headFamily,
             'fatherName' => $this->fatherName,

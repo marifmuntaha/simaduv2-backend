@@ -27,6 +27,7 @@ return new class extends Migration
 
         Schema::create('student_parents', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('userId');
             $table->string('numberKk')->unique();
             $table->string('headFamily')->nullable();
             $table->string('fatherName')->nullable();

@@ -5,6 +5,10 @@ namespace App\Http\Requests\Student;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
+/**
+ * @property mixed $fatherStatus
+ * @property mixed $motherStatus
+ */
 class StoreParentRequest extends FormRequest
 {
     /**
@@ -22,31 +26,58 @@ class StoreParentRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'numberKk' => 'nullable|string',
-            'headFamily' => 'nullable|string',
-            'fatherName' => 'nullable|string',
-            'fatherNIK' => 'nullable|string',
-            'fatherStatus' => 'nullable|string',
-            'fatherBirthplace' => 'nullable|string',
-            'fatherBirthdate' => 'nullable|date',
-            'fatherEmail' => 'nullable|string',
-            'fatherPhone' => 'nullable|string',
-            'motherName' => 'nullable|string',
-            'motherNIK' => 'nullable|string',
-            'motherStatus' => 'nullable|string',
-            'motherBirthplace' => 'nullable|string',
-            'motherBirthdate' => 'nullable|date',
-            'motherEmail' => 'nullable|string',
-            'motherPhone' => 'nullable|string',
-            'guardStatus' => 'nullable|string',
-            'guardName' => 'nullable|string',
-            'guardNIK' => 'nullable|string',
-            'guardBirthplace' => 'nullable|string',
-            'guardBirthdate' => 'nullable|date',
-            'guardEmail' => 'nullable|string',
-            'guardPhone' => 'nullable|string',
+        $rules = [
+            'numberKk' => 'required|string',
+            'headFamily' => 'required|string',
+            'fatherStatus' => 'required|string',
+            'motherStatus' => 'required|string',
+            'guardStatus' => 'required|string',
+            'guardName' => 'required|string',
+            'guardNIK' => 'required|string',
+            'guardBirthplace' => 'required|string',
+            'guardBirthdate' => 'required|date',
+            'guardEmail' => 'required|string',
+            'guardPhone' => 'required|string',
         ];
+        if ($this->fatherStatus === 1) {
+            $father = array_merge($rules, [
+                'fatherName' => 'required|string',
+                'fatherNIK' => 'required|string',
+                'fatherBirthplace' => 'required|string',
+                'fatherBirthdate' => 'required|date',
+                'fatherEmail' => 'required|string',
+                'fatherPhone' => 'required|string',
+            ]);
+        } else {
+            $father = array_merge($rules, [
+                'fatherName' => 'nullable|string',
+                'fatherNIK' => 'nullable|string',
+                'fatherBirthplace' => 'nullable|string',
+                'fatherBirthdate' => 'nullable|date',
+                'fatherEmail' => 'nullable|string',
+                'fatherPhone' => 'nullable|string',
+            ]);
+        }
+        if ($this->motherStatus == 1) {
+            $mother = array_merge($rules, [
+                'motherName' => 'required|string',
+                'motherNIK' => 'required|string',
+                'motherBirthplace' => 'required|string',
+                'motherBirthdate' => 'required|date',
+                'motherEmail' => 'required|string',
+                'motherPhone' => 'required|string',
+            ]);
+        } else {
+            $mother = array_merge($rules, [
+                'motherName' => 'nullable|string',
+                'motherNIK' => 'nullable|string',
+                'motherBirthplace' => 'nullable|string',
+                'motherBirthdate' => 'nullable|date',
+                'motherEmail' => 'nullable|string',
+                'motherPhone' => 'nullable|string',
+            ]);
+        }
+        return array_merge($rules, $father, $mother);
     }
 
     public function attributes(): array

@@ -10,6 +10,7 @@ class Parents extends Model
 {
     protected $table = 'student_parents';
     protected $fillable = [
+        'userId',
         'numberKk',
         'headFamily',
         'fatherName',
