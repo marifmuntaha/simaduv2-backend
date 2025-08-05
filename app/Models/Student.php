@@ -15,6 +15,7 @@ class Student extends Model
         'id',
         'userId',
         'parentId',
+        'nik',
         'nisn',
         'nism',
         'name',

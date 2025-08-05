@@ -17,6 +17,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $birthdate
  * @property mixed $email
  * @property mixed $phone
+ * @property mixed $user
+ * @property mixed $nik
+ * @property mixed $parent
  * @method activities()
  */
 class StudentResource extends JsonResource
@@ -31,6 +34,7 @@ class StudentResource extends JsonResource
         $resource = [
             'id' => $this->id,
             'userId' => $this->userId,
+            'nik' => $this->nik,
             'nisn' => $this->nisn,
             'nism' => $this->nism,
             'name' => $this->name,
@@ -39,6 +43,8 @@ class StudentResource extends JsonResource
             'birthdate' => $this->birthdate,
             'email' => $this->email,
             'phone' => $this->phone,
+            'user' => $this->user,
+            'parent' => $this->parent,
             'activity' => new ActivityResource($this->activities()->latest()->first()),
         ];
         return $resource;

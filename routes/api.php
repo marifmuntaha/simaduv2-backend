@@ -10,6 +10,7 @@ use App\Http\Controllers\Master\MajorController;
 use App\Http\Controllers\Master\YearController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Student\ActivityController;
+use App\Http\Controllers\Student\AddressController;
 use App\Http\Controllers\Student\ParentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
@@ -38,6 +39,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('/institution/program', ProgramController::class);
     Route::apiResource('/institution', InstitutionController::class);
     Route::apiResource('/student/activity', ActivityController::class);
+    Route::apiResource('/student/address', AddressController::class);
     Route::apiResource('/student/parent', ParentController::class);
     Route::apiResource('/student', StudentController::class);
     Route::apiResource('/teacher', TeacherController::class);

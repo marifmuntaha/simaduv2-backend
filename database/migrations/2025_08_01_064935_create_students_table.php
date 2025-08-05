@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('userId');
             $table->unsignedBigInteger('parentId');
+            $table->string('nik')->unique();
             $table->string('nisn')->unique();
             $table->string('nism')->unique();
             $table->string('name');

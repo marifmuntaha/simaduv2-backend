@@ -24,6 +24,7 @@ class UpdateStudentRequest extends FormRequest
     {
         return [
             'userId' => 'required|integer|exists:users,id',
+            'nik' => 'required|string|exists:users,nik',
             'nisn' => 'required|string',
             'nism' => 'required|string',
             'nama' => 'required|string',

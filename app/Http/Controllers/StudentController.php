@@ -78,6 +78,7 @@ class StudentController extends Controller
         try {
             if ($student->delete()) {
                 $student->activities()->delete();
+                $student->address()->delete();
                 $student->user()->delete();
                 return response([
                     'result' => new StudentResource($student),

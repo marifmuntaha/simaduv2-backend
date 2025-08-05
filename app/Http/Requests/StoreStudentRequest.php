@@ -24,6 +24,7 @@ class StoreStudentRequest extends FormRequest
     {
         return [
             'userId' => 'required|integer|exists:users,id',
+            'nik' => 'required|string|size:16',
             'nisn' => 'required|string',
             'nism' => 'required|string',
             'name' => 'required|string',
