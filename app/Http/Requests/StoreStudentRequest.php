@@ -42,6 +42,7 @@ class StoreStudentRequest extends FormRequest
             'userId' => 'ID Pengguna',
             'nisn' => 'NISN',
             'nism' => 'NISM',
+            'nik' => 'NIK Anak',
             'nama' => 'Nama Lengkap',
             'gender' => 'Jenis Kelamin',
             'birthplace' => 'Tempat Lahir',

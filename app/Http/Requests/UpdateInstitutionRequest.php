@@ -32,7 +32,6 @@ class UpdateInstitutionRequest extends FormRequest
             'phone' => 'required|numeric',
             'email' => 'required|email',
             'website' => 'required|string',
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ];
     }
 

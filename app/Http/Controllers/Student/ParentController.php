@@ -17,7 +17,7 @@ class ParentController extends Controller
         try {
             $parent = new Parents();
             if ($request->has('numberKk')) {
-                $parent = $parent->whereNumberKk($request->numberKK);
+                $parent = $parent->where('numberKk', $request->numberKk);
             }
             return response([
                 'result' => ParentResource::collection($parent->get()),

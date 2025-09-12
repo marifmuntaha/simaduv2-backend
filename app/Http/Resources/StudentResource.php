@@ -20,6 +20,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $user
  * @property mixed $nik
  * @property mixed $parent
+ * @property mixed $address
  * @method activities()
  */
 class StudentResource extends JsonResource
@@ -45,6 +46,7 @@ class StudentResource extends JsonResource
             'phone' => $this->phone,
             'user' => $this->user,
             'parent' => $this->parent,
+            'address' => $this->address,
             'activity' => new ActivityResource($this->activities()->latest()->first()),
         ];
         return $resource;

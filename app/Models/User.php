@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Carbon\Carbon;
 use Database\Factories\UserFactory;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -58,12 +59,13 @@ class User extends Authenticatable
         return $this->username;
     }
 
-    public function createToken(string $name, array $abilities = ['*'], DateTimeInterface $expiresAt = null): NewAccessToken
+    public function createToken(string $name, array $abilities = ['*'], $expiresAt = null): NewAccessToken
     {
         $token = $this->tokens()->create([
             'name' => $name,
             'token' => hash('sha256', $plainTextToken = Str::random(480,)),
-            'abilities' => $abilities
+            'abilities' => $abilities,
+            'expires_at' => $expiresAt ?? Carbon::now()->addDays(2),
         ]);
         return new NewAccessToken($token, $token->getKey(). '|'.$plainTextToken);
     }

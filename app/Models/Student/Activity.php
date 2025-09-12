@@ -17,6 +17,7 @@ class Activity extends Model
         'studentId',
         'yearId',
         'institutionId',
+        'levelId',
         'rombelId',
         'programId',
         'boardingId'

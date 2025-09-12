@@ -73,6 +73,7 @@ return new class extends Migration
             $table->unsignedBigInteger('studentId')->nullable();
             $table->unsignedBigInteger('yearId')->nullable();
             $table->unsignedBigInteger('institutionId')->nullable();
+            $table->unsignedInteger('levelId')->nullable();
             $table->unsignedBigInteger('rombelId')->nullable();
             $table->unsignedBigInteger('programId')->nullable();
             $table->unsignedBigInteger('boardingId')->nullable();

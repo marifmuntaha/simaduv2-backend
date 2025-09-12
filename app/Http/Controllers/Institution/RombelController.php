@@ -22,6 +22,9 @@ class RombelController extends Controller
             if ($request->has('institutionId')) {
                 $rombels = $rombels->whereInstitutionid($request->institutionId);
             }
+            if ($request->has('levelId')) {
+                $rombels = $rombels->whereLevelid($request->levelId);
+            }
             return response()->json([
                 'result' => RombelResource::collection($rombels->get()),
             ]);

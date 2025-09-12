@@ -56,7 +56,7 @@ class YearController extends Controller
     public function update(UpdateYearRequest $request, Year $year)
     {
         try {
-            return ($year->update(array_filter($request->all())))
+            return ($year->update($request->all()))
                 ? response([
                     'message' => 'Year updated successfully.',
                     'result' => new YearResource($year),
