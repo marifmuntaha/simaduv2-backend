@@ -15,13 +15,10 @@ use App\Http\Controllers\Student\ParentController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 //sleep(1);
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
 Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);
@@ -31,18 +28,24 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::apiResource('/master/ladder', LadderController::class);
-    Route::apiResource('/master/level', LevelController::class);
-    Route::apiResource('/master/major', MajorController::class);
-    Route::apiResource('/master/year', YearController::class);
-    Route::apiResource('institution/rombel', RombelController::class);
-    Route::apiResource('/institution/program', ProgramController::class);
-    Route::apiResource('/institution', InstitutionController::class);
-    Route::apiResource('/student/activity', ActivityController::class);
-    Route::apiResource('/student/address', AddressController::class);
-    Route::apiResource('/student/parent', ParentController::class);
+    Route::group(['prefix' => 'master'], function () {
+        Route::apiResource('ladder', LadderController::class);
+        Route::apiResource('level', LevelController::class);
+        Route::apiResource('major', MajorController::class);
+        Route::apiResource('year', YearController::class);
+    });
+    Route::group(['prefix' => 'institution'], function () {
+        Route::apiResource('rombel', RombelController::class);
+        Route::apiResource('program', ProgramController::class);
+    });
+    Route::apiResource('institution', InstitutionController::class);
+    Route::group(['prefix' => 'student'], function () {
+        Route::apiResource('activity', ActivityController::class);
+        Route::apiResource('address', AddressController::class);
+        Route::apiResource('parent', ParentController::class);
+    });
     Route::apiResource('/student', StudentController::class);
     Route::apiResource('/teacher', TeacherController::class);
     Route::apiResource('/user', UserController::class);
-    Route::apiResource('/notifications', NotificationController::class)->only(['index', 'update']);
+    Route::apiResource('/notification', NotificationController::class)->only(['index', 'update']);
 });

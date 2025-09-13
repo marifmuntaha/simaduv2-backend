@@ -2,25 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\NotificationResource;
 use App\Models\Notification;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Notifications\DatabaseNotification;
 
 class NotificationController extends Controller
 {
     public function index(Request $request)
     {
         try {
-            if ($request->user('sanctum')->id == 1) {
-                $notifications = Notification::all();
+            if ($request->user('sanctum')->role == 1) {
+                $notifications = DatabaseNotification::orderBy('updated_at', 'desc')->limit(10)->get();
             } else {
-                $notifications = Notification::whereHas('user', function ($query) use ($request) {
-                    return $query->where('user_id', $request->user('sanctum')->id);
-                })->get();
+                $notifications = auth()->user()->notifications();
             }
             return response([
-                'result' => NotificationResource::collection($notifications),
+                'result' => $notifications,
             ]);
         } catch (Exception $e) {
             return response()->json([

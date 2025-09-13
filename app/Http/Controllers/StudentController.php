@@ -58,7 +58,6 @@ class StudentController extends Controller
     {
         try {
             if ($student->update(array_filter($request->all()))) {
-                $student->years()->sync($request->yearId);
                 return response([
                     'result' => new StudentResource($student),
                     'message' => 'Data berhasil diubah!'

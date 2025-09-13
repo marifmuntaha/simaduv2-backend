@@ -2,6 +2,9 @@
 
 namespace App\Http\Resources\Student;
 
+use App\Http\Resources\Institution\ProgramResource;
+use App\Http\Resources\Institution\RombelResource;
+use App\Http\Resources\InstitutionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,6 +20,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $year
  * @property mixed $institution
  * @property mixed $rombel
+ * @property mixed $program
+ * @property mixed $created_at
  */
 class ActivityResource extends JsonResource
 {
@@ -36,9 +41,11 @@ class ActivityResource extends JsonResource
             'rombelId' => $this->rombelId,
             'programId' => $this->programId,
             'boardingId' => $this->boardingId,
+            'created_at' => $this->created_at,
             'year' => $this->year,
-            'institution' => $this->institution,
-            'rombel' => $this->rombel,
+            'institution' => new InstitutionResource($this->institution),
+            'rombel' => new RombelResource($this->rombel),
+            'program' => new ProgramResource($this->program),
         ];
         return $resource;
     }

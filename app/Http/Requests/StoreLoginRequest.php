@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Recaptha;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +25,8 @@ class StoreLoginRequest extends FormRequest
     {
         return [
             'username' => 'required|string',
-            'password' => 'required|string'
+            'password' => 'required|string',
+            'g-recaptcha-response' => ['required', 'string', new Recaptha]
         ];
     }
 
@@ -32,7 +34,8 @@ class StoreLoginRequest extends FormRequest
     {
         return [
             'username' => 'Nama Pengguna',
-            'password' => 'Kata Sandi'
+            'password' => 'Kata Sandi',
+            'g-recaptcha-response' => 'Recaptcha',
         ];
     }
 }

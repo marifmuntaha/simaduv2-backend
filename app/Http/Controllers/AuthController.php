@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StorePasswordRequest;
+use App\Models\User;
+use App\Notifications\AuthLoginNotification;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -15,13 +17,20 @@ class AuthController extends Controller
     public function login(StoreLoginRequest $request)
     {
         try {
-            return (Auth::attempt($request->all())) ?
-                response([
+            if (Auth::attempt($request->only(['username', 'password']))) {
+                $user = Auth::user();
+                $user->notify(new AuthLoginNotification($user, 'Berhasil masuk ke aplikasi.'));
+                return response([
                     'message' => 'Berhasil masuk, anda akan dialihkan dalam 2 detik.',
                     'result' => Arr::collapse([$request->user()->toArray(), [
                         'token' => $request->user()->createToken($request->user()->email)->plainTextToken,
                     ]])
-                ]) : throw new Exception('Nama pengguna/kata sandi salah.');
+                ]);
+            } else {
+                $user = User::whereUsername($request->username)->first();
+                $user?->notify(new AuthLoginNotification($user, 'Gagal masuk ke aplikasi.'));
+                throw new Exception('Nama pengguna/kata sandi salah.');
+            }
         } catch (Exception $e) {
             return response([
                 'message' => $e->getMessage(),

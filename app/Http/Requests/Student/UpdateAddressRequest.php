@@ -23,7 +23,6 @@ class UpdateAddressRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'studentId' => 'required|integer|exists:students,id',
             'provinceId' => 'required|integer',
             'cityId' => 'required|integer',
             'districtId' => 'required|integer',

@@ -61,7 +61,6 @@ class ParentController extends Controller
     {
         try {
             if ($parent->update($request->all())) {
-                $parent->students()->sync([$request->studentId]);
                 return response([
                     'result' => new ParentResource($parent),
                     'message' => 'Data Orangtua berhasil diubah!'

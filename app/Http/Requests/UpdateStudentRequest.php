@@ -23,11 +23,10 @@ class UpdateStudentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'userId' => 'required|integer|exists:users,id',
-            'nik' => 'required|string|exists:users,nik',
+            'nik' => 'required|string|exists:students,nik',
             'nisn' => 'required|string',
             'nism' => 'required|string',
-            'nama' => 'required|string',
+            'name' => 'required|string',
             'gender' => 'required|string',
             'birthplace' => 'required|string',
             'birthdate' => 'required|date',
