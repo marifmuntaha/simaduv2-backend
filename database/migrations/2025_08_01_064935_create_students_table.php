@@ -69,7 +69,7 @@ return new class extends Migration
 
         Schema::create('student_activities', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', [1, 2, 3])->comment('1. Aktif, 2. Keluar, 3. Alumni');
+            $table->enum('status', [1, 2, 3])->comment('1. Aktif, 2. Keluar, 3. Alumni, 4.Non Aktif');
             $table->unsignedBigInteger('studentId')->nullable();
             $table->unsignedBigInteger('yearId')->nullable();
             $table->unsignedBigInteger('institutionId')->nullable();

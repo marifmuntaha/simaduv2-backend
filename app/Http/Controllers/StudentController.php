@@ -27,7 +27,7 @@ class StudentController extends Controller
             }
             if ($request->has('rombelId')) {
                 $students = $students->whereHas('activities', function ($query) use ($request) {
-                    $query->where('rombelId', $request->rombelId);
+                    $query->where('rombelId', $request->rombelId)->latest();
                 });
             }
             if ($request->has('boardingId')) {
