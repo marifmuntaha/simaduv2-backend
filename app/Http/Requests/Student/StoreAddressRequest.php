@@ -24,10 +24,10 @@ class StoreAddressRequest extends FormRequest
     {
         return [
             'studentId' => 'required|integer|exists:students,id',
-            'provinceId' => 'required|integer',
-            'cityId' => 'required|integer',
-            'districtId' => 'required|integer',
-            'villageId' => 'required|integer',
+            'provinceId' => 'nullable|integer',
+            'cityId' => 'nullable|integer',
+            'districtId' => 'nullable|integer',
+            'villageId' => 'nullable|integer',
             'address' => 'required|string'
         ];
     }

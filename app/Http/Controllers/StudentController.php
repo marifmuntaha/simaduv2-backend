@@ -15,6 +15,26 @@ class StudentController extends Controller
     {
         try {
             $students = new Student();
+            if ($request->has('yearId')) {
+                $students = $students->whereHas('activities', function ($query) use ($request) {
+                    $query->where('yearId', $request->yearId)->latest();
+                });
+            }
+            if ($request->has('institutionId')) {
+                $students = $students->whereHas('activities', function ($query) use ($request) {
+                    $query->where('institutionId', $request->institutionId)->latest();
+                });
+            }
+            if ($request->has('rombelId')) {
+                $students = $students->whereHas('activities', function ($query) use ($request) {
+                    $query->where('rombelId', $request->rombelId);
+                });
+            }
+            if ($request->has('boardingId')) {
+                $students = $students->whereHas('activities', function ($query) use ($request) {
+                    $query->where('boardingId', $request->boardingId);
+                });
+            }
             return response([
                 'result' => StudentResource::collection($students->get())
             ]);

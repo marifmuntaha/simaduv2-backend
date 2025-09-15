@@ -26,7 +26,7 @@ class RombelController extends Controller
                 $rombels = $rombels->whereLevelid($request->levelId);
             }
             return response()->json([
-                'result' => RombelResource::collection($rombels->get()),
+                'result' => RombelResource::collection($rombels->orderBy('alias')->get()),
             ]);
         } catch (Exception $e) {
             return response()->json([
