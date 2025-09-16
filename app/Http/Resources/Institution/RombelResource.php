@@ -39,11 +39,11 @@ class RombelResource extends JsonResource
             'name' => $this->name,
             'alias' => $this->alias,
             'teacherId' => $this->teacherId,
-            'year' => $this->year,
-            'institution' => new InstitutionResource($this->institution),
-            'level' => $this->level,
-            'major' => $this->major,
-            'teacher' => $this->teacher
+            'yearName' => $this->year->name,
+            'institutionName' => $this->institution->ladder->alias .'. '.$this->institution->name,
+            'levelName' => $this->level->name,
+            'majorName' => $this->major->name,
+            'teacherName' => $this->teacher->name
         ];
         if ($request->has('type')) {
             if ($request->type == 'select') {

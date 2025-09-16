@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Http\Resources\Student\ActivityResource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -54,6 +55,21 @@ class StudentResource extends JsonResource
                 $resource = [
                     'value' => $this->id,
                     'label' => $this->nisn. '-' .$this->name,
+                ];
+            }
+        }
+        if ($request->has('list')){
+            if ($request->list == 'table'){
+                $resource = [
+                    'id' => $this->id,
+                    'institutionAlias' => $this->activities()->where('status', '1')->first()->institution->alias,
+                    'name' => $this->name,
+                    'birth' => $this->birthplace . ', '. Carbon::parse($this->birthdate)->format('d F Y'),
+                    'nisn' => $this->nisn,
+                    'nism' => $this->nism,
+                    'status' => $this->activities()->where('status', '1')->first()->status,
+                    'rombelAlias' => $this->activities()->where('status', '1')->first()->rombel->alias,
+                    'boardingId' => $this->activities()->where('status', '1')->first()->boardingId,
                 ];
             }
         }

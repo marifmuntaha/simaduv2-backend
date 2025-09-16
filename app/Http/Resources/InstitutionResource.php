@@ -40,7 +40,7 @@ class InstitutionResource extends JsonResource
             'email' => $this->email,
             'website' => $this->website,
             'logo' => $this->logo,
-            'ladder' => $this->ladder
+            'ladderAlias' => $this->ladder->alias
         ];
         if ($request->has('ladder')) {
             if ($request->ladder == 'alias') {

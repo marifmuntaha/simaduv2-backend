@@ -25,16 +25,17 @@ class StoreMutationRequest extends FormRequest
         return [
             'yearId' => 'required|integer|exists:years,id',
             'institutionId' => 'required|integer|exists:institutions,id',
-            'type' => 'required|string',
-            'numberLetter' => 'required|string',
             'studentId' => 'required|exists:students,id',
+            'type' => 'required|string',
+            'token' => 'required|string',
+            'numberLetter' => 'required|string',
             'description' => 'nullable|string',
             'schoolNPSN' => 'nullable|string',
             'schoolName' => 'nullable|string',
             'schoolAddress' => 'nullable|string',
             'operatorName' => 'nullable|string',
             'operatorPhone' => 'nullable|string',
-            'letterEmis' => 'required|file|mimes:pdf|max:2048',
+            'file' => 'required|mimes:pdf|max:2048',
         ];
     }
 

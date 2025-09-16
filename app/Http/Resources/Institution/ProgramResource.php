@@ -30,8 +30,8 @@ class ProgramResource extends JsonResource
             'institutionId' => $this->institutionId,
             'name' => $this->name,
             'alias' => $this->alias,
-            'year' => $this->year,
-            'institution' => new InstitutionResource($this->institution)
+            'yearName' => $this->year->name,
+            'institutionName' => $this->institution->ladder->alias .'. '. $this->institution->name
         ];
 
         if ($request->has('type')) {

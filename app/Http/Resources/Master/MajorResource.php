@@ -28,7 +28,7 @@ class MajorResource extends JsonResource
             'name' => $this->name,
             'alias' => $this->alias,
             'description' => $this->description,
-            'ladder' => $this->ladder
+            'ladderAlias' => $this->ladder->alias
         ];
         if ($request->has('type')) {
             if ($request->type == 'select') {
