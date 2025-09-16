@@ -59,6 +59,12 @@ class InstitutionController extends Controller
     public function update(UpdateInstitutionRequest $request, Institution $institution)
     {
         try {
+            if ($request->hasFile('image')) {
+                $old = Institution::find($institution->id);
+                Storage::disk('public')->delete($old->logo);
+                $path = Storage::disk('public')->putFileAs('images', $request->file('image'), $request->file('image')->hashName());
+                $request->merge(['logo' => $path]);
+            }
             return ($institution->update(array_filter($request->all())))
                 ? response([
                     'message' => 'Institution updated successfully.',

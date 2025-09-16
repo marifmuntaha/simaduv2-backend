@@ -23,13 +23,13 @@ class YearCreateOrUpdateListener
     public function handle(YearCreateOrUpdateEvent $event): void
     {
         if ($event->year->active) {
-            $years = Year::get();
-            foreach ($years as $year) {
+            $years = Year::get()->collect();
+            $years->map(function ($year) use ($event) {
                 if ($year->id != $event->year->id) {
                     $year->active = false;
                     $year->save();
                 }
-            }
+            });
         }
     }
 }

@@ -49,6 +49,14 @@ class StudentResource extends JsonResource
             'address' => $this->address,
             'activity' => new ActivityResource($this->activities()->latest()->first()),
         ];
+        if ($request->has('type')){
+            if ($request->type == 'select'){
+                $resource = [
+                    'value' => $this->id,
+                    'label' => $this->nisn. '-' .$this->name,
+                ];
+            }
+        }
         return $resource;
     }
 }

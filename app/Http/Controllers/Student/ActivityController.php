@@ -15,7 +15,7 @@ class ActivityController extends Controller
     public function index(Request $request)
     {
         try {
-            $activity = Activity::whereStudentid($request->studentId);
+            $activity = Activity::whereStudentid($request->studentId)->orderBy('id', 'DESC');
             return response([
                 'result' => ActivityResource::collection($activity->get()),
             ]);

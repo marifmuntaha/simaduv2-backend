@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('userId');
-            $table->unsignedBigInteger('parentId');
+            $table->unsignedBigInteger('parentId')->nullable();
             $table->string('nik')->unique();
             $table->string('nisn')->unique();
             $table->string('nism')->unique();
@@ -59,17 +59,17 @@ return new class extends Migration
         Schema::create('student_addresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('studentId');
-            $table->integer('provinceId')->nullable();
-            $table->integer('cityId')->nullable();
-            $table->integer('districtId')->nullable();
-            $table->integer('villageId')->nullable();
+            $table->string('provinceId')->nullable();
+            $table->string('cityId')->nullable();
+            $table->string('districtId')->nullable();
+            $table->string('villageId')->nullable();
             $table->string('address');
             $table->timestamps();
         });
 
         Schema::create('student_activities', function (Blueprint $table) {
             $table->id();
-            $table->enum('status', [1, 2, 3])->comment('1. Aktif, 2. Keluar, 3. Alumni, 4.Non Aktif');
+            $table->enum('status', [1, 2, 3, 4])->comment('1. Aktif, 2. Keluar, 3. Alumni, 4. Pindah Kelas');
             $table->unsignedBigInteger('studentId')->nullable();
             $table->unsignedBigInteger('yearId')->nullable();
             $table->unsignedBigInteger('institutionId')->nullable();
@@ -79,6 +79,25 @@ return new class extends Migration
             $table->unsignedBigInteger('boardingId')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('student_mutations', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('yearId');
+            $table->unsignedBigInteger('institutionId');
+            $table->unsignedBigInteger('studentId');
+            $table->enum('type', [1, 2])->comment('1. Out, 2. In');
+            $table->string('token');
+            $table->string('numberLetter');
+            $table->string('description')->nullable();
+            $table->string('schoolNPSN')->nullable();
+            $table->string('schoolName')->nullable();
+            $table->string('schoolAddress')->nullable();
+            $table->string('operatorName')->nullable();
+            $table->string('operatorPhone')->nullable();
+            $table->string('letterEmis')->nullable();
+            $table->enum('status', [1, 2])->comment('1. unread, 2.read')->default(1);
+            $table->timestamps();
+        });
     }
 
     /**
@@ -86,6 +105,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('student_mutations');
         Schema::dropIfExists('student_activities');
         Schema::dropIfExists('student_addresses');
         Schema::dropIfExists('student_parents');
