@@ -21,12 +21,17 @@ class MutationController extends Controller
                 $mutations = $mutations->latest();
             }
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => MutationResource::collection($mutations->get())
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode()
+            ]);
         }
     }
 
@@ -39,13 +44,17 @@ class MutationController extends Controller
             }
             return ($mutation = Mutation::create($request->all()))
                 ? response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data mutasi siswa berhasil disimpan',
+                    'statusCode' => 201,
                     'result' => new MutationResource($mutation),
-                    'message' => 'Mutation created!'
-                ]) : throw new Exception('Unable to create mutation');
+                ]) : throw new Exception('Data mutasi siswa gagal disimpan', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode()
+            ]);
         }
     }
 
@@ -53,12 +62,17 @@ class MutationController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => new MutationResource($mutation),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode()
+            ]);
         }
     }
 
@@ -73,13 +87,17 @@ class MutationController extends Controller
             }
             return ($mutation->update(array_filter($request->all())))
                 ? response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data mutasi siswa berhasil disimpan',
+                    'statusCode' => 201,
                     'result' => new MutationResource($mutation),
-                    'message' => 'Mutation updated!'
-                ]) : throw new Exception('Unable to update mutation');
+                ]) : throw new Exception('Data mutasi siswa gagal disimpan', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode()
+            ]);
         }
     }
 
@@ -88,13 +106,17 @@ class MutationController extends Controller
         try {
             return $mutation->delete()
                 ? response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data mutasi siswa berhasil dihapus',
+                    'statusCode' => 200,
                     'result' => new MutationResource($mutation),
-                    'message' => 'Mutation deleted!'
-                ]) : throw new Exception('Unable to delete mutation');
+                ]) : throw new Exception('Data mutasi siswa gagal dihapus', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode()
+            ]);
         }
     }
 }

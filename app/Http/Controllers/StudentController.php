@@ -36,12 +36,17 @@ class StudentController extends Controller
                 });
             }
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => StudentResource::collection($students->get())
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -49,15 +54,19 @@ class StudentController extends Controller
     {
         try {
             return ($student = Student::create($request->all()))
-            ? response([
-                'result' => new StudentResource($student),
-                'message' => 'Data berhasil ditambahkan!'
-            ], 201) : throw new Exception("Data gagal ditambahkan!");
+                ? response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data Siswa berhasil ditambahkan!',
+                    'statusCode' => 201,
+                    'result' => new StudentResource($student),
+                ], 201) : throw new Exception("Data Siswa gagal ditambahkan!", 422);
 
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ], 422);
         }
     }
 
@@ -65,12 +74,17 @@ class StudentController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => new StudentResource($student)
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -79,16 +93,20 @@ class StudentController extends Controller
         try {
             if ($student->update(array_filter($request->all()))) {
                 return response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data Siswa berhasil disimpan!',
+                    'statusCode' => 200,
                     'result' => new StudentResource($student),
-                    'message' => 'Data berhasil diubah!'
                 ]);
             } else {
-                throw new Exception("Data gagal diubah!");
+                throw new Exception("Data Siswa gagal diubah!", 422);
             }
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 442);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ], 422);
         }
     }
 
@@ -100,16 +118,20 @@ class StudentController extends Controller
                 $student->address()->delete();
                 $student->user()->delete();
                 return response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data Siswa berhasil dihapus!',
+                    'statusCode' => 200,
                     'result' => new StudentResource($student),
-                    'message' => 'Data berhasil dihapus!'
                 ]);
             } else {
-                throw new Exception("Data gagal dihapus!");
+                throw new Exception("Data Siswa gagal dihapus!", 422);
             }
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 442);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 }

@@ -3,7 +3,9 @@
 namespace App\Http\Requests\Student;
 
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 /**
  * @property mixed $fatherStatus
@@ -108,5 +110,14 @@ class StoreParentRequest extends FormRequest
             'guardEmail' => 'Alamat Email Wali',
             'guardPhone' => 'Nomor HP Wali',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'error',
+            'statusMessage' => $validator->errors()->first(),
+            'statusCode' => 422,
+        ], 422));
     }
 }

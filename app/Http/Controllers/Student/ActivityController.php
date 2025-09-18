@@ -17,12 +17,17 @@ class ActivityController extends Controller
         try {
             $activity = Activity::whereStudentid($request->studentId)->orderBy('id', 'DESC');
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => ActivityResource::collection($activity->get()),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -31,13 +36,17 @@ class ActivityController extends Controller
         try {
             return ($activity = Activity::create($request->all()))
                 ? response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data aktifitas siswa berhasil ditambahkan.',
+                    'statusCode' => 201,
                     'result' => new ActivityResource($activity),
-                    'message' => 'Activity has been created.'
-                ]) : throw new Exception('Unable to create activity.');
+                ]) : throw new Exception('Data aktifitas siswa gagal ditambahkan.', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 442);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -45,12 +54,17 @@ class ActivityController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => new ActivityResource($activity),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -59,13 +73,17 @@ class ActivityController extends Controller
         try {
             return $activity->update(array_filter($request->all()))
                 ? response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data aktifitas siswa berhasil disimpan.',
+                    'statusCode' => 200,
                     'result' => new ActivityResource($activity),
-                    'message' => 'Activity has been updated.'
-                ]) : throw new Exception('Unable to update activity.');
+                ]) : throw new Exception('Data aktifitas siswa gagal disimpan.', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 442);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -74,13 +92,17 @@ class ActivityController extends Controller
         try {
             return $activity->delete()
                 ? response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data aktifitas siswa berhasil dihapus.',
+                    'statusCode' => 200,
                     'result' => new ActivityResource($activity),
-                    'message' => 'Activity has been deleted.'
-                ]) : throw new Exception('Unable to delete activity.');
+                ]) : throw new Exception('Data aktifitas siswa gagal dihapus.', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 442);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 }

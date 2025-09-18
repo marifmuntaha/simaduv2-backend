@@ -3,7 +3,9 @@
 namespace App\Http\Requests\Student;
 
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateAddressRequest extends FormRequest
 {
@@ -41,5 +43,14 @@ class UpdateAddressRequest extends FormRequest
             'villageId' => 'required|integer',
             'address' => 'required|string'
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'error',
+            'statusMessage' => $validator->errors()->first(),
+            'statusCode' => 422,
+        ], 422));
     }
 }

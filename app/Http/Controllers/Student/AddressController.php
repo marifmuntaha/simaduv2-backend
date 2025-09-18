@@ -17,12 +17,17 @@ class AddressController extends Controller
         try {
             $address = new Address();
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => AddressResource::collection($address->get())
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode()
+            ]);
         }
     }
 
@@ -31,13 +36,17 @@ class AddressController extends Controller
         try {
             return ($address = Address::create($request->all()))
                 ? response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data alamat siswa berhasil ditambahkan.',
+                    'statusCode' => 201,
                     'result' => new AddressResource($address),
-                    'message' => 'Address added successfully!'
-                ]) : throw new Exception('Address not added!');
+                ]) : throw new Exception('Data alamat siswa gagal ditambahkan.', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode()
+            ]);
         }
     }
 
@@ -45,12 +54,17 @@ class AddressController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => new AddressResource($address)
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -59,13 +73,17 @@ class AddressController extends Controller
         try {
             return $address->update(array_filter($request->all()))
                 ? response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data alamat siswa berhasil disimpan.',
+                    'statusCode' => 200,
                     'result' => new AddressResource($address),
-                    'message' => 'Address updated successfully!'
-                ]) : throw new Exception('Address not updated!');
+                ]) : throw new Exception('Data alamat siswa gagal disimpan.', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -74,13 +92,17 @@ class AddressController extends Controller
         try {
             return $address->delete()
                 ? response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data alamat siswa berhasil dihapus.',
+                    'statusCode' => 200,
                     'result' => new AddressResource($address),
-                    'message' => 'Address deleted successfully!'
-                ]) : throw new Exception('Address not deleted!');
+                ]) : throw new Exception('Data alamat siswa gagal dihapus.', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage()
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 }

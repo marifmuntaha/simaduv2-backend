@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Requests\Student;
+namespace App\Http\Requests\Finance;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreActivityRequest extends FormRequest
+class UpdateAccountResource extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return in_array($this->user()->role, [1, 2]);
+        return false;
     }
 
     /**
@@ -25,25 +25,18 @@ class StoreActivityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'studentId' => 'required',
-            'status' => 'required',
-            'yearId' => 'required',
-            'institutionId' => 'required',
-            'rombelId' => 'nullable',
-            'programId' => 'nullable',
-            'boardingId' => 'nullable',
+            'institutionId' => ['required', 'exists:institutions,id'],
+            'name' => ['required', 'string'],
+            'balance' => ['nullable', 'numeric', 'min:0'],
         ];
     }
+
     public function attributes(): array
     {
         return [
-            'studentId' => 'ID Siswa',
-            'status' => 'Status',
-            'yearId' => 'ID Tahun Ajaran',
             'institutionId' => 'ID Lembaga',
-            'rombelId' => 'ID Rombel',
-            'programId' => 'ID Program',
-            'boardingId' => 'ID Boarding',
+            'name' => 'Nama Rekening',
+            'balance' => 'Saldo',
         ];
     }
 

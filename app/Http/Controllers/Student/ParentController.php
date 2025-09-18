@@ -20,12 +20,17 @@ class ParentController extends Controller
                 $parent = $parent->where('numberKk', $request->numberKk);
             }
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => ParentResource::collection($parent->get()),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -34,13 +39,17 @@ class ParentController extends Controller
         try {
             return ($parent = Parents::create($request->all()))
             ? response([
+                'status' => 'success',
+                'statusMessage' => 'Data orangtua berhasil ditambahkan',
+                'statusCode' => 201,
                 'result' => new ParentResource($parent),
-                'message' => 'Data Orangtua berhasil ditambahkan!'
-            ]) : throw new Exception('Data Orangtua gagal ditambahkan!');
+            ]) : throw new Exception('Data Orangtua gagal ditambahkan!', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -48,12 +57,17 @@ class ParentController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => new ParentResource($parent),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -62,16 +76,20 @@ class ParentController extends Controller
         try {
             if ($parent->update($request->all())) {
                 return response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data orangtua berhasil disimpan',
+                    'statusCode' => 200,
                     'result' => new ParentResource($parent),
-                    'message' => 'Data Orangtua berhasil diubah!'
                 ]);
             } else {
-                throw new Exception('Data Orangtua gagal diubah!');
+                throw new Exception('Data Orangtua gagal disimpan!', 422);
             }
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -80,13 +98,17 @@ class ParentController extends Controller
         try {
             return $parent->delete()
                 ? response([
-                    'message' => 'Data Orangtua berhasil dihapus!',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Orangtua berhasil dihapus!',
+                    'statusCode' => 200,
                     'result' => new ParentResource($parent),
-                ]) : throw new Exception('Data Orangtua gagal dihapus!');
+                ]) : throw new Exception('Data Orangtua gagal dihapus!', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 }
