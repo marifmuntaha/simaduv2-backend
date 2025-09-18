@@ -28,13 +28,26 @@ class MajorResource extends JsonResource
             'name' => $this->name,
             'alias' => $this->alias,
             'description' => $this->description,
-            'ladderAlias' => $this->ladder->alias
+            'ladder' => $this->ladder
         ];
         if ($request->has('type')) {
             if ($request->type == 'select') {
                 $resource = [
                     'value' => $this->id,
                     'label' => $this->alias,
+                ];
+            }
+        }
+
+        if ($request->has('list')){
+            if ($request->list == 'table') {
+                $resource = [
+                    'id' => $this->id,
+                    'ladderId' => $this->ladderId,
+                    'name' => $this->name,
+                    'alias' => $this->alias,
+                    'description' => $this->description,
+                    'ladderAlias' => $this->ladder->alias
                 ];
             }
         }

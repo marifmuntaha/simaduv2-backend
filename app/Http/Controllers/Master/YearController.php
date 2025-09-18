@@ -15,13 +15,20 @@ class YearController extends Controller
     public function index(Request $request)
     {
         try {
+            $years = new Year();
+            $years = $years->orderBy('created_at', 'desc');
             return response([
-                'result' => YearResource::collection(Year::orderBy('created_at', 'desc')->get()),
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
+                'result' => YearResource::collection($years->get()),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -30,13 +37,17 @@ class YearController extends Controller
         try {
             return ($year = Year::create($request->all()))
                 ? response([
-                    'message' => 'Year created successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Tahun Pelajaran berhasil ditambahkan',
+                    'statusCode' => 201,
                     'result' => new YearResource($year),
-                ], 201) : throw new Exception("Failed to create Year");
+                ], 201) : throw new Exception("Data Tahun Pelajaran Gagal Ditambahkan");
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -44,12 +55,17 @@ class YearController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => new YearResource($year),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -58,13 +74,17 @@ class YearController extends Controller
         try {
             return ($year->update($request->all()))
                 ? response([
-                    'message' => 'Year updated successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Tahun Pelajaran Berhasil Disimpan',
+                    'statusCode' => 200,
                     'result' => new YearResource($year),
-                ]) : throw new Exception("Failed to update Year");
+                ]) : throw new Exception("Data Tahun Pelajaran Gagal Disimpan");
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -73,12 +93,17 @@ class YearController extends Controller
         try {
             return ($year->delete())
                 ? response([
-                    'message' => 'Year deleted successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Tahun Pelajaran Berhasil Dihapus',
+                    'statusCode' => 200,
+                    'result' => new YearResource($year),
                 ]) : throw new Exception("Failed to delete Year");
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 }

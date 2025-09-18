@@ -21,7 +21,9 @@ class AuthController extends Controller
                 $user = Auth::user();
                 $user->notify(new AuthLoginNotification($user, 'Berhasil masuk ke aplikasi.'));
                 return response([
-                    'message' => 'Berhasil masuk, anda akan dialihkan dalam 2 detik.',
+                    'status' => 'success',
+                    'statusMessage' => 'Berhasil masuk, anda akan dialihkan dalam 2 detik.',
+                    'statusCode' => 200,
                     'result' => Arr::collapse([$request->user()->toArray(), [
                         'token' => $request->user()->createToken($request->user()->email)->plainTextToken,
                     ]])
@@ -29,12 +31,14 @@ class AuthController extends Controller
             } else {
                 $user = User::whereUsername($request->username)->first();
                 $user?->notify(new AuthLoginNotification($user, 'Gagal masuk ke aplikasi.'));
-                throw new Exception('Nama pengguna/kata sandi salah.');
+                throw new Exception('Nama pengguna/kata sandi salah.', 401);
             }
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 401);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -74,12 +78,16 @@ class AuthController extends Controller
         try {
             return ($status = $request->user('sanctum')->currentAccessToken()->delete())
                 ? response([
-                    'message' => 'Berhasil keluar.',
+                    'status' => 'success',
+                    'statusMessage' => 'Berhasil keluar.',
+                    'statusCode' => 200,
                 ]) : throw new Exception(__($status));
         } catch (Exception $exception) {
             return response([
-                'message' => $exception->getMessage(),
-            ], 400);
+                'status' => 'error',
+                'statusMessage' => $exception->getMessage(),
+                'statusCode' => $exception->getCode(),
+            ]);
         }
     }
 }

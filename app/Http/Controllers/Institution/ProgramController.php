@@ -23,12 +23,17 @@ class ProgramController extends Controller
                 $programs = $programs->whereInstitutionid($request->institutionId);
             }
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => ProgramResource::collection($programs->get()),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -37,13 +42,17 @@ class ProgramController extends Controller
         try {
             return ($program = Program::create($request->all()))
                 ? response([
-                    'message' => 'Program created successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Program berhasil ditambahkan',
+                    'statusCode' => 201,
                     'result' => new ProgramResource($program),
-                ], 201) : throw new Exception("Failed to create Program");
+                ], 201) : throw new Exception("Data Status gagal ditambahkan", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -51,12 +60,17 @@ class ProgramController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => new ProgramResource($program),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -65,13 +79,17 @@ class ProgramController extends Controller
         try {
             return ($program->update(array_filter($request->all())))
                 ? response([
-                    'message' => 'Program updated successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Program berhasil disimpan',
+                    'statusCode' => 200,
                     'result' => new ProgramResource($program),
-                ]) : throw new Exception("Failed to update Program");
+                ]) : throw new Exception("Data Program gagal disimpan", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -80,12 +98,16 @@ class ProgramController extends Controller
         try {
             return ($program->delete())
                 ? response([
-                    'message' => 'Program deleted successfully.',
-                ]) : throw new Exception("Failed to delete Program");
+                    'status' => 'success',
+                    'statusMessage' => 'Data Program berhasil dihapus',
+                    'statusCode' => 200,
+                ]) : throw new Exception("Data Program gagal dihapus", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 }

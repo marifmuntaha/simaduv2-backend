@@ -26,12 +26,17 @@ class RombelController extends Controller
                 $rombels = $rombels->whereLevelid($request->levelId);
             }
             return response()->json([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => RombelResource::collection($rombels->orderBy('alias')->get()),
             ]);
         } catch (Exception $e) {
             return response()->json([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -40,13 +45,17 @@ class RombelController extends Controller
         try {
             return($rombel = Rombel::create($request->all()))
                 ? response([
-                    'result' => $rombel,
-                    'message' => 'Rombel berhasil ditambahkan',
-                ], 201) : throw new Exception('Rombel gagal ditambahkan');
+                    'status' => 'success',
+                    'statusMessage' => 'Data Rombel berhasil ditambahkan',
+                    'statusCode' => 200,
+                    'result' => new RombelResource($rombel),
+                ], 201) : throw new Exception('Data Rombel gagal ditambahkan', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -54,12 +63,17 @@ class RombelController extends Controller
     {
         try {
             return response([
-                'result' => $rombel,
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
+                'result' => new RombelResource($rombel),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -68,13 +82,17 @@ class RombelController extends Controller
         try {
             return ($rombel->update(array_filter($request->all())))
                 ? response([
-                    'result' => $rombel,
-                    'message' => 'Rombel berhasil diubah',
-                ]) : throw new Exception('Rombel gagal diubah');
+                    'status' => 'success',
+                    'statusMessage' => 'Data Rombel berhasil disimpan',
+                    'statusCode' => 200,
+                    'result' => new RombelResource($rombel),
+                ]) : throw new Exception('Data Rombel gagal diubah', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -83,13 +101,17 @@ class RombelController extends Controller
         try {
             return ($rombel->delete())
                 ? response([
-                    'result' => $rombel,
-                    'message' => 'Rombel berhasil dihapus',
-                ]) : throw new Exception('Rombel gagal dihapus');
+                    'status' => 'success',
+                    'statusMessage' => 'Data Rombel berhasil dihapus',
+                    'statusCode' => 200,
+                    'result' => new RombelResource($rombel),
+                ]) : throw new Exception('Data Rombel gagal dihapus', 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 }

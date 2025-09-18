@@ -22,12 +22,17 @@ class MajorController extends Controller
                 $majors = $majors->get();
             }
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => MajorResource::collection($majors),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -36,13 +41,17 @@ class MajorController extends Controller
         try {
             return ($major = Major::create($request->all()))
                 ? response([
-                    'message' => 'Major created successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Jurusan berhasil ditambahkan.',
+                    'statusCode' => 201,
                     'result' => new MajorResource($major),
-                ], 201) : throw new Exception("Failed to create Major");
+                ], 201) : throw new Exception("Data Jurusan gagal ditambahkan.", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -50,12 +59,17 @@ class MajorController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => new MajorResource($major),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -64,13 +78,17 @@ class MajorController extends Controller
         try {
             return ($major->update(array_filter($request->all())))
                 ? response([
-                    'message' => 'Major updated successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Jurusan berhasil disimpan.',
+                    'statusCode' => 201,
                     'result' => new MajorResource($major),
-                ]) : throw new Exception("Failed to update Major");
+                ]) : throw new Exception("Data Jurusan gagal disimpan.", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -79,12 +97,16 @@ class MajorController extends Controller
         try {
             return ($major->delete())
                 ? response([
-                    'message' => 'Major deleted successfully.',
-                ]) : throw new Exception("Failed to delete Major");
+                    'status' => 'success',
+                    'statusMessage' => 'Data Jurusan berhasil dihapus.',
+                    'statusCode' => 200,
+                ]) : throw new Exception("Data Jurusan gagal dihapus.", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 }

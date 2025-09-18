@@ -6,7 +6,6 @@ use App\Http\Requests\StoreTeacherRequest;
 use App\Http\Requests\UpdateTeacherRequest;
 use App\Http\Resources\TeacherResource;
 use App\Models\Teacher;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -25,12 +24,17 @@ class TeacherController extends Controller
                 $teachers = $teachers->where('status', $request->status);
             }
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => TeacherResource::collection($teachers->get()),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -41,14 +45,20 @@ class TeacherController extends Controller
             if ($teacher) {
                 $teacher->institution()->attach($request->institution);
                 return response([
-                    'message' => 'Teacher created successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Guru berhasil ditambahkan.',
+                    'statusCode' => 201,
                     'result' => new TeacherResource($teacher),
                 ], 201);
+            } else {
+                throw new Exception('Data Guru gagal ditambahkan.', 422);
             }
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -56,12 +66,17 @@ class TeacherController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => new TeacherResource($teacher),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -71,16 +86,20 @@ class TeacherController extends Controller
             if ($teacher->update(array_filter($request->all()))) {
                 $teacher->institution()->sync($request->institution);
                 return response([
-                    'message' => 'Teacher updated successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Guru berhasil disimpan.',
+                    'statusCode' => 200,
                     'result' => new TeacherResource($teacher),
                 ]);
             } else {
-                throw new Exception("Failed to update Teacher");
+                throw new Exception("Data Guru gagal disimpan.", 422);
             }
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -91,13 +110,19 @@ class TeacherController extends Controller
                 $teacher->institution()->detach();
                 $teacher->user->delete();
                 return response([
-                    'message' => 'Teacher deleted successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Guru berhasil dihapus.',
+                    'statusCode' => 200,
                 ]);
+            } else {
+                throw new Exception("Data Guru gagal dihapus.", 422);
             }
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 }

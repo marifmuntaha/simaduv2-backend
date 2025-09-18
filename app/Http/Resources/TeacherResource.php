@@ -20,6 +20,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $institution
  * @property mixed $status
  * @property mixed $userId
+ * @method institution(\Closure $param)
  */
 class TeacherResource extends JsonResource
 {

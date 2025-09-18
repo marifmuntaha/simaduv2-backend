@@ -3,7 +3,9 @@
 namespace App\Http\Requests\Institution;
 
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateProgramRequest extends FormRequest
 {
@@ -38,5 +40,14 @@ class UpdateProgramRequest extends FormRequest
             'name' => 'Nama Program',
             'alias' => 'Alias',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'error',
+            'statusMessage' => $validator->errors()->first(),
+            'statusCode' => 422,
+        ], 422));
     }
 }

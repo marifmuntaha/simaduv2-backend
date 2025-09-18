@@ -22,12 +22,17 @@ class LevelController extends Controller
                 $levels = $levels->get();
             }
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => LevelResource::collection($levels),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statsCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -36,13 +41,17 @@ class LevelController extends Controller
         try {
             return ($level = Level::create($request->all()))
                 ? response([
-                    'message' => 'Level created successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Tingkat berhasil ditambahkan',
+                    'statusCode' => 201,
                     'result' => new LevelResource($level),
-                ], 201) : throw new Exception("Failed to create Level");
+                ], 201) : throw new Exception("Data Tingkat gagal ditambahkan", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statsCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -50,12 +59,17 @@ class LevelController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => new LevelResource($level),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statsCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -64,13 +78,17 @@ class LevelController extends Controller
         try {
             return ($level->update(array_filter($request->all())))
                 ? response([
-                    'message' => 'Level updated successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Tingkat berhasil disimpan',
+                    'statusCode' => 200,
                     'result' => new LevelResource($level),
-                ]) : throw new Exception("Failed to update Level");
+                ]) : throw new Exception("Data Tingkat gagal disimpan", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statsCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -79,12 +97,17 @@ class LevelController extends Controller
         try {
             return ($level->delete())
                 ? response([
-                    'message' => 'Level deleted successfully.',
-                ]) : throw new Exception("Failed to delete Level");
+                    'status' => 'success',
+                    'statusMessage' => 'Data Tingkat berhasil dihapus',
+                    'statusCode' => 200,
+                    'result' => new LevelResource($level),
+                ]) : throw new Exception("Data Tingkat gagal dihapus", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statsCode' => $e->getCode(),
+            ]);
         }
     }
 }

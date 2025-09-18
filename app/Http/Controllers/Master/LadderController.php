@@ -16,12 +16,17 @@ class LadderController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => LadderResource::collection(Ladder::all()),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -30,13 +35,17 @@ class LadderController extends Controller
         try {
             return ($ladder = Ladder::create($request->all()))
                 ? response([
-                    'message' => 'Ladder created successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Jenjang berhasil ditambahkan',
+                    'statusCode' => 201,
                     'result' => new LadderResource($ladder),
-                ], 201) : throw new Exception("Failed to create Ladder");
+                ], 201) : throw new Exception("Data Jenjang gagal ditambahkan.");
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -44,12 +53,17 @@ class LadderController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => new LadderResource($ladder),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -58,13 +72,17 @@ class LadderController extends Controller
         try {
             return ($ladder->update(array_filter($request->all())))
                 ? response([
-                    'message' => 'Ladder updated successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Jenjang berhasil disimpan',
+                    'statusCode' => 200,
                     'result' => new LadderResource($ladder),
-                ]) : throw new Exception("Failed to update Ladder");
+                ]) : throw new Exception("Data Jenjang gagal disimpan");
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -73,12 +91,17 @@ class LadderController extends Controller
         try {
             return ($ladder->delete())
                 ? response([
-                    'message' => 'Ladder deleted successfully.',
-                ]) : throw new Exception("Failed to delete Ladder");
+                    'status' => 'success',
+                    'statusMessage' => 'Data Jenjang berhasil dihapus',
+                    'statusCode' => 200,
+                    'result' => new LadderResource($ladder),
+                ]) : throw new Exception("Data Jenjang gagal dihapus.");
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 }

@@ -30,8 +30,8 @@ class ProgramResource extends JsonResource
             'institutionId' => $this->institutionId,
             'name' => $this->name,
             'alias' => $this->alias,
-            'yearName' => $this->year->name,
-            'institutionName' => $this->institution->ladder->alias .'. '. $this->institution->name
+            'year' => $this->year,
+            'institution' => $this->institution
         ];
 
         if ($request->has('type')) {
@@ -39,6 +39,19 @@ class ProgramResource extends JsonResource
                 $resource = [
                     'value' => $this->id,
                     'label' => $this->name,
+                ];
+            }
+        }
+        if ($request->has('list')){
+            if ($request->list == 'table') {
+                $resource = [
+                    'id' => $this->id,
+                    'yearId' => $this->yearId,
+                    'institutionId' => $this->institutionId,
+                    'name' => $this->name,
+                    'alias' => $this->alias,
+                    'yearName' => $this->year->name,
+                    'institutionName' => $this->institution->ladder->alias .'. '. $this->institution->name
                 ];
             }
         }

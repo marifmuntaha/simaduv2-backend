@@ -40,7 +40,7 @@ class InstitutionResource extends JsonResource
             'email' => $this->email,
             'website' => $this->website,
             'logo' => $this->logo,
-            'ladderAlias' => $this->ladder->alias
+            'ladder' => $this->ladder
         ];
         if ($request->has('ladder')) {
             if ($request->ladder == 'alias') {
@@ -59,6 +59,24 @@ class InstitutionResource extends JsonResource
                     'value' => $this->id,
                     'label' => $resource['name'],
                     'ladderId' => $this->ladderId
+                ];
+            }
+        }
+        if ($request->has('list')) {
+            if ($request->list == 'table') {
+                $resource = [
+                    'id' => $this->id,
+                    'ladderId' => $this->ladderId,
+                    'name' => $this->name,
+                    'alias' => $this->alias,
+                    'nsm' => $this->nsm,
+                    'npsn' => $this->npsn,
+                    'address' => $this->address,
+                    'phone' => $this->phone,
+                    'email' => $this->email,
+                    'website' => $this->website,
+                    'logo' => $this->logo,
+                    'ladderAlias' => $this->ladder->alias
                 ];
             }
         }

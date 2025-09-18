@@ -14,13 +14,19 @@ class InstitutionController extends Controller
     public function index()
     {
         try {
+            $institutions = new Institution();
             return response([
-                'result' => InstitutionResource::collection(Institution::all()),
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
+                'result' => InstitutionResource::collection($institutions->get()),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -33,13 +39,17 @@ class InstitutionController extends Controller
             }
             return ($institution = Institution::create($request->all()))
                 ? response([
-                    'message' => 'Institution created successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Institusi berhasil ditambahkan',
+                    'statusCode' => 201,
                     'result' => new InstitutionResource($institution),
-                ], 201) : throw new Exception("Failed to create Institution");
+                ], 201) : throw new Exception("Data Institusi gagal ditambahkan", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -47,12 +57,17 @@ class InstitutionController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => new InstitutionResource($institution),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -67,27 +82,39 @@ class InstitutionController extends Controller
             }
             return ($institution->update(array_filter($request->all())))
                 ? response([
-                    'message' => 'Institution updated successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Institusi berhasil disimpan',
+                    'statusCode' => 200,
                     'result' => new InstitutionResource($institution),
-                ]) : throw new Exception("Failed to update Institution");
+                ]) : throw new Exception("Data Institusi gagal disimpan", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
     public function destroy(Institution $institution)
     {
         try {
-            return ($institution->delete())
-                ? response([
-                    'message' => 'Institution deleted successfully.',
-                ]) : throw new Exception("Failed to delete Institution");
+            if ($institution->delete()) {
+                Storage::disk('public')->delete($institution->logo);
+                return response([
+                    'status' => 'success',
+                    'statusMessage' => 'Data Institusi berhasil dihapus',
+                    'statusCode' => 200,
+                ]);
+            } else {
+                throw new Exception("Data Institusi gagal dihapus", 422);
+            }
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 }

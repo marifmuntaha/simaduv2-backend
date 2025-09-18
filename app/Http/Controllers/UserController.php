@@ -22,12 +22,17 @@ class UserController extends Controller
                 $users = $users->get();
             }
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => UserResource::collection($users),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 500);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -36,13 +41,17 @@ class UserController extends Controller
         try {
             return ($user = User::create($request->all()))
                 ? response([
-                    'message' => 'User created successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Pengguna berhasil ditambahkan',
+                    'statusCode' => 201,
                     'result' => new UserResource($user),
-                ], 201) : throw new Exception("Failed to create User");
+                ], 201) : throw new Exception("Data Pengguna gagal ditambahkan", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -50,12 +59,17 @@ class UserController extends Controller
     {
         try {
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => new UserResource($user),
             ]);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -64,13 +78,17 @@ class UserController extends Controller
         try {
             return ($user->update(array_filter($request->all())))
                 ? response([
-                    'message' => 'User updated successfully.',
+                    'status' => 'success',
+                    'statusMessage' => 'Data Pengguna berhasil disimpan',
+                    'statusCode' => 200,
                     'result' => new UserResource($user),
-                ]) : throw new Exception("Failed to update User");
+                ]) : throw new Exception("Data Pengguna gagal disimpan", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 
@@ -79,12 +97,16 @@ class UserController extends Controller
         try {
             return ($user->delete())
                 ? response([
-                    'message' => 'User deleted successfully.',
-                ]) : throw new Exception("Failed to delete User");
+                    'status' => 'success',
+                    'statusMessage' => 'Data Pengguna berhasil dihapus',
+                    'statusCode' => 200,
+                ]) : throw new Exception("Data Pengguna gagal dihapus", 422);
         } catch (Exception $e) {
             return response([
-                'message' => $e->getMessage(),
-            ], 422);
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+                'statusCode' => $e->getCode(),
+            ]);
         }
     }
 }

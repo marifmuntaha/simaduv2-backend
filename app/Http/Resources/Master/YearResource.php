@@ -34,6 +34,16 @@ class YearResource extends JsonResource
                 ];
             }
         }
+        if ($request->has('list')){
+            if ($request->list == 'table'){
+                $resource = [
+                    'id' => $this->id,
+                    'name' => $this->name,
+                    'description' => $this->description,
+                    'active' => $this->active
+                ];
+            }
+        }
         return $resource;
     }
 }

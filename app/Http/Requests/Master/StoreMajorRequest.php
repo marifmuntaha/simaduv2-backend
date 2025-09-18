@@ -3,7 +3,9 @@
 namespace App\Http\Requests\Master;
 
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreMajorRequest extends FormRequest
 {
@@ -38,5 +40,14 @@ class StoreMajorRequest extends FormRequest
             'alias' => 'Nama Alias',
             'description' => 'Diskripsi',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'error',
+            'statusMessage' => $validator->errors()->first(),
+            'statusCode' => 422,
+        ], 422));
     }
 }

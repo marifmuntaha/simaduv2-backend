@@ -34,6 +34,16 @@ class LadderResource extends JsonResource
                 ];
             }
         }
+        if ($request->has('list')) {
+            if ($request->list == 'table'){
+                $resource = [
+                    'id' => $this->id,
+                    'name' => $this->name,
+                    'alias' => $this->alias,
+                    'description' => $this->description,
+                ];
+            }
+        }
         return $resource;
     }
 }

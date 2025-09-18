@@ -18,6 +18,9 @@ class NotificationController extends Controller
                 $notifications = auth()->user()->notifications();
             }
             return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'statusCode' => 200,
                 'result' => $notifications,
             ]);
         } catch (Exception $e) {
@@ -25,10 +28,5 @@ class NotificationController extends Controller
                 'message' => $e->getMessage(),
             ], 500);
         }
-    }
-
-    public function update(Request $request, Notification $notification)
-    {
-
     }
 }
