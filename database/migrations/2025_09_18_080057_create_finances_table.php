@@ -18,6 +18,21 @@ return new class extends Migration
             $table->bigInteger('balance');
             $table->timestamps();
         });
+
+        Schema::create('items', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('yearId');
+            $table->unsignedBigInteger('institutionId');
+            $table->unsignedBigInteger('programId');
+            $table->unsignedBigInteger('accountId');
+            $table->string('name');
+            $table->string('alias');
+            $table->string('gender');
+            $table->string('boardingId');
+            $table->string('repeat');
+            $table->bigInteger('price');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -25,6 +40,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('items');
         Schema::dropIfExists('accounts');
     }
 };

@@ -76,7 +76,7 @@ return new class extends Migration
             $table->unsignedInteger('levelId')->nullable();
             $table->unsignedBigInteger('rombelId')->nullable();
             $table->unsignedBigInteger('programId')->nullable();
-            $table->unsignedBigInteger('boardingId')->nullable();
+            $table->unsignedBigInteger('boardingId')->nullable()->comment('');
             $table->timestamps();
         });
 

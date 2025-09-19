@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class UpdateAccountResource extends FormRequest
+class UpdateItemRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,18 +25,32 @@ class UpdateAccountResource extends FormRequest
     public function rules(): array
     {
         return [
-            'institutionId' => ['required', 'exists:institutions,id'],
-            'name' => ['required', 'string'],
-            'balance' => ['nullable', 'numeric', 'min:0'],
+            'yearId' => 'required|integer|exists:years,id',
+            'institutionId' => 'required|integer|exists:institutions,id',
+            'programId' => 'required',
+            'accountId' => 'required|integer|exists:accounts,id',
+            'name' => 'required|string',
+            'alias' => 'required|string',
+            'gender' => 'required|string',
+            'boardingId' => 'required',
+            'repeat' => 'required',
+            'price' => 'required',
         ];
     }
 
     public function attributes(): array
     {
         return [
+            'yearId' => 'ID Tahun Pelajaran',
             'institutionId' => 'ID Lembaga',
-            'name' => 'Nama Rekening',
-            'balance' => 'Saldo',
+            'programId' => 'ID Program',
+            'accountId' => 'ID Rekening',
+            'name' => 'Nama',
+            'alias' => 'Alias',
+            'gender' => 'Jenis Kelamin',
+            'boardingId' => 'Boarding',
+            'repeat' => 'Bulanan',
+            'price' => 'Harga',
         ];
     }
 

@@ -28,6 +28,12 @@ class AccountResource extends JsonResource
             'balance' => $this->balance,
             'institutionAlias' => $this->institution->alias
         ];
+        if ($request->has('type')) {
+            $resource = [
+                'value' => $this->id,
+                'label' => $this->name,
+            ];
+        }
         return $resource;
     }
 }
