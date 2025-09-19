@@ -14,8 +14,14 @@ return new class extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('institutionId');
+            $table->string('codeParent')->nullable();
+            $table->string('codeApp')->unique();
+            $table->string('code');
             $table->string('name');
-            $table->bigInteger('balance');
+            $table->string('level');
+            $table->bigInteger('debit')->nullable();
+            $table->bigInteger('credit')->nullable();
+            $table->bigInteger('balance')->nullable();
             $table->timestamps();
         });
 

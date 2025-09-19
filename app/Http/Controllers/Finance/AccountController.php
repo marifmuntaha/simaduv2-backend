@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Finance;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Finance\StoreAccountResource;
-use App\Http\Requests\Finance\UpdateAccountResource;
+use App\Http\Requests\Finance\StoreAccountRequest;
+use App\Http\Requests\Finance\UpdateAccountRequest;
 use App\Http\Resources\Finance\AccountResource;
 use App\Models\Finance\Account;
 use Exception;
@@ -19,6 +19,15 @@ class AccountController extends Controller
             if ($request->has('institutionId')) {
                 $accounts = $accounts->where('institutionId', $request->institutionId);
             }
+            if ($request->has('list')) {
+                if ($request->list == 'table') {
+                    $accounts  = $accounts->whereNot('level', '1')->whereNot('level', '2');
+                }
+            }
+            if ($request->level) {
+                $accounts = $accounts->where('level', $request->level);
+            }
+            $accounts = $accounts->orderBy('codeApp');
             return response([
                 'status' => 'success',
                 'statusMessage' => '',
@@ -34,7 +43,7 @@ class AccountController extends Controller
         }
     }
 
-    public function store(StoreAccountResource $request)
+    public function store(StoreAccountRequest $request)
     {
         try {
             return ($account = Account::create($request->all()))
@@ -71,7 +80,7 @@ class AccountController extends Controller
         }
     }
 
-    public function update(UpdateAccountResource $request, Account $account)
+    public function update(UpdateAccountRequest $request, Account $account)
     {
         try {
             return $account->update(array_filter($request->all()))

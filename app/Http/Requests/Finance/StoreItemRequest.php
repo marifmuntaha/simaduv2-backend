@@ -28,7 +28,7 @@ class StoreItemRequest extends FormRequest
             'yearId' => 'required|integer|exists:years,id',
             'institutionId' => 'required|integer|exists:institutions,id',
             'programId' => 'required',
-            'accountId' => 'required|integer|exists:accounts,id',
+            'accountId' => 'required|integer|exists:accounts,codeApp',
             'name' => 'required|string',
             'alias' => 'required|string',
             'gender' => 'required|string',

@@ -40,6 +40,6 @@ class Item extends Model
 
     public function account(): HasOne
     {
-        return $this->hasOne(Account::class, 'id', 'accountId');
+        return $this->hasOne(Account::class, 'codeApp', 'accountId');
     }
 }
