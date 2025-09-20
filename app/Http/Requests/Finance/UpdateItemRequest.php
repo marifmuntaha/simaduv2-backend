@@ -25,32 +25,25 @@ class UpdateItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'yearId' => 'required|integer|exists:years,id',
+            'id' => 'required|exists:items,id',
             'institutionId' => 'required|integer|exists:institutions,id',
-            'programId' => 'required',
-            'accountId' => 'required|integer|exists:accounts,id',
+            'accountAppId' => 'required|integer|exists:accounts,id',
+            'accountRevId' => 'required|integer|exists:accounts,id',
             'name' => 'required|string',
             'alias' => 'required|string',
-            'gender' => 'required|string',
-            'boardingId' => 'required',
             'repeat' => 'required',
-            'price' => 'required',
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'yearId' => 'ID Tahun Pelajaran',
             'institutionId' => 'ID Lembaga',
-            'programId' => 'ID Program',
-            'accountId' => 'ID Rekening',
+            'accountAppId' => 'Rekening Perkiraan',
+            'accountRevId' => 'Rekening Pendapatan',
             'name' => 'Nama',
             'alias' => 'Alias',
-            'gender' => 'Jenis Kelamin',
-            'boardingId' => 'Boarding',
             'repeat' => 'Bulanan',
-            'price' => 'Harga',
         ];
     }
 

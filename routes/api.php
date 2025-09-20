@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Finance\AccountController;
 use App\Http\Controllers\Finance\ItemController;
+use App\Http\Controllers\Finance\TransactionController;
 use App\Http\Controllers\Institution\ProgramController;
 use App\Http\Controllers\Institution\RombelController;
 use App\Http\Controllers\InstitutionController;
@@ -55,5 +56,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['prefix' => 'finance'], function () {
         Route::apiResource('account', AccountController::class);
         Route::apiResource('item', ItemController::class);
+        Route::apiResource('transaction', TransactionController::class);
     });
 });

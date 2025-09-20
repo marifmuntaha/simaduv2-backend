@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreItemRequest extends FormRequest
+class StoreTransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,12 +25,13 @@ class StoreItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'institutionId' => 'required|integer|exists:institutions,id',
-            'accountAppId' => 'required|integer|exists:accounts,id',
-            'accountRevId' => 'required|integer|exists:accounts,id',
+            'institutionId' => 'required|exists:institutions,id',
+            'accountAppId' => 'nullable',
+            'accountRevId' => 'required|exists:accounts,id',
+            'code' => 'required|string',
+            'number' => 'nullable|string',
             'name' => 'required|string',
-            'alias' => 'required|string',
-            'repeat' => 'required',
+            'amount' => 'required|numeric',
         ];
     }
 
@@ -40,9 +41,10 @@ class StoreItemRequest extends FormRequest
             'institutionId' => 'ID Lembaga',
             'accountAppId' => 'Rekening Perkiraan',
             'accountRevId' => 'Rekening Pendapatan',
-            'name' => 'Nama',
-            'alias' => 'Alias',
-            'repeat' => 'Bulanan',
+            'code' => 'Kode Transaksi',
+            'number' => 'Nomor Transaksi',
+            'name' => 'Keterangan Transaksi',
+            'amount' => 'Jumlah Transaksi',
         ];
     }
 
