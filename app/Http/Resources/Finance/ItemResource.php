@@ -21,6 +21,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $institution
  * @property mixed $program
  * @property mixed $account
+ * @property mixed $accountAppId
+ * @property mixed $accountRevId
  */
 class ItemResource extends JsonResource
 {
@@ -36,7 +38,8 @@ class ItemResource extends JsonResource
             'yearId' => $this->yearId,
             'institutionId' => $this->institutionId,
             'programId' => $this->programId,
-            'accountId' => $this->accountId,
+            'accountAppId' => $this->accountAppId,
+            'accountRevId' => $this->accountRevId,
             'name' => $this->name,
             'alias' => $this->alias,
             'gender' => $this->gender === '0' ? 'Semua' : ($this->gender === 'L' ? 'Laki-laki' : 'Perempuan'),
@@ -45,8 +48,7 @@ class ItemResource extends JsonResource
             'price' => $this->price,
             'yearName' => $this->year->name,
             'institutionAlias' => $this->institution->alias,
-            'programName' => $this->programId == 0 ? "Semua" : $this->program->name,
-            'accountName' => $this->account->name,
+            'programName' => $this->programId == '0' ? "Semua" : $this->program->name,
         ];
 
         return $resource;

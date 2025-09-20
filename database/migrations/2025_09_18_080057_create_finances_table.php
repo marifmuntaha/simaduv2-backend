@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('accounts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('institutionId');
-            $table->string('codeParent')->nullable();
-            $table->string('codeApp')->unique();
+            $table->unsignedBigInteger('parent')->nullable();
             $table->string('code');
+            $table->string('codeApp');
             $table->string('name');
             $table->string('level');
             $table->bigInteger('debit')->nullable();
@@ -30,7 +30,8 @@ return new class extends Migration
             $table->unsignedBigInteger('yearId');
             $table->unsignedBigInteger('institutionId');
             $table->unsignedBigInteger('programId');
-            $table->unsignedBigInteger('accountId');
+            $table->unsignedBigInteger('accountAppId');
+            $table->unsignedBigInteger('accountRevId');
             $table->string('name');
             $table->string('alias');
             $table->string('gender');

@@ -26,7 +26,11 @@ class StoreLoginRequest extends FormRequest
         return [
             'username' => 'required|string',
             'password' => 'required|string',
-            'g-recaptcha-response' => ['required', 'string', new Recaptha]
+            'g-recaptcha-response' => [
+                'required',
+                'string',
+//                new Recaptha
+            ]
         ];
     }
 

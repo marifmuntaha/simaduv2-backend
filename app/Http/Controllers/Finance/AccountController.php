@@ -21,7 +21,7 @@ class AccountController extends Controller
             }
             if ($request->has('list')) {
                 if ($request->list == 'table') {
-                    $accounts  = $accounts->whereNot('level', '1')->whereNot('level', '2');
+                    $accounts  = $accounts->where('level', '4');
                 }
             }
             if ($request->level) {
