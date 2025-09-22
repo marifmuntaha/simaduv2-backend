@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Finance\Invoice;
 use App\Models\Finance\Transaction;
 use App\Models\Institution;
 use App\Models\Institution\Program;
@@ -12,6 +13,7 @@ use App\Models\Master\Major;
 use App\Models\Master\Year;
 use App\Models\Student;
 use App\Models\Student\Activity;
+use App\Observers\Finance\InvoiceObserver;
 use App\Observers\Finance\TransactionObserve;
 use App\Observers\Institution\ProgramObserver;
 use App\Observers\Institution\RombelObserver;
@@ -49,5 +51,6 @@ class AppServiceProvider extends ServiceProvider
         Student::observe(StudentObserver::class);
         Activity::observe(ActivityObserver::class);
         Transaction::observe(TransactionObserve::class);
+        Invoice::observe(InvoiceObserver::class);
     }
 }

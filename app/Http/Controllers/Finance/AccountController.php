@@ -21,11 +21,14 @@ class AccountController extends Controller
             }
             if ($request->has('list')) {
                 if ($request->list == 'table') {
-                    $accounts  = $accounts->where('level', '4');
+                    $accounts  = $accounts->whereShown(1);
                 }
             }
+            if ($request->shown) {
+                $accounts = $accounts->where('shown', $request->shown);
+            }
             if ($request->level) {
-                $accounts = $accounts->where('level', $request->level);
+                $accounts = $accounts->where('level', '>=', $request->level);
             }
             $accounts = $accounts->orderBy('codeApp');
             return response([

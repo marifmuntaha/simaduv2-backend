@@ -32,9 +32,20 @@ class StudentController extends Controller
             }
             if ($request->has('boardingId')) {
                 $students = $students->whereHas('activities', function ($query) use ($request) {
-                    $query->where('boardingId', $request->boardingId);
+                    $query->where('boardingId', $request->boardingId)->where('status', '1');
                 });
             }
+            if ($request->has('levelId')) {
+                $students = $students->whereHas('activities', function ($query) use ($request) {
+                    $query->where('levelId', $request->levelId)->where('status', '1');
+                });
+            }
+            if ($request->has('programId')) {
+                $students = $students->whereHas('activities', function ($query) use ($request) {
+                    $query->where('programId', $request->programId)->where('status', '1');
+                });
+            }
+            $students = $request->has('gender') ? $students->whereGender($request->gender) : $students;
             return response([
                 'status' => 'success',
                 'statusMessage' => '',

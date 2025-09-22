@@ -3,25 +3,24 @@
 namespace App\Http\Controllers\Finance;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Finance\StoreItemRequest;
-use App\Http\Requests\Finance\UpdateItemRequest;
-use App\Http\Resources\Finance\ItemResource;
-use App\Models\Finance\Item;
+use App\Http\Requests\Finance\StoreInvoiceRequest;
+use App\Http\Requests\Finance\UpdateInvoiceRequest;
+use App\Http\Resources\Finance\InvoiceResource;
+use App\Models\Finance\Invoice;
 use Exception;
 use Illuminate\Http\Request;
 
-class ItemController extends Controller
+class InvoiceController extends Controller
 {
     public function index(Request $request)
     {
         try {
-            $items = new Item();
-            $items = $request->has('institutionId') ? $items->whereinstitutionid($request->institutionId) : $items;
+            $invoices = new Invoice();
             return response([
                 'status' => 'success',
                 'statusMessage' => '',
                 'statusCode' => 200,
-                'result' => ItemResource::collection($items->get())
+                'result' => InvoiceResource::collection($invoices->get())
             ]);
         } catch (Exception $e) {
             return response([
@@ -32,16 +31,16 @@ class ItemController extends Controller
         }
     }
 
-    public function store(StoreItemRequest $request)
+    public function store(StoreInvoiceRequest $request)
     {
         try {
-            return ($item = Item::create($request->all()))
+            return ($invoice = Invoice::create($request->all()))
                 ? response([
                     'status' => 'success',
-                    'statusMessage' => 'Data Item berhasil ditambahkan.',
+                    'statusMessage' => 'Data Tagihan Berhasil Ditambahkan',
                     'statusCode' => 201,
-                    'result' => new ItemResource($item)
-                ]) : throw new Exception('Data Item gagal ditambahkan.', 422);
+                    'result' => new InvoiceResource($invoice)
+                ]) : throw new Exception('Data Tagihan Gagal Ditambahkan');
         } catch (Exception $e) {
             return response([
                 'status' => 'error',
@@ -51,14 +50,14 @@ class ItemController extends Controller
         }
     }
 
-    public function show(Item $item)
+    public function show(Invoice $invoice)
     {
         try {
             return response([
                 'status' => 'success',
                 'statusMessage' => '',
                 'statusCode' => 200,
-                'result' => new ItemResource($item)
+                'result' => new InvoiceResource($invoice)
             ]);
         } catch (Exception $e) {
             return response([
@@ -69,16 +68,16 @@ class ItemController extends Controller
         }
     }
 
-    public function update(UpdateItemRequest $request, Item $item)
+    public function update(UpdateInvoiceRequest $request, Invoice $invoice)
     {
         try {
-            return ($item->update(array_filter($request->all())))
+            return $invoice->update(array_filter($request->all()))
                 ? response([
                     'status' => 'success',
-                    'statusMessage' => 'Data Item berhasil disimpan.',
+                    'statusMessage' => 'Data Tagihan Berhasil Disimpan',
                     'statusCode' => 200,
-                    'result' => new ItemResource($item)
-                ]) : throw new Exception('Data Item gagal disimpan.', 422);
+                    'result' => new InvoiceResource($invoice)
+                ]) : throw new Exception('Data Tagihan Gagal Disimpan');
         } catch (Exception $e) {
             return response([
                 'status' => 'error',
@@ -88,16 +87,16 @@ class ItemController extends Controller
         }
     }
 
-    public function destroy(Item $item)
+    public function destroy(Invoice $invoice)
     {
         try {
-            return $item->delete()
+            return $invoice->delete()
                 ? response([
                     'status' => 'success',
-                    'statusMessage' => 'Data Item berhasil dihapus.',
+                    'statusMessage' => 'Data Tagihan Berhasil Dihapus',
                     'statusCode' => 200,
-                    'result' => new ItemResource($item)
-                ]) : throw new Exception('Data Item gagal dihapus.', 422);
+                    'result' => new InvoiceResource($invoice)
+                ]) : throw new Exception('Data Tagihan Gagal Dihapus');
         } catch (Exception $e) {
             return response([
                 'status' => 'error',

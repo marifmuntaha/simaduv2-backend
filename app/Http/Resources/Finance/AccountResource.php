@@ -15,6 +15,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $codeApp
  * @property mixed $level
  * @property mixed $parent
+ * @property mixed $shown
+ * @property mixed $type
  */
 class AccountResource extends JsonResource
 {
@@ -33,6 +35,8 @@ class AccountResource extends JsonResource
             'code' => $this->code,
             'name' => $this->name,
             'level' => $this->level,
+            'shown' => $this->shown,
+            'type' => $this->type,
             'balance' => $this->balance,
             'institutionAlias' => $this->institution->alias
         ];
@@ -40,8 +44,9 @@ class AccountResource extends JsonResource
             if( $request->with == 'level') {
                 $resource = [
                     'value' => $this->id,
-                    'label' => $this->codeApp ." - ". $this->name ." ($this->level)",
+                    'label' => $this->codeApp ." - ". $this->name,
                     'codeApp' => $this->codeApp,
+                    'level' => $this->level,
                 ];
             } else {
                 $resource = [

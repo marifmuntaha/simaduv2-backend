@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Finance\AccountController;
+use App\Http\Controllers\Finance\InvoiceController;
 use App\Http\Controllers\Finance\ItemController;
 use App\Http\Controllers\Finance\TransactionController;
 use App\Http\Controllers\Institution\ProgramController;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Master\LevelController;
 use App\Http\Controllers\Master\MajorController;
 use App\Http\Controllers\Master\YearController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Student\ActivityController;
 use App\Http\Controllers\Student\AddressController;
 use App\Http\Controllers\Student\MutationController;
@@ -57,5 +59,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::apiResource('account', AccountController::class);
         Route::apiResource('item', ItemController::class);
         Route::apiResource('transaction', TransactionController::class);
+        Route::apiResource('invoice', InvoiceController::class);
     });
+    Route::apiResource('setting', SettingController::class);
 });

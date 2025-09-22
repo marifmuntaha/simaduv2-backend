@@ -45,8 +45,14 @@ class RombelResource extends JsonResource
             'major' => $this->major,
             'teacher' => $this->teacher
         ];
-        if ($request->has('type')) {
-            if ($request->type == 'select') {
+        if ($request->type == 'select') {
+            if ($request->with === 'level') {
+                $resource = [
+                    'value' => $this->id,
+                    'label' => $this->alias,
+                    'levelId' => $this->levelId,
+                ];
+            } else {
                 $resource = [
                     'value' => $this->id,
                     'label' => $this->alias,

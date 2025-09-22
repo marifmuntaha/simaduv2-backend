@@ -24,7 +24,7 @@ class ItemResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $resource = [
+        $resources = [
             'id' => $this->id,
             'institutionId' => $this->institutionId,
             'accountAppId' => $this->accountAppId,
@@ -35,6 +35,13 @@ class ItemResource extends JsonResource
             'institutionAlias' => $this->institution->alias,
         ];
 
-        return $resource;
+        if ($request->type == 'select') {
+            $resources = [
+                'value' => $this->id,
+                'label' => $this->alias .' - '. $this->name,
+            ];
+        }
+
+        return $resources;
     }
 }

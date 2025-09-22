@@ -8,7 +8,14 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Transaction extends Model
 {
-    protected $fillable = ['institutionId', 'accountAppId', 'accountRevId', 'code', 'number', 'name', 'amount',
+    protected $fillable = [
+        'institutionId',
+        'accountAppId',
+        'accountRevId',
+        'code',
+        'number',
+        'name',
+        'amount',
         'balance'
     ];
 

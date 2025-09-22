@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreAccountRequest extends FormRequest
+class StoreInvoiceRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,15 +25,13 @@ class StoreAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'institutionId' => ['required', 'exists:institutions,id'],
-            'codeParent' => ['nullable', 'string'],
-            'codeApp' => ['required', 'string', 'unique:accounts,codeApp'],
-            'code' => ['required', 'string'],
-            'shown' => ['required', 'boolean'],
-            'type' => ['required', 'string'],
+            'institutionId' => ['required', 'integer', 'exists:institutions,id'],
+            'itemId' => ['required', 'integer', 'exists:items,id'],
+            'studentId' => ['required', 'integer', 'exists:students,id'],
+            'number' => ['nullable', 'string'],
             'name' => ['required', 'string'],
-            'level' => ['required', 'string'],
-            'balance' => ['nullable', 'numeric', 'min:0'],
+            'amount' => ['required', 'numeric'],
+            'status' => ['nullable', 'string'],
         ];
     }
 
@@ -41,10 +39,12 @@ class StoreAccountRequest extends FormRequest
     {
         return [
             'institutionId' => 'ID Lembaga',
-            'code' => 'Kode Rekening',
-            'name' => 'Nama Rekening',
-            'level' => 'Level Rekening',
-            'balance' => 'Saldo',
+            'itemId' => 'ID Item',
+            'studentId' => 'ID Siswa',
+            'number' => 'Nomor Tagihan',
+            'name' => 'Keterangan',
+            'amount' => 'Jumlah Tagihan',
+            'status' => 'Status Tagihan',
         ];
     }
 
