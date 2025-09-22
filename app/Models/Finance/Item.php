@@ -12,7 +12,6 @@ class Item extends Model
 {
     protected $fillable = [
         'institutionId',
-        'accountAppId',
         'accountRevId',
         'name',
         'alias',

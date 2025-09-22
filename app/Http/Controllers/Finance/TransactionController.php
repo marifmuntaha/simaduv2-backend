@@ -34,7 +34,6 @@ class TransactionController extends Controller
     public function store(StoreTransactionRequest $request)
     {
         try {
-            $request->merge(['accountAppId' => 5]);
             return ($transaction = Transaction::create($request->all()))
                 ? response([
                     'status' => 'success',

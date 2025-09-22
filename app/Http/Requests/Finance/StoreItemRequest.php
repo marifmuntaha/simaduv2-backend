@@ -26,7 +26,6 @@ class StoreItemRequest extends FormRequest
     {
         return [
             'institutionId' => 'required|integer|exists:institutions,id',
-            'accountAppId' => 'required|integer|exists:accounts,id',
             'accountRevId' => 'required|integer|exists:accounts,id',
             'name' => 'required|string',
             'alias' => 'required|string',
@@ -38,7 +37,6 @@ class StoreItemRequest extends FormRequest
     {
         return [
             'institutionId' => 'ID Lembaga',
-            'accountAppId' => 'Rekening Perkiraan',
             'accountRevId' => 'Rekening Pendapatan',
             'name' => 'Nama',
             'alias' => 'Alias',

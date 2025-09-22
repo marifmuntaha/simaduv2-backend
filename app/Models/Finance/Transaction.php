@@ -3,8 +3,10 @@
 namespace App\Models\Finance;
 
 use App\Models\Institution;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Str;
 
 class Transaction extends Model
 {
@@ -18,6 +20,13 @@ class Transaction extends Model
         'amount',
         'balance'
     ];
+
+    protected function amount(): Attribute
+    {
+        return Attribute::make(
+            set: fn (string $value) => Str::replace('.', '', $value),
+        );
+    }
 
     public function institution(): HasOne
     {

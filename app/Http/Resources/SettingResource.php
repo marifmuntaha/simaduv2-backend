@@ -20,10 +20,10 @@ class SettingResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            $this->name => [
+            $this->name => collect([
                 'id' => $this->id,
                 'value' => $this->value
-            ]
+            ])
         ];
     }
 }

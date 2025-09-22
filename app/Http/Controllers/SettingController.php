@@ -53,7 +53,7 @@ class SettingController extends Controller
     public function update(Request $request, Setting $setting)
     {
         try {
-            return ($setting->updateOrCreate(array_filter($request->all())))
+            return ($setting->update(array_filter($request->all())))
                 ? response([
                     'status' => 'success',
                     'statusMessage' => 'Pengaturan berhasil disimpan',

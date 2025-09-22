@@ -31,7 +31,7 @@ class StoreTransactionRequest extends FormRequest
             'code' => 'required|string',
             'number' => 'nullable|string',
             'name' => 'required|string',
-            'amount' => 'required|numeric',
+            'amount' => 'required|string',
         ];
     }
 

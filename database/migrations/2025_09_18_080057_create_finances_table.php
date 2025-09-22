@@ -11,32 +11,31 @@ return new class extends Migration
      */
     public function up(): void
     {
-//        Schema::create('accounts', function (Blueprint $table) {
-//            $table->id();
-//            $table->unsignedBigInteger('institutionId');
-//            $table->unsignedBigInteger('parent')->nullable();
-//            $table->string('code');
-//            $table->string('codeApp');
-//            $table->string('name');
-//            $table->integer('level')->default(1);
-//            $table->boolean('shown');
-//            $table->string('type');
-//            $table->bigInteger('debit')->nullable();
-//            $table->bigInteger('credit')->nullable();
-//            $table->bigInteger('balance')->nullable();
-//            $table->timestamps();
-//        });
-//
-//        Schema::create('items', function (Blueprint $table) {
-//            $table->id();
-//            $table->unsignedBigInteger('institutionId');
-//            $table->unsignedBigInteger('accountAppId');
-//            $table->unsignedBigInteger('accountRevId');
-//            $table->string('name');
-//            $table->string('alias');
-//            $table->string('repeat');
-//            $table->timestamps();
-//        });
+        Schema::create('accounts', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('institutionId');
+            $table->unsignedBigInteger('parent')->nullable();
+            $table->string('code');
+            $table->string('codeApp');
+            $table->string('name');
+            $table->integer('level')->default(1);
+            $table->boolean('shown');
+            $table->string('type');
+            $table->bigInteger('debit')->nullable();
+            $table->bigInteger('credit')->nullable();
+            $table->bigInteger('balance')->nullable();
+            $table->timestamps();
+        });
+
+        Schema::create('items', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('institutionId');
+            $table->unsignedBigInteger('accountRevId');
+            $table->string('name');
+            $table->string('alias');
+            $table->string('repeat');
+            $table->timestamps();
+        });
 
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
@@ -50,17 +49,17 @@ return new class extends Migration
             $table->timestamps();
         });
 
-//        Schema::create('transactions', function (Blueprint $table) {
-//            $table->id();
-//            $table->unsignedBigInteger('institutionId');
-//            $table->unsignedBigInteger('accountAppId');
-//            $table->unsignedBigInteger('accountRevId');
-//            $table->string('code');
-//            $table->string('number');
-//            $table->string('name');
-//            $table->bigInteger('amount');
-//            $table->timestamps();
-//        });
+        Schema::create('transactions', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('institutionId');
+            $table->unsignedBigInteger('accountAppId');
+            $table->unsignedBigInteger('accountRevId');
+            $table->string('code');
+            $table->string('number');
+            $table->string('name');
+            $table->bigInteger('amount');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -68,9 +67,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-//        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('transactions');
         Schema::dropIfExists('invoices');
-//        Schema::dropIfExists('items');
-//        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('items');
+        Schema::dropIfExists('accounts');
     }
 };

@@ -11,7 +11,7 @@ class InvoiceObserver
     public function creating(Invoice $invoice): void
     {
         $today = Carbon::today()->format('Ymd');
-        $lastInvoice = $invoice->whereDate('created_at', Carbon::today())
+        $lastInvoice = $invoice->whereDate('updated_at', Carbon::today())
             ->orderByDesc('number')
             ->first();
         $sequence = 1;

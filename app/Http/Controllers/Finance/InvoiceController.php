@@ -7,6 +7,7 @@ use App\Http\Requests\Finance\StoreInvoiceRequest;
 use App\Http\Requests\Finance\UpdateInvoiceRequest;
 use App\Http\Resources\Finance\InvoiceResource;
 use App\Models\Finance\Invoice;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -16,6 +17,11 @@ class InvoiceController extends Controller
     {
         try {
             $invoices = new Invoice();
+            if ($request->studentId) {
+                $invoices = $invoices->where('studentId', $request->studentId);
+            }
+            $invoices = $invoices->whereDate('created_at', '<=', Carbon::today());
+            $invoices = $invoices->orderBy('created_at', 'desc');
             return response([
                 'status' => 'success',
                 'statusMessage' => '',

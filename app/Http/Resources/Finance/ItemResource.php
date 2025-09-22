@@ -36,10 +36,18 @@ class ItemResource extends JsonResource
         ];
 
         if ($request->type == 'select') {
-            $resources = [
-                'value' => $this->id,
-                'label' => $this->alias .' - '. $this->name,
-            ];
+            if ($request->with == 'repeat') {
+                $resources = [
+                    'value' => $this->id,
+                    'label' => $this->alias .' - '. $this->name,
+                    'repeat' => $this->repeat,
+                ];
+            } else {
+                $resources = [
+                    'value' => $this->id,
+                    'label' => $this->alias .' - '. $this->name,
+                ];
+            }
         }
 
         return $resources;

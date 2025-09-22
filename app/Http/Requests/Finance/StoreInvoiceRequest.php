@@ -30,7 +30,7 @@ class StoreInvoiceRequest extends FormRequest
             'studentId' => ['required', 'integer', 'exists:students,id'],
             'number' => ['nullable', 'string'],
             'name' => ['required', 'string'],
-            'amount' => ['required', 'numeric'],
+            'amount' => ['required', 'string'],
             'status' => ['nullable', 'string'],
         ];
     }
