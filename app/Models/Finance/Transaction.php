@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 
 class Transaction extends Model
 {
+    protected $table = 'finance_transactions';
     protected $fillable = [
         'institutionId',
         'accountAppId',

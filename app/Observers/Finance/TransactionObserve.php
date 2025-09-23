@@ -73,11 +73,27 @@ class TransactionObserve
         $appBalance = $transaction->accountApp()->value('balance');
         $revBalance = $transaction->accountRev()->value('balance');
         if ($transaction->code == "KM") {
-            $newAppBalance = $appBalance - $transaction->amount;
-            $newRevBalance = $revBalance - $transaction->amount;
+            if ($transaction->accountApp->type == 'D') {
+                $newAppBalance = $appBalance - $transaction->amount;
+            } else {
+                $newAppBalance = $appBalance + $transaction->amount;
+            }
+            if ($transaction->accountRev->type == 'D') {
+                $newRevBalance = $revBalance - $transaction->amount;
+            } else {
+                $newRevBalance = $revBalance + $transaction->amount;
+            }
         } else {
-            $newAppBalance = $appBalance + $transaction->amount;
-            $newRevBalance = $revBalance + $transaction->amount;
+            if ($transaction->accountApp->type == 'D') {
+                $newAppBalance = $appBalance + $transaction->amount;
+            } else {
+                $newAppBalance = $appBalance + $transaction->amount;
+            }
+            if ($transaction->accountRev->type == 'D') {
+                $newRevBalance = $revBalance - $transaction->amount;
+            } else {
+                $newRevBalance = $revBalance - $transaction->amount;
+            }
         }
         $transaction->accountApp()->update(['balance' => $newAppBalance]);
         $transaction->accountRev()->update(['balance' => $newRevBalance]);

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Item extends Model
 {
+    protected $table = 'finance_items';
     protected $fillable = [
         'institutionId',
         'accountRevId',

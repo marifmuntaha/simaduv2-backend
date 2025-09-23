@@ -11,7 +11,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $name
  * @property mixed $alias
  * @property mixed $repeat
- * @property mixed $accountAppId
  * @property mixed $accountRevId
  * @property mixed $institution
  */
@@ -27,7 +26,6 @@ class ItemResource extends JsonResource
         $resources = [
             'id' => $this->id,
             'institutionId' => $this->institutionId,
-            'accountAppId' => $this->accountAppId,
             'accountRevId' => $this->accountRevId,
             'name' => $this->name,
             'alias' => $this->alias,
@@ -41,6 +39,12 @@ class ItemResource extends JsonResource
                     'value' => $this->id,
                     'label' => $this->alias .' - '. $this->name,
                     'repeat' => $this->repeat,
+                ];
+            } else if ($request->with == 'account') {
+                $resources = [
+                    'value' => $this->id,
+                    'label' => $this->alias .' - '. $this->name,
+                    'accountRevId' => $this->accountRevId,
                 ];
             } else {
                 $resources = [

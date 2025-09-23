@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('accounts', function (Blueprint $table) {
+        Schema::create('finance_accounts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('institutionId');
             $table->unsignedBigInteger('parent')->nullable();
@@ -27,7 +27,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('finance_items', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('institutionId');
             $table->unsignedBigInteger('accountRevId');
@@ -37,7 +37,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('finance_invoices', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('institutionId');
             $table->unsignedBigInteger('itemId');
@@ -49,7 +49,21 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('finance_discounts', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('yearId');
+            $table->unsignedBigInteger('institutionId');
+            $table->unsignedBigInteger('itemId');
+            $table->string('name');
+            $table->integer('qty');
+            $table->integer('percent');
+            $table->string('amount');
+            $table->unsignedBigInteger('creator');
+            $table->unsignedBigInteger('updater');
+            $table->timestamps();
+        });
+
+        Schema::create('finance_transactions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('institutionId');
             $table->unsignedBigInteger('accountAppId');
@@ -67,9 +81,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
-        Schema::dropIfExists('invoices');
-        Schema::dropIfExists('items');
-        Schema::dropIfExists('accounts');
+        Schema::dropIfExists('finance_transactions');
+        Schema::dropIfExists('finance_discounts');
+        Schema::dropIfExists('finance_invoices');
+        Schema::dropIfExists('finance_items');
+        Schema::dropIfExists('finance_accounts');
     }
 };

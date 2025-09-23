@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Account extends Model
 {
+    protected $table = 'finance_accounts';
     protected $fillable = [
         'institutionId',
         'parent',

@@ -11,6 +11,7 @@ use Illuminate\Support\Str;
 
 class Invoice extends Model
 {
+    protected $table = 'finance_invoices';
     protected $fillable = ['institutionId', 'itemId', 'studentId', 'number', 'name', 'amount', 'status', 'created_at'];
 
     protected function amount(): Attribute
