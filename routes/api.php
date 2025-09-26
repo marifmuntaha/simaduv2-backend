@@ -7,6 +7,7 @@ use App\Http\Controllers\Finance\ItemController;
 use App\Http\Controllers\Finance\TransactionController;
 use App\Http\Controllers\Institution\ProgramController;
 use App\Http\Controllers\Institution\RombelController;
+use App\Http\Controllers\Institution\RoomController;
 use App\Http\Controllers\InstitutionController;
 use App\Http\Controllers\Master\LadderController;
 use App\Http\Controllers\Master\LevelController;
@@ -43,6 +44,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['prefix' => 'institution'], function () {
         Route::apiResource('rombel', RombelController::class);
         Route::apiResource('program', ProgramController::class);
+        Route::apiResource('room', RoomController::class);
     });
     Route::apiResource('institution', InstitutionController::class);
     Route::group(['prefix' => 'student'], function () {

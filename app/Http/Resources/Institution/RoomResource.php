@@ -2,20 +2,17 @@
 
 namespace App\Http\Resources\Institution;
 
-use App\Http\Resources\InstitutionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
+ * @property mixed $id
  * @property mixed $yearId
- * @property mixed $institutionId
  * @property mixed $name
  * @property mixed $alias
  * @property mixed $year
- * @property mixed $institution
- * @property mixed $id
  */
-class ProgramResource extends JsonResource
+class RoomResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -27,35 +24,21 @@ class ProgramResource extends JsonResource
         $resource = [
             'id' => $this->id,
             'yearId' => $this->yearId,
-            'institutionId' => $this->institutionId,
             'name' => $this->name,
             'alias' => $this->alias,
-            'year' => $this->year,
-            'institution' => $this->institution
+            'year' => $this->year
         ];
-
         if ($request->has('type')) {
-            if ($request->type == 'select') {
-                $resource = [
-                    'value' => $this->id,
-                    'label' => $this->name,
-                ];
-            }
-        }
-        if ($request->has('list')){
-            if ($request->list == 'table') {
+            if ($request->type == 'datatable') {
                 $resource = [
                     'id' => $this->id,
                     'yearId' => $this->yearId,
-                    'institutionId' => $this->institutionId,
                     'name' => $this->name,
                     'alias' => $this->alias,
-                    'yearName' => $this->year->name,
-                    'institutionAlias' => $this->institution->alias
+                    'yearName' => $this->year->name
                 ];
             }
         }
-
         return $resource;
     }
 }

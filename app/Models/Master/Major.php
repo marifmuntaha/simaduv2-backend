@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Major extends Model
 {
+    protected $table = 'master_majors';
     protected $fillable = ['ladderId', 'name', 'alias', 'description'];
     public $timestamps = false;
 

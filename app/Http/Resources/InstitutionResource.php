@@ -55,15 +55,23 @@ class InstitutionResource extends JsonResource
         }
         if ($request->has('type')) {
             if ($request->type == 'select') {
-                $resource = [
-                    'value' => $this->id,
-                    'label' => $resource['name'],
-                    'ladderId' => $this->ladderId
-                ];
+                if ($request->has('with')) {
+                    if ($request->with == 'ladder') {
+                        $resource = [
+                            'value' => $this->id,
+                            'label' => $resource['name'],
+                            'ladder' => $this->ladder
+                        ];
+                    }
+                } else {
+                    $resource = [
+                        'value' => $this->id,
+                        'label' => $resource['name'],
+                        'ladderId' => $this->ladderId
+                    ];
+                }
             }
-        }
-        if ($request->has('list')) {
-            if ($request->list == 'table') {
+            if ($request->list == 'datatable') {
                 $resource = [
                     'id' => $this->id,
                     'ladderId' => $this->ladderId,
@@ -80,6 +88,7 @@ class InstitutionResource extends JsonResource
                 ];
             }
         }
+
         return $resource;
     }
 }

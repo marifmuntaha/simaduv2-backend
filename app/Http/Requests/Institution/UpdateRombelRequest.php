@@ -25,10 +25,10 @@ class UpdateRombelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'yearId' => 'required|integer|exists:years,id',
+            'yearId' => 'required|integer|exists:master_years,id',
             'institutionId' => 'required|integer|exists:institutions,id',
-            'levelId' => 'required|integer|exists:levels,id',
-            'majorId' => 'required|integer|exists:majors,id',
+            'levelId' => 'required|integer|exists:master_levels,id',
+            'majorId' => 'required|integer|exists:master_majors,id',
             'name' => 'required|string|max:255',
             'alias' => 'required|string|max:255',
             'teacherId' => 'required|integer|exists:teachers,id',

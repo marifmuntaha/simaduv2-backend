@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -30,7 +29,7 @@ class LevelDatabaseSeeder extends Seeder
         ]);
 
         $levels->map(function ($level) {
-            DB::table('levels')->insert($level);
+            DB::table('master_levels')->insert($level);
         });
     }
 }

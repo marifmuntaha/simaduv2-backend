@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+//use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -22,7 +22,7 @@ class MajorDatabaseSeeder extends Seeder
         ]);
 
         $majors->map(function ($major) {
-            DB::table('majors')->insert($major);
+            DB::table('master_majors')->insert($major);
         });
     }
 }

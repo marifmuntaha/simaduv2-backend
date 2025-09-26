@@ -71,7 +71,7 @@ class RombelResource extends JsonResource
                     'alias' => $this->alias,
                     'teacherId' => $this->teacherId,
                     'yearName' => $this->year->name,
-                    'institutionName' => $this->institution->ladder->alias .'. '.$this->institution->name,
+                    'institutionAlias' => $this->institution->alias,
                     'levelName' => $this->level->name,
                     'majorName' => $this->major->name,
                     'teacherName' => $this->teacher->name

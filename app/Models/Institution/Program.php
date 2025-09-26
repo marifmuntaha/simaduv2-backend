@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Program extends Model
 {
+    protected $table = 'institution_programs';
     protected $fillable = ['yearId', 'institutionId', 'name', 'alias'];
 
     public function year(): HasOne

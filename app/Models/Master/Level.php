@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Level extends Model
 {
+    protected $table = 'master_levels';
     protected $fillable = ['ladderId', 'name', 'alias', 'description'];
     public $timestamps = false;
 

@@ -25,7 +25,7 @@ class UpdateInstitutionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ladderId' => 'required|integer|exists:ladders,id',
+            'ladderId' => 'required|integer|exists:master_ladders,id',
             'name' => 'required|string',
             'alias' => 'required|string',
             'nsm' => 'required|numeric',

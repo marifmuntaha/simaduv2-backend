@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+//use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -21,7 +21,7 @@ class ProgramDatabaseSeeder extends Seeder
         ]);
 
         $programs->map(function ($program) {
-            DB::table('programs')->insert($program);
+            DB::table('master_programs')->insert($program);
         });
     }
 }

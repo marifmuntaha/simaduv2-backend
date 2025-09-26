@@ -57,9 +57,7 @@ class StudentResource extends JsonResource
                     'label' => $this->nisn. '-' .$this->name,
                 ];
             }
-        }
-        if ($request->has('list')){
-            if ($request->list == 'table'){
+            if ($request->type == 'datatable'){
                 $resource = [
                     'id' => $this->id,
                     'institutionAlias' => $this->activities()->where('status', '1')->first()->institution->alias,

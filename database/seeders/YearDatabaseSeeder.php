@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+//use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -20,7 +20,7 @@ class YearDatabaseSeeder extends Seeder
         ]);
 
         $years->map(function ($year) {
-            DB::table('years')->insert($year);
+            DB::table('master_years')->insert($year);
         });
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -28,7 +27,7 @@ class InstitutionDatabaseSeeder extends Seeder
             ],
             [
                 'ladderId' => 2,
-                'name' => 'Darul Hikmah Menganti',
+                'name' => 'PTQ Darul Hikmah Menganti',
                 'alias' => 'MIDHA',
                 'nsm' => '1234567890',
                 'npsn' => '1234567',

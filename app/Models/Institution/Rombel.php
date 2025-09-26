@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Rombel extends Model
 {
+    protected $table = 'institution_rombels';
     protected $fillable = ['yearId', 'institutionId', 'levelId', 'majorId', 'name', 'alias', 'teacherId'];
 
     public function year(): HasOne

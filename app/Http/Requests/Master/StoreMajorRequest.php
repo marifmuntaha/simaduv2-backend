@@ -25,7 +25,7 @@ class StoreMajorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'ladderId' => 'required|exists:ladders,id',
+            'ladderId' => 'required|exists:master_ladders,id',
             'name' => 'required|string',
             'alias' => 'required|string',
             'description' => 'nullable|string',

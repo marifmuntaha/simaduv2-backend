@@ -7,14 +7,14 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreRombelRequest extends FormRequest
+class StoreRoomRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return in_array($this->user()->role, [1, 2]);
+        return in_array($this->user('sanctum')->role, ['1', '6']);
     }
 
     /**
@@ -26,12 +26,8 @@ class StoreRombelRequest extends FormRequest
     {
         return [
             'yearId' => 'required|integer|exists:master_years,id',
-            'institutionId' => 'required|integer|exists:institutions,id',
-            'levelId' => 'required|integer|exists:master_levels,id',
-            'majorId' => 'required|integer|exists:master_majors,id',
             'name' => 'required|string|max:255',
             'alias' => 'required|string|max:255',
-            'teacherId' => 'required|integer|exists:teachers,id',
         ];
     }
 
@@ -39,12 +35,8 @@ class StoreRombelRequest extends FormRequest
     {
         return [
             'yearId' => 'ID Tahun Pelajaran',
-            'institutionId' => 'ID Lembaga',
-            'levelId' => 'ID Tingkat',
-            'majorId' => 'ID Jurusan',
-            'name' => 'Nama Rombel',
+            'name' => 'Nama Kamar',
             'alias' => 'Alias',
-            'teacherId' => 'ID Guru Walikelas',
         ];
     }
 

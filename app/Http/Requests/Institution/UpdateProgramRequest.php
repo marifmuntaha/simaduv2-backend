@@ -25,7 +25,7 @@ class UpdateProgramRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'yearId' => 'required|exists:years,id',
+            'yearId' => 'required|exists:master_years,id',
             'institutionId' => 'required|exists:institutions,id',
             'name' => 'required|string',
             'alias' => 'required|string',
