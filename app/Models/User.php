@@ -6,6 +6,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -62,10 +63,20 @@ class User extends Authenticatable
     {
         $token = $this->tokens()->create([
             'name' => $name,
-            'token' => hash('sha256', $plainTextToken = Str::random(480,)),
+            'token' => hash('sha256', $plainTextToken = Str::random(480)),
             'abilities' => $abilities,
             'expires_at' => $expiresAt ?? Carbon::now()->addDays(2),
         ]);
         return new NewAccessToken($token, $token->getKey(). '|'.$plainTextToken);
+    }
+
+    public function institutions(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Institution::class,
+            'institution_user',
+            'userId',
+            'institutionId'
+        );
     }
 }

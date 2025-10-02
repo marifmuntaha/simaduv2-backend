@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StorePasswordRequest;
+use App\Models\Institution;
+use App\Models\Master\Year;
 use App\Models\User;
 use App\Notifications\AuthLoginNotification;
 use Carbon\Carbon;
@@ -26,6 +28,8 @@ class AuthController extends Controller
                     'statusCode' => 200,
                     'result' => Arr::collapse([$request->user()->toArray(), [
                         'token' => $request->user()->createToken($request->user()->email)->plainTextToken,
+                        'yearId' => Year::whereActive(true)->first()->id,
+                        'institutionId' => $user->institutions()->first()?->id,
                     ]])
                 ]);
             } else {
@@ -38,7 +42,7 @@ class AuthController extends Controller
                 'status' => 'error',
                 'statusMessage' => $e->getMessage(),
                 'statusCode' => $e->getCode(),
-            ]);
+            ], $e->getCode());
         }
     }
 

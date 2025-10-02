@@ -17,10 +17,14 @@ class ProgramController extends Controller
         try {
             $programs = new Program();
             if ($request->has('yearId')) {
-                $programs = $programs->whereYearid($request->yearId);
+                $programs = $request->yearId == 'null'
+                    ? $programs
+                    : $programs->whereYearid($request->yearId);
             }
             if ($request->has('institutionId')) {
-                $programs = $programs->whereInstitutionid($request->institutionId);
+                $programs = $request->institutionId == 'null'
+                    ? $programs
+                    : $programs->whereInstitutionid($request->institutionId);
             }
             return response([
                 'status' => 'success',

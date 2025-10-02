@@ -45,22 +45,22 @@ class RombelResource extends JsonResource
             'major' => $this->major,
             'teacher' => $this->teacher
         ];
-        if ($request->type == 'select') {
-            if ($request->with === 'level') {
-                $resource = [
-                    'value' => $this->id,
-                    'label' => $this->alias,
-                    'levelId' => $this->levelId,
-                ];
-            } else {
-                $resource = [
-                    'value' => $this->id,
-                    'label' => $this->alias,
-                ];
+        if ($request->has('type')) {
+            if ($request->type == 'select') {
+                if ($request->with == 'level') {
+                    $resource = [
+                        'value' => $this->id,
+                        'label' => $this->alias,
+                        'levelId' => $this->levelId,
+                    ];
+                } else {
+                    $resource = [
+                        'value' => $this->id,
+                        'label' => $this->alias,
+                    ];
+                }
             }
-        }
-        if ($request->has('list')) {
-            if ($request->list == 'table') {
+            if ($request->type == 'datatable') {
                 $resource = [
                     'id' => $this->id,
                     'yearId' => $this->yearId,

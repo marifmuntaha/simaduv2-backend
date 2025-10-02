@@ -17,13 +17,13 @@ class RombelController extends Controller
         try {
             $rombels = new Rombel();
             if ($request->has('yearId')) {
-                $rombels = $rombels->whereYearid($request->yearId);
+                $rombels = $request->yearId == 'null' ? $rombels : $rombels->whereYearid($request->yearId);
             }
             if ($request->has('institutionId')) {
-                $rombels = $rombels->whereInstitutionid($request->institutionId);
+                $rombels = $request->institutionId == 'null' ? $rombels : $rombels->whereInstitutionid($request->institutionId);
             }
             if ($request->has('levelId')) {
-                $rombels = $rombels->whereLevelid($request->levelId);
+                $rombels = $request->levelId == 'null' ? $rombels : $rombels->whereLevelid($request->levelId);
             }
             return response()->json([
                 'status' => 'success',

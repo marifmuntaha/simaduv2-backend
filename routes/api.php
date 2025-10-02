@@ -25,7 +25,7 @@ use App\Http\Controllers\UserController;
 //use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-//sleep(1);
+//sleep(3);
 
 Route::prefix('auth')->group(function () {
     Route::post('/login', [AuthController::class, 'login']);

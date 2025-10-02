@@ -14,7 +14,7 @@ class UpdateInstitutionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->role == '1';
+        return in_array($this->user()->role, ['1', '2']);
     }
 
     /**

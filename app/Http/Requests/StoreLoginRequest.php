@@ -4,7 +4,9 @@ namespace App\Http\Requests;
 
 use App\Rules\Recaptha;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreLoginRequest extends FormRequest
 {
@@ -26,11 +28,11 @@ class StoreLoginRequest extends FormRequest
         return [
             'username' => 'required|string',
             'password' => 'required|string',
-            'g-recaptcha-response' => [
-                'required',
-                'string',
-//                new Recaptha
-            ]
+//            'g-recaptcha-response' => [
+//                'required',
+//                'string',
+////                new Recaptha
+//            ]
         ];
     }
 
@@ -39,7 +41,16 @@ class StoreLoginRequest extends FormRequest
         return [
             'username' => 'Nama Pengguna',
             'password' => 'Kata Sandi',
-            'g-recaptcha-response' => 'Recaptcha',
+//            'g-recaptcha-response' => 'Recaptcha',
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'error',
+            'statusMessage' => $validator->errors()->first(),
+            'statusCode' => 422,
+        ], 422));
     }
 }

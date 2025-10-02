@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Notification;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
@@ -12,11 +11,7 @@ class NotificationController extends Controller
     public function index(Request $request)
     {
         try {
-            if ($request->user('sanctum')->role == 1) {
-                $notifications = DatabaseNotification::orderBy('updated_at', 'desc')->limit(10)->get();
-            } else {
-                $notifications = auth()->user()->notifications();
-            }
+            $notifications = DatabaseNotification::orderBy('updated_at', 'desc')->limit(10)->get();
             return response([
                 'status' => 'success',
                 'statusMessage' => '',

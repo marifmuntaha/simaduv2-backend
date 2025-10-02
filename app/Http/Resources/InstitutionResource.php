@@ -71,7 +71,7 @@ class InstitutionResource extends JsonResource
                     ];
                 }
             }
-            if ($request->list == 'datatable') {
+            if ($request->type == 'datatable') {
                 $resource = [
                     'id' => $this->id,
                     'ladderId' => $this->ladderId,

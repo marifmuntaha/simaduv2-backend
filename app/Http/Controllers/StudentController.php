@@ -21,19 +21,22 @@ class StudentController extends Controller
                 });
             }
             if ($request->has('institutionId')) {
-                $students = $students->whereHas('activities', function ($query) use ($request) {
-                    $query->where('institutionId', $request->institutionId)->latest();
-                });
+                $students = $request->institutionId == 'null' ? $students : $students
+                    ->whereHas('activities', function ($query) use ($request) {
+                        $query->where('institutionId', $request->institutionId)->latest();
+                    });
             }
             if ($request->has('rombelId')) {
-                $students = $students->whereHas('activities', function ($query) use ($request) {
-                    $query->where('rombelId', $request->rombelId)->where('status', '1');
-                });
+                $students = $request->rombelId == 'null' ? $students : $students
+                    ->whereHas('activities', function ($query) use ($request) {
+                        $query->where('rombelId', $request->rombelId)->where('status', '1');
+                    });
             }
             if ($request->has('boardingId')) {
-                $students = $students->whereHas('activities', function ($query) use ($request) {
-                    $query->where('boardingId', $request->boardingId)->where('status', '1');
-                });
+                $students = $request->boardingId == 'null' ? $students : $students
+                    ->whereHas('activities', function ($query) use ($request) {
+                        $query->where('boardingId', $request->boardingId)->where('status', '1');
+                    });
             }
             if ($request->has('levelId')) {
                 $students = $students->whereHas('activities', function ($query) use ($request) {

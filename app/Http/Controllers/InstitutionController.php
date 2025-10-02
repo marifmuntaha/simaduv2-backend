@@ -7,14 +7,18 @@ use App\Http\Requests\UpdateInstitutionRequest;
 use App\Http\Resources\InstitutionResource;
 use App\Models\Institution;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class InstitutionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
             $institutions = new Institution();
+            $institutions = $request->has('institutionId')
+                ? $institutions->whereId($request->institutionId)
+                : $institutions;
             return response([
                 'status' => 'success',
                 'statusMessage' => '',
