@@ -9,6 +9,7 @@ use App\Http\Controllers\Institution\ProgramController;
 use App\Http\Controllers\Institution\RombelController;
 use App\Http\Controllers\Institution\RoomController;
 use App\Http\Controllers\InstitutionController;
+use App\Http\Controllers\LetterController;
 use App\Http\Controllers\Master\LadderController;
 use App\Http\Controllers\Master\LevelController;
 use App\Http\Controllers\Master\MajorController;
@@ -63,5 +64,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::apiResource('transaction', TransactionController::class);
         Route::apiResource('invoice', InvoiceController::class);
     });
+    Route::apiResource('letter', LetterController::class);
     Route::apiResource('setting', SettingController::class);
 });
