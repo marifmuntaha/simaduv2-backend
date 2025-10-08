@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('letters', function (Blueprint $table) {
             $table->id();
             $table->string('number');
-            $table->integer('type')->comment('1. Mutasi Keluar');
+            $table->string('type')->comment('1.01. Surat Keterangan, 1.02. Surat Keterangan Aktif, 1.03. Surat Pindah Sekolah, 1.04. Surat Pindah Sekolah');
             $table->mediumText('data');
             $table->boolean('signature')->comment('1. digital, 2. manual');
             $table->unsignedBigInteger('creatorId');

@@ -7,6 +7,7 @@ use App\Models\Finance\Transaction;
 use App\Models\Institution;
 use App\Models\Institution\Program;
 use App\Models\Institution\Rombel;
+use App\Models\Letter;
 use App\Models\Master\Ladder;
 use App\Models\Master\Level;
 use App\Models\Master\Major;
@@ -18,6 +19,7 @@ use App\Observers\Finance\TransactionObserve;
 use App\Observers\Institution\ProgramObserver;
 use App\Observers\Institution\RombelObserver;
 use App\Observers\InstitutionObserver;
+use App\Observers\LetterObserver;
 use App\Observers\Master\LadderObserver;
 use App\Observers\Master\LevelObserver;
 use App\Observers\Master\MajorObserver;
@@ -52,5 +54,6 @@ class AppServiceProvider extends ServiceProvider
         Activity::observe(ActivityObserver::class);
         Transaction::observe(TransactionObserve::class);
         Invoice::observe(InvoiceObserver::class);
+        Letter::observe(LetterObserver::class);
     }
 }

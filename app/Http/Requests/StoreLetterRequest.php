@@ -3,7 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreLetterRequest extends FormRequest
 {
@@ -12,7 +14,7 @@ class StoreLetterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,7 +27,7 @@ class StoreLetterRequest extends FormRequest
         return [
             'number' => 'nullable|string',
             'type' => 'required',
-            'data' => 'nullable|string',
+            'data' => 'required|string',
             'signature' => 'nullable|string',
         ];
     }
@@ -38,6 +40,14 @@ class StoreLetterRequest extends FormRequest
             'data' => 'Data',
             'signature' => 'Keterangan',
         ];
+    }
 
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'error',
+            'statusMessage' => $validator->errors()->first(),
+            'statusCode' => 422,
+        ], 422));
     }
 }

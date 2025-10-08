@@ -2,7 +2,10 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdateLetterRequest extends FormRequest
 {
@@ -11,18 +14,40 @@ class UpdateLetterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'number' => 'nullable|string',
+            'type' => 'required',
+            'data' => 'required|string',
+            'signature' => 'nullable|string',
         ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'number' => 'Nomor',
+            'type' => 'Jenis',
+            'data' => 'Data',
+            'signature' => 'Keterangan',
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(response()->json([
+            'status' => 'error',
+            'statusMessage' => $validator->errors()->first(),
+            'statusCode' => 422,
+        ], 422));
     }
 }
