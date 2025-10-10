@@ -8,6 +8,8 @@ class Letter extends Model
 {
     protected $fillable = [
         'id',
+        'yearId',
+        'institutionId',
         'number',
         'type',
         'data',

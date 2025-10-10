@@ -25,6 +25,8 @@ class StoreLetterRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'yearId' => 'required|integer|exists:master_years,id',
+            'institutionId' => 'required|integer|exists:institutions,id',
             'number' => 'nullable|string',
             'type' => 'required',
             'data' => 'required|string',
@@ -35,6 +37,8 @@ class StoreLetterRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'yearId' => 'ID Tahun Pelajaran',
+            'institutionId' => 'ID Lembaga',
             'number' => 'Nomor',
             'type' => 'Jenis',
             'data' => 'Data',

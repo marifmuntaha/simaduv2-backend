@@ -40,7 +40,7 @@ class InstitutionDatabaseSeeder extends Seeder
             [
                 'ladderId' => 3,
                 'name' => 'Darul Hikmah Menganti',
-                'alias' => 'MTS',
+                'alias' => 'MTSDH',
                 'nsm' => '1234567890',
                 'npsn' => '1234567',
                 'address' => 'Jl. Raya Jepara - Bugel KM 07 Ds. Menganti',
@@ -52,7 +52,7 @@ class InstitutionDatabaseSeeder extends Seeder
             [
                 'ladderId' => 4,
                 'name' => 'Darul Hikmah Menganti',
-                'alias' => 'MA',
+                'alias' => 'MADH',
                 'nsm' => '1234567890',
                 'npsn' => '1234567',
                 'address' => 'Jl. Raya Jepara - Bugel KM 07 Ds. Menganti',

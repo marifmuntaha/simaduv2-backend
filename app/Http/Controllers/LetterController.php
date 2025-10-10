@@ -11,10 +11,13 @@ use Illuminate\Http\Request;
 
 class LetterController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
             $letters = new Letter();
+            $letters = $request->has('yearId') ? $letters->whereYearid($request->yearId) : $letters;
+            $letters = $request->has('institutionId') ? $letters->whereInstitutionid($request->institutionId) : $letters;
+            $letters = $letters->orderBy('created_at', 'desc');
             return response([
                 'status' => 'success',
                 'statusMessage' => '',
@@ -33,7 +36,7 @@ class LetterController extends Controller
     public function store(StoreLetterRequest $request)
     {
         try {
-            return ($letter = Letter::create($request->only(['type', 'signature', 'data'])))
+            return ($letter = Letter::create($request->only(['yearId', 'institutionId', 'type', 'signature', 'data'])))
                 ? response([
                     'status' => 'success',
                     'statusMessage' => 'Data Surat Berhasil Dibuat',
@@ -103,5 +106,10 @@ class LetterController extends Controller
                 'statusCode' => $e->getCode(),
             ], $e->getCode());
         }
+    }
+
+    public function print(Request $request)
+    {
+
     }
 }

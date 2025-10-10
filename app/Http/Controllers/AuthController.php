@@ -28,7 +28,7 @@ class AuthController extends Controller
                     'statusCode' => 200,
                     'result' => Arr::collapse([$request->user()->toArray(), [
                         'token' => $request->user()->createToken($request->user()->email)->plainTextToken,
-                        'yearId' => Year::whereActive(true)->first()->id,
+                        'yearId' => Year::whereActive(true)->first()?->id,
                         'institutionId' => $user->institutions()->first()?->id,
                     ]])
                 ]);

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\Institution;
 use App\Models\Letter;
 use Carbon\Carbon;
 
@@ -9,20 +10,21 @@ class LetterObserver
 {
     public function creating(Letter $letter): void
     {
-        // '001/1.01/MTs-DH/V/2025
         $todayMonth = Carbon::today()->format('m');
         $todayYear = Carbon::today()->format('Y');
-        $lastLetter = $letter->whereDate('created_at', Carbon::now()->year)
+        $institution = Institution::find($letter->institutionId);
+        $lastLetter = $letter->whereYearid($letter->yearId)
+            ->whereInstitutionid($letter->institutionId)
             ->orderByDesc('number')
             ->first();
         $sequence = 1;
         if ($lastLetter) {
-            $lastSequence = (int) substr($lastLetter->number, 3);
+            $lastSequence = (int) substr($lastLetter->number, 1, 3);
             $sequence = $lastSequence + 1;
         }
         $formattedSequence = str_pad($sequence, 3, '0', STR_PAD_LEFT);
 
-        $letter->number = "{$formattedSequence}/{$letter->type}/MTS.DH/{$this->nameMonthToRoman($todayMonth)}/{$todayYear}";
+        $letter->number = "{$formattedSequence}/{$letter->type}/$institution->alias/{$this->nameMonthToRoman($todayMonth)}/{$todayYear}";
         $letter->creatorId = auth()->user()->id;
         $letter->updaterId = auth()->user()->id;
     }

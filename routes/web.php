@@ -1,6 +1,10 @@
 <?php
 
+use App\Models\Certificate;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
+use LSNepomuceno\LaravelA1PdfSign\Sign\ManageCert;
+use LSNepomuceno\LaravelA1PdfSign\Sign\SignaturePdf;
 
 Route::get('/', function () {
     return view('welcome');
@@ -10,10 +14,16 @@ Route::get('/print', function () {
     $data = 'http://localhost:5173/surat-menyurat/verify/68768jguytguytgu';
     $qrcode = base64_encode(QrCode::size(100)
         ->generate($data));
-    return Pdf::loadView('template.letter.invitation', compact('qrcode'))->stream('invitation.pdf');
+    $pdf = Pdf::loadView('template.letter.invitation', compact('qrcode'));
+    $output = $pdf->output();
+    $fileName = 'order_' . time() . '.pdf';
+    Storage::disk('pdfs')->put('unsign/' . $fileName, $output);
 });
 
 Route::get('/generate/signature', function () {
+    if(!Storage::exists('signature')) {
+        Storage::makeDirectory('signature');
+    }
     $privateKeyPath = '/var/www/html/storage/app/private/signature/private.key';
     $command = "openssl genrsa -out $privateKeyPath 2048"; // 2048 is the key strength
     exec($command, $output, $return_var);
@@ -78,4 +88,26 @@ Route::get('/generate/signature', function () {
         echo "Error generating private key.\n";
         print_r($output);
     }
+});
+
+
+Route::get('/signature/signed', function () {
+    try {
+        $cert = Certificate::find(1);
+        $pdf = new SignaturePdf('/var/www/html/storage/app/public/pdfs/unsign/order_1760018491.pdf', $cert->parse(), SignaturePdf::MODE_DOWNLOAD);
+        return $pdf->signature(); // The file will be downloaded
+        } catch (\Throwable $th) {
+        return response($th->getMessage());
+    }
+});
+
+
+Route::get('/test', function () {
+    $sequence = 1;
+    $lastSequence = (int) substr('002/00990090', 1, 3);
+    $sequence = $lastSequence + 1;
+    $formattedSequence = str_pad($sequence, 3, '0', STR_PAD_LEFT);
+    return response([
+        'sequence' => $formattedSequence,
+    ]);
 });

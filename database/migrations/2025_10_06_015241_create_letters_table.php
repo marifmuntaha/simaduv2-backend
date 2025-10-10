@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('letters', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('yearId');
+            $table->unsignedBigInteger('institutionId');
             $table->string('number');
             $table->string('type')->comment('1.01. Surat Keterangan, 1.02. Surat Keterangan Aktif, 1.03. Surat Pindah Sekolah, 1.04. Surat Pindah Sekolah');
             $table->mediumText('data');
