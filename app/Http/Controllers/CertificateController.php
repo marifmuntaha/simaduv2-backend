@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Institution;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -29,7 +30,7 @@ class CertificateController extends Controller
         } catch (Exception $e) {
             return response([
                 'status' => 'error',
-                'statusMessage' => $e->getMessage(),
+                'statusMessage' => 'Signature tidak ditemukan, silahkan membuat signature',
                 'statusCode' => 500
             ], 500);
         }
@@ -86,7 +87,8 @@ class CertificateController extends Controller
                                 return response([
                                     'status' => 'success',
                                     'statusMessage' => 'Sertifikat berhasil dibuat.',
-                                    'statusCode' => 200
+                                    'statusCode' => 200,
+                                    'result' => true
                                 ], 200);
                             } else {
                                 throw new Exception("Error creating PFX file: " . openssl_error_string() . "\n");
@@ -110,5 +112,18 @@ class CertificateController extends Controller
                 'statusCode' => 500
             ], 500);
         }
+    }
+
+    public function destroy(User $certificate)
+    {
+        Storage::delete("signature/$certificate->username.crt");
+        Storage::delete("signature/$certificate->username.key");
+        Storage::delete("signature/$certificate->username.csr");
+        Storage::delete("signature/$certificate->username.pfx");
+        return response([
+            'status' => 'success',
+            'statusMessage' => 'Sertifikat berhasil dihapus.',
+            'statusCode' => 200,
+        ], 200);
     }
 }

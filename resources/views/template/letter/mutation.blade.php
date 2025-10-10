@@ -19,62 +19,65 @@
     </tr>
 </table>
 <br/>
-<table>
+<table style="width: 100%">
     <tr>
-        <td>Nomor</td>
-        <td>:</td>
-        <td>{{$letter->number}}</td>
+        <td style="font-size: 16px; font-weight: bold; text-align: center">SURAT KETERANGAN PINDAH</td>
     </tr>
     <tr>
-        <td>Hal</td>
-        <td>:</td>
-        <td>Undangan</td>
+        <td style="text-align: center">Nomor : {{$letter->number}}</td>
     </tr>
 </table>
 <br/>
-<span>Kepada Yth,</span><br/>
-<span>{{$data->to}}</span>
-<br/>
-<br/>
-<span>di tempat.</span>
-<br/>
-<br/>
-<br/>
-<span style="font-style: italic">Assalamu’alaikum Wr. Wb</span><br/>
-<span>Dimohon dengan hormat kehadiran {{$data->to}} dengan ketentuan sebagai berikut :</span>
-<br/>
+<span>Yang bertanda tangan dibawah ini Kepala {{$institution->ladder->name.' '.$institution->name}} menerangkan :</span><br/>
 <br/>
 <table style="margin-left: 30px">
     <tr>
-        <td style="width: 150px">Hari/ Tanggal</td>
+        <td style="width: 150px">Nama</td>
         <td>:</td>
-        <td>{{$data->date}}</td>
+        <td>{{$data?->name}}</td>
     </tr>
     <tr style="vertical-align: top">
-        <td>Waktu</td>
+        <td>Tempat, Tanggal Lahir</td>
         <td>:</td>
-        <td>{{$data->time}}</td>
+        <td>{{$data?->birthdate}}</td>
     </tr>
     <tr style="vertical-align: top">
-        <td>Tempat</td>
+        <td>Kelas</td>
         <td>:</td>
-        <td>{{$data->place}}</td>
+        <td>{{$data?->level}}</td>
     </tr>
     <tr style="vertical-align: top">
-        <td>Acara</td>
+        <td>NISN</td>
         <td>:</td>
-        <td>{{$data->event}}</td>
+        <td>{{$data?->nisn}}</td>
     </tr>
     <tr style="vertical-align: top">
-        <td>Seragam</td>
+        <td>Jenis Kelamin</td>
         <td>:</td>
-        <td>{{$data->costume}}</td>
+        <td>{{$data?->gender}}</td>
+    </tr>
+    <tr style="vertical-align: top">
+        <td>Nama Wali</td>
+        <td>:</td>
+        <td>{{$data?->guardName}}</td>
+    </tr>
+{{--    <tr style="vertical-align: top">--}}
+{{--        <td>Alamat</td>--}}
+{{--        <td>:</td>--}}
+{{--        <td>{{$data?->address->address}}</td>--}}
+{{--    </tr>--}}
+    <tr style="vertical-align: top">
+        <td>Keterangan</td>
+        <td>:</td>
+        <td>{{$data?->description}}</td>
     </tr>
 </table>
 <br/>
-<span>Demikian undangan kami, Atas perhatian dan kehadirannya disampaikan terima kasih.</span>
+<span>Siswa tersebut akan melanjutkan sekolah/madrasah di ...................</span>
 <br/>
-<span style="font-style: italic">Wassalamu’alaikum Wr. Wb</span>
+<span>Setelah keluar dari madrasah ini, maka yang bersangkutan tidak dapat diterima kembali menjadi siswa {{$institution->ladder->alias.'. '.$institution->name}}</span>
+<br/>
+<span>Demikian surat keterangan ini kami buat untuk dapat digunakan  sebagaimana mestinya.</span>
 <br/>
 <br/>
 <br/>
@@ -96,7 +99,7 @@
     </tr>
     <tr>
         <td style="vertical-align: top">
-            <span style="font-size: 10px; font-style: italic">Scan untuk verifikasi keaslian</span>
+            <span style="font-size: 10px; font-style: italic">Scan untuk mengunduh surat mutasi EMIS</span>
         </td>
     </tr>
 </table>

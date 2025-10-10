@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::apiResource('parent', ParentController::class);
         Route::apiResource('mutation', MutationController::class);
     });
-    Route::apiResource('certificate', CertificateController::class);
+    Route::apiResource('certificate', CertificateController::class)->only(['index', 'store', 'destroy']);
     Route::apiResource('/student', StudentController::class);
     Route::apiResource('/teacher', TeacherController::class);
     Route::apiResource('/user', UserController::class);
@@ -67,6 +67,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::apiResource('invoice', InvoiceController::class);
     });
     Route::apiResource('letter', LetterController::class);
-    Route::post('letter/print', [LetterController::class, 'print']);
+    Route::post('letter/print/{letter}', [LetterController::class, 'print']);
     Route::apiResource('setting', SettingController::class);
 });

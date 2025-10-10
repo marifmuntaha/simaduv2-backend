@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('signature')->comment('1. digital, 2. manual');
             $table->unsignedBigInteger('creatorId');
             $table->unsignedBigInteger('updaterId');
+            $table->string('token');
             $table->timestamps();
         });
     }

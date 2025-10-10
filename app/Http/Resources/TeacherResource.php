@@ -37,7 +37,7 @@ class TeacherResource extends JsonResource
             $fullName .= $this->frontTitle. '. ';
         }
         $fullName .= $this->name;
-        if ($this->backTitle != '') {
+        if ($this->backTitle != '' || $this->backTitle != null) {
             $fullName .= ', ' .$this->backTitle;
         }
 
@@ -54,9 +54,9 @@ class TeacherResource extends JsonResource
             'phone' => $this->phone,
             'email' => $this->email,
             'address' => $this->address,
-            'fullName' => $fullName,
             'institution' => $this->institution,
-            'status' => $this->status
+            'status' => $this->status,
+            'fullName' => $fullName,
         ];
 
         if ($request->has('type')) {

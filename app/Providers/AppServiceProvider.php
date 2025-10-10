@@ -14,6 +14,7 @@ use App\Models\Master\Major;
 use App\Models\Master\Year;
 use App\Models\Student;
 use App\Models\Student\Activity;
+use App\Models\Student\Mutation;
 use App\Observers\Finance\InvoiceObserver;
 use App\Observers\Finance\TransactionObserve;
 use App\Observers\Institution\ProgramObserver;
@@ -25,6 +26,7 @@ use App\Observers\Master\LevelObserver;
 use App\Observers\Master\MajorObserver;
 use App\Observers\Master\YearObserver;
 use App\Observers\Student\ActivityObserver;
+use App\Observers\Student\MutationObserver;
 use App\Observers\StudentObserver;
 use Illuminate\Support\ServiceProvider;
 
@@ -55,5 +57,6 @@ class AppServiceProvider extends ServiceProvider
         Transaction::observe(TransactionObserve::class);
         Invoice::observe(InvoiceObserver::class);
         Letter::observe(LetterObserver::class);
+        Mutation::observe(MutationObserver::class);
     }
 }

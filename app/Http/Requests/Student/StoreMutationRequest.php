@@ -25,12 +25,10 @@ class StoreMutationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'yearId' => 'required|integer|exists:years,id',
+            'yearId' => 'required|integer|exists:master_years,id',
             'institutionId' => 'required|integer|exists:institutions,id',
             'studentId' => 'required|exists:students,id',
             'type' => 'required|string',
-            'token' => 'required|string',
-            'numberLetter' => 'required|string',
             'description' => 'nullable|string',
             'schoolNPSN' => 'nullable|string',
             'schoolName' => 'nullable|string',

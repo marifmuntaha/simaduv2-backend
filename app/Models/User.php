@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
@@ -24,6 +25,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'username',
@@ -78,5 +80,10 @@ class User extends Authenticatable
             'userId',
             'institutionId'
         );
+    }
+
+    public function teacher() : HasOne
+    {
+        return $this->hasOne(Teacher::class, 'userId', 'id');
     }
 }

@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Observers;
+namespace App\Observers\Student;
 
 use App\Models\Institution;
 use App\Models\Letter;
+use App\Models\Student\Mutation;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
-class LetterObserver
+class MutationObserver
 {
-    public function creating(Letter $letter): void
+    public function creating(Mutation $mutation): void
     {
         $todayMonth = Carbon::today()->format('m');
         $todayYear = Carbon::today()->format('Y');
-        $institution = Institution::find($letter->institutionId);
-        $lastLetter = $letter->whereYearid($letter->yearId)
-            ->whereInstitutionid($letter->institutionId)
+        $institution = Institution::find($mutation->institutionId);
+        $lastLetter = Letter::whereYearid($mutation->yearId)
+            ->whereInstitutionid($mutation->institutionId)
             ->orderByDesc('number')
             ->first();
         $sequence = 1;
@@ -25,10 +26,8 @@ class LetterObserver
         }
         $formattedSequence = str_pad($sequence, 3, '0', STR_PAD_LEFT);
 
-        $letter->number = "{$formattedSequence}/{$letter->type}/$institution->alias/{$this->nameMonthToRoman($todayMonth)}/{$todayYear}";
-        $letter->creatorId = auth()->user()->id;
-        $letter->updaterId = auth()->user()->id;
-        $letter->token = Str::uuid();
+        $mutation->numberLetter = "{$formattedSequence}/1.03/$institution->alias/{$this->nameMonthToRoman($todayMonth)}/{$todayYear}";
+        $mutation->token = Str::uuid();
     }
 
     private function nameMonthToRoman($nameMonth): ?string

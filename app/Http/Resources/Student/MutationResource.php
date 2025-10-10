@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Student;
 
 use App\Http\Resources\InstitutionResource;
+use App\Http\Resources\StudentResource;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -44,7 +45,7 @@ class MutationResource extends JsonResource
             'studentId' => $this->studentId,
             'type' => $this->type,
             'token' => $this->token,
-            'numberLetter' => $this->numberLetter .'/2.1/'.$this->institution->alias.'/'.Carbon::parse($this->created_at)->format('m/Y'),
+            'numberLetter' => $this->numberLetter,
             'description' => $this->description,
             'schoolNPSN' => $this->schoolNPSN,
             'schoolName' => $this->schoolName,
@@ -55,16 +56,16 @@ class MutationResource extends JsonResource
             'status' => $this->status,
             'year' => $this->year,
             'institution' => new InstitutionResource($this->institution),
-            'student' => $this->student,
+            'student' => new StudentResource($this->student),
         ];
-        if ($request->has('list')){
-            if ($request->list == 'table'){
+        if ($request->has('type')){
+            if ($request->type == 'datatable'){
                 $resources = [
                     'id' => $this->id,
                     'year' => $this->year,
-                    'institution' => $this->institution->ladder->alias .'. '. $this->institution->name,
+                    'institution' => $this->institution->alias,
                     'name' => $this->student->name,
-                    'numberLetter' => $this->numberLetter .'/2.1/'.$this->institution->alias.'/'.Carbon::parse($this->created_at)->format('m/Y'),
+                    'numberLetter' => $this->numberLetter,
                     'description' => $this->description,
                     'status' => $this->status,
                 ];
