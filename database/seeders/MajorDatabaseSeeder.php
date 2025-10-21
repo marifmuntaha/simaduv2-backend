@@ -17,6 +17,7 @@ class MajorDatabaseSeeder extends Seeder
             ['ladderId' => 1, 'name' => 'Non Jurusan', 'alias' => 'NON'],
             ['ladderId' => 2, 'name' => 'Non Jurusan', 'alias' => 'NON'],
             ['ladderId' => 3, 'name' => 'Non Jurusan', 'alias' => 'NON'],
+            ['ladderId' => 4, 'name' => 'Non Jurusan', 'alias' => 'NON'],
             ['ladderId' => 4, 'name' => 'Ilmu Pengetahuan Alam', 'alias' => 'IPA'],
             ['ladderId' => 4, 'name' => 'Ilmu Pengetahuan Sosial', 'alias' => 'IPS'],
         ]);

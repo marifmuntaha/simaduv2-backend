@@ -15,14 +15,11 @@ class TeacherController extends Controller
     {
         try {
             $teachers = new Teacher();
-            if ($request->has('institutionId')) {
-                $teachers = $teachers->whereHas('institution', function ($item) use ($request) {
-                    $item->where('institutionId', $request->institutionId);
-                });
-            }
-            if ($request->has('status')) {
-                $teachers = $teachers->where('status', $request->status);
-            }
+            $teachers = $request->has('institutionId')
+                ? $teachers->whereHas('activities', function ($query) use ($request) {
+                    $query->whereInstitutionid($request->institutionId)->whereStatus(1);
+                }) : $teachers;
+            $teachers = $request->has('pegId') ? $teachers->wherePegid($request->pegId) : $teachers;
             return response([
                 'status' => 'success',
                 'statusMessage' => '',
@@ -43,7 +40,6 @@ class TeacherController extends Controller
         try {
             $teacher = Teacher::create($request->all());
             if ($teacher) {
-                $teacher->institution()->attach($request->institution);
                 return response([
                     'status' => 'success',
                     'statusMessage' => 'Data Guru berhasil ditambahkan.',
@@ -83,8 +79,7 @@ class TeacherController extends Controller
     public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
         try {
-            if ($teacher->update(array_filter($request->all()))) {
-                $teacher->institution()->sync($request->institution);
+            if ($teacher->update($request->all())) {
                 return response([
                     'status' => 'success',
                     'statusMessage' => 'Data Guru berhasil disimpan.',
@@ -107,12 +102,11 @@ class TeacherController extends Controller
     {
         try {
             if ($teacher->delete()) {
-                $teacher->institution()->detach();
-                $teacher->user->delete();
                 return response([
                     'status' => 'success',
                     'statusMessage' => 'Data Guru berhasil dihapus.',
                     'statusCode' => 200,
+                    'result' => new TeacherResource($teacher),
                 ]);
             } else {
                 throw new Exception("Data Guru gagal dihapus.", 422);

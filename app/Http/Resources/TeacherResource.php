@@ -17,10 +17,9 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $phone
  * @property mixed $email
  * @property mixed $address
- * @property mixed $institution
  * @property mixed $status
  * @property mixed $userId
- * @method institution(\Closure $param)
+ * @property mixed $activities
  */
 class TeacherResource extends JsonResource
 {
@@ -54,7 +53,9 @@ class TeacherResource extends JsonResource
             'phone' => $this->phone,
             'email' => $this->email,
             'address' => $this->address,
-            'institution' => $this->institution,
+            'institution' => $this->activities->map((function ($activity) {
+                return $activity->institution;
+            })),
             'status' => $this->status,
             'fullName' => $fullName,
         ];

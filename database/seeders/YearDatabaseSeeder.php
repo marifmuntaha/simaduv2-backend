@@ -14,9 +14,9 @@ class YearDatabaseSeeder extends Seeder
     public function run(): void
     {
         $years = collect([
-            ['name' => '2024/2025', 'description' => 'Tahun Pelajaran 2024/2025'],
-            ['name' => '2025/2026', 'description' => 'Tahun Pelajaran 2025/2026'],
-            ['name' => '2026/2027', 'description' => 'Tahun Pelajaran 2026/2027'],
+            ['name' => '2024/2025', 'description' => 'Tahun Pelajaran 2024/2025', 'active' => false],
+            ['name' => '2025/2026', 'description' => 'Tahun Pelajaran 2025/2026', 'active' => true],
+            ['name' => '2026/2027', 'description' => 'Tahun Pelajaran 2026/2027', 'active' => false],
         ]);
 
         $years->map(function ($year) {

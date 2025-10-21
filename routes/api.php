@@ -17,15 +17,16 @@ use App\Http\Controllers\Master\MajorController;
 use App\Http\Controllers\Master\YearController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\Student\ActivityController;
+use App\Http\Controllers\Student\ActivityController as StudentActivityController;
 use App\Http\Controllers\Student\AddressController;
 use App\Http\Controllers\Student\MutationController;
 use App\Http\Controllers\Student\ParentController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\Teacher\ActivityController as TeacherActivityController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
-//use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+//use Illuminate\Http\Request;
 
 //sleep(3);
 
@@ -50,10 +51,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
     Route::apiResource('institution', InstitutionController::class);
     Route::group(['prefix' => 'student'], function () {
-        Route::apiResource('activity', ActivityController::class);
+        Route::apiResource('activity', StudentActivityController::class);
         Route::apiResource('address', AddressController::class);
         Route::apiResource('parent', ParentController::class);
         Route::apiResource('mutation', MutationController::class);
+    });
+    Route::group(['prefix' => 'teacher'], function () {
+        Route::apiResource('activity', TeacherActivityController::class);
     });
     Route::apiResource('certificate', CertificateController::class)->only(['index', 'store', 'destroy']);
     Route::apiResource('/student', StudentController::class);

@@ -2,10 +2,8 @@
 
 namespace App\Listeners;
 
-use App\Events\ActivityCreateOrUpdateEvent;
+use App\Events\Student\ActivityCreateOrUpdateEvent;
 use App\Models\Student\Activity;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 
 class ActivityCreateOrUpdateListener
 {

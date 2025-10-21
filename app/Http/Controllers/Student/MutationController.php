@@ -17,6 +17,11 @@ class MutationController extends Controller
     {
         try {
             $mutations = new Mutation();
+            $mutations = $request->has('yearId') ? $mutations->whereYearid($request->yearId) : $mutations;
+            $mutations = $request->has('institutionId')
+                ? $mutations->whereInstitutionid($request->institutionId)
+                : $mutations;
+
             if ($request->has('latest')) {
                 $mutations = $mutations->latest();
             }

@@ -15,39 +15,36 @@ class StudentController extends Controller
     {
         try {
             $students = new Student();
-            if ($request->has('yearId')) {
-                $students = $students->whereHas('activities', function ($query) use ($request) {
-                    $query->where('yearId', $request->yearId)->latest();
-                });
-            }
-            if ($request->has('institutionId')) {
-                $students = $request->institutionId == 'null' ? $students : $students
-                    ->whereHas('activities', function ($query) use ($request) {
-                        $query->where('institutionId', $request->institutionId)->latest();
-                    });
-            }
-            if ($request->has('rombelId')) {
-                $students = $request->rombelId == 'null' ? $students : $students
-                    ->whereHas('activities', function ($query) use ($request) {
-                        $query->where('rombelId', $request->rombelId)->where('status', '1');
-                    });
-            }
-            if ($request->has('boardingId')) {
-                $students = $request->boardingId == 'null' ? $students : $students
-                    ->whereHas('activities', function ($query) use ($request) {
-                        $query->where('boardingId', $request->boardingId)->where('status', '1');
-                    });
-            }
+            $students = $request->has('yearId')
+                ? $students->whereHas('activities', function ($query) use ($request) {
+                    $query->whereYearid($request->yearId)->latest();
+                }) : $students;
+            $students = $request->has('institutionId')
+                ? $students->whereHas('activities', function ($query) use ($request) {
+                    $query->whereInstitutionid($request->institutionId);
+                }) : $students;
+            $students = $request->has('rombelId')
+                ? $students->whereHas('activities', function ($query) use ($request) {
+                    $query->where('rombelId', $request->rombelId);
+                }) : $students;
+            $students = $request->has('boardingId')
+                ? $students->whereHas('activities', function ($query) use ($request) {
+                    $query->where('boardingId', $request->boardingId);
+                }) : $students;
             if ($request->has('levelId')) {
                 $students = $students->whereHas('activities', function ($query) use ($request) {
-                    $query->where('levelId', $request->levelId)->where('status', '1');
+                    $query->where('levelId', $request->levelId);
                 });
             }
             if ($request->has('programId')) {
                 $students = $students->whereHas('activities', function ($query) use ($request) {
-                    $query->where('programId', $request->programId)->where('status', '1');
+                    $query->where('programId', $request->programId);
                 });
             }
+            $students = $request->has('status')
+                ? $students->whereHas('activities', function ($query) use ($request) {
+                    $query->where('status', 2);
+                }) : $students;
             $students = $request->has('gender') ? $students->whereGender($request->gender) : $students;
             return response([
                 'status' => 'success',

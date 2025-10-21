@@ -22,6 +22,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @property mixed $rombel
  * @property mixed $program
  * @property mixed $created_at
+ * @property mixed $levelId
+ * @property mixed $statusCode
  */
 class ActivityResource extends JsonResource
 {
@@ -32,12 +34,14 @@ class ActivityResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $resource = [
+        return [
             'id' => $this->id,
             'status' => $this->status,
+            'statusCode' => $this->statusCode,
             'studentId' => $this->studentId,
             'yearId' => $this->yearId,
             'institutionId' => $this->institutionId,
+            'levelId' => $this->levelId,
             'rombelId' => $this->rombelId,
             'programId' => $this->programId,
             'boardingId' => $this->boardingId,
@@ -47,6 +51,5 @@ class ActivityResource extends JsonResource
             'rombel' => new RombelResource($this->rombel),
             'program' => new ProgramResource($this->program),
         ];
-        return $resource;
     }
 }

@@ -14,6 +14,7 @@ class Activity extends Model
     protected $table = 'student_activities';
     protected $fillable = [
         'status',
+        'statusCode',
         'studentId',
         'yearId',
         'institutionId',

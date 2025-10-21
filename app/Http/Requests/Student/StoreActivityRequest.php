@@ -26,7 +26,8 @@ class StoreActivityRequest extends FormRequest
     {
         return [
             'studentId' => 'required',
-            'status' => 'required',
+            'status' => 'nullable',
+            'statusCode' => 'required',
             'yearId' => 'required',
             'institutionId' => 'required',
             'rombelId' => 'nullable',
@@ -39,6 +40,7 @@ class StoreActivityRequest extends FormRequest
         return [
             'studentId' => 'ID Siswa',
             'status' => 'Status',
+            'statusCode' => 'Status',
             'yearId' => 'ID Tahun Ajaran',
             'institutionId' => 'ID Lembaga',
             'rombelId' => 'ID Rombel',

@@ -65,7 +65,7 @@ class StudentResource extends JsonResource
                     'birth' => $this->birthplace . ', '. Carbon::parse($this->birthdate)->format('d F Y'),
                     'nisn' => $this->nisn,
                     'nism' => $this->nism,
-                    'status' => $this->activities()->where('status', '1')->first()->status,
+                    'status' => $this->activities()->latest()->first()->status,
                     'rombelAlias' => $this->activities()->where('status', '1')->first()->rombel->alias,
                     'boardingId' => $this->activities()->where('status', '1')->first()->boardingId,
                 ];

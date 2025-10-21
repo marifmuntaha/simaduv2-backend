@@ -25,7 +25,8 @@ class UpdateActivityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => 'required',
+            'status' => 'nullable',
+            'statusCode' => 'required',
             'yearId' => 'required',
             'institutionId' => 'required',
             'rombelId' => 'nullable',
@@ -38,6 +39,7 @@ class UpdateActivityRequest extends FormRequest
         return [
             'studentId' => 'ID Siswa',
             'status' => 'Status',
+            'statusCode' => 'Status',
             'yearId' => 'ID Tahun Pelajaran',
             'institutionId' => 'ID Lembaga',
             'rombelId' => 'ID Rombel',
