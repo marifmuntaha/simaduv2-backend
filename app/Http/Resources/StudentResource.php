@@ -60,14 +60,14 @@ class StudentResource extends JsonResource
             if ($request->type == 'datatable'){
                 $resource = [
                     'id' => $this->id,
-                    'institutionAlias' => $this->activities()->where('status', '1')->first()->institution->alias,
+                    'institutionAlias' => new ActivityResource($this->activities()->first())->institution->alias,
                     'name' => $this->name,
                     'birth' => $this->birthplace . ', '. Carbon::parse($this->birthdate)->format('d F Y'),
                     'nisn' => $this->nisn,
                     'nism' => $this->nism,
-                    'status' => $this->activities()->latest()->first()->status,
-                    'rombelAlias' => $this->activities()->where('status', '1')->first()->rombel->alias,
-                    'boardingId' => $this->activities()->where('status', '1')->first()->boardingId,
+                    'status' => new ActivityResource($this->activities()->latest()->first())->statusCode,
+                    'rombelAlias' => new ActivityResource($this->activities()->first())->rombel->alias,
+                    'boardingId' => new ActivityResource($this->activities()->first())->boardingId,
                 ];
             }
         }

@@ -41,9 +41,9 @@ class StudentController extends Controller
                     $query->where('programId', $request->programId);
                 });
             }
-            $students = $request->has('status')
+            $students = $request->has('statusCode')
                 ? $students->whereHas('activities', function ($query) use ($request) {
-                    $query->where('status', 2);
+                    $query->where('status', 1)->where('statusCode', 1);
                 }) : $students;
             $students = $request->has('gender') ? $students->whereGender($request->gender) : $students;
             return response([

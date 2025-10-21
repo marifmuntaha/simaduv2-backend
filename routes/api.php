@@ -56,11 +56,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::apiResource('parent', ParentController::class);
         Route::apiResource('mutation', MutationController::class);
     });
+    Route::apiResource('/student', StudentController::class);
     Route::group(['prefix' => 'teacher'], function () {
         Route::apiResource('activity', TeacherActivityController::class);
     });
     Route::apiResource('certificate', CertificateController::class)->only(['index', 'store', 'destroy']);
-    Route::apiResource('/student', StudentController::class);
     Route::apiResource('/teacher', TeacherController::class);
     Route::apiResource('/user', UserController::class);
     Route::apiResource('/notification', NotificationController::class)->only(['index', 'update']);

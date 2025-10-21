@@ -1,12 +1,12 @@
 services:
     laravel.test:
         build:
-            context: './vendor/laravel/sail/runtimes/8.4'
+            context: ./vendor/laravel/sail/runtimes/8.4
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
                 MYSQL_CLIENT: mariadb-client
-        image: 'sail-8.4/app'
+        image: sail-8.4/app
         extra_hosts:
             - 'host.docker.internal:host-gateway'
         ports:
@@ -24,10 +24,10 @@ services:
         depends_on:
             - mariadb
         deploy:
-          resources:
-            limits:
-              cpus: 0.5
-              memory: '512M'
+            resources:
+                limits:
+                    cpus: 0.5
+                    memory: 512M
     mariadb:
         image: 'mariadb:11'
         ports:
@@ -53,10 +53,10 @@ services:
             retries: 3
             timeout: 5s
         deploy:
-          resources:
-            limits:
-              cpus: 0.5
-              memory: '512M'
+            resources:
+                limits:
+                    cpus: 0.5
+                    memory: 512M
 networks:
     sail:
         driver: bridge

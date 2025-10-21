@@ -13,13 +13,14 @@ class ActivityObserver
     public function created(Activity $activity): void
     {
         if ($activity->status) {
-            Activity::get()->collect()->each(function ($item) use ($activity) {
-                if ($item->id !== $activity->id) {
-                    $item->update(['status' => 0]);
-                }
-            });
+            Activity::whereStudentid($activity->studentId)
+                ->get()->collect()->each(function ($item) use ($activity) {
+                    if ($item->id !== $activity->id) {
+                        $item->update(['status' => 0]);
+                    }
+                });
         }
-        event(new ActivityCreateOrUpdateEvent($activity));
+//        event(new ActivityCreateOrUpdateEvent($activity));
     }
 
     /**
