@@ -80,7 +80,7 @@ class InstitutionController extends Controller
         try {
             if ($request->hasFile('image')) {
                 $old = Institution::find($institution->id);
-                Storage::disk('public')->delete($old->logo);
+                Storage::disk('public')->delete($old->getRawOriginal('logo'));
                 $path = Storage::disk('public')->putFileAs('images', $request->file('image'), $request->file('image')->hashName());
                 $request->merge(['logo' => $path]);
             }
@@ -104,7 +104,7 @@ class InstitutionController extends Controller
     {
         try {
             if ($institution->delete()) {
-                Storage::disk('public')->delete($institution->logo);
+                Storage::disk('public')->delete($institution->getRawOriginal('logo'));
                 return response([
                     'status' => 'success',
                     'statusMessage' => 'Data Institusi berhasil dihapus',

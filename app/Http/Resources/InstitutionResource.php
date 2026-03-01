@@ -84,7 +84,9 @@ class InstitutionResource extends JsonResource
                     'email' => $this->email,
                     'website' => $this->website,
                     'logo' => $this->logo,
-                    'ladderAlias' => $this->ladder->alias
+                    'ladder' =>[
+                        'alias' => $this->ladder->alias,
+                    ]
                 ];
             }
         }

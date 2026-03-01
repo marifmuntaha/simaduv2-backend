@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StorePasswordRequest;
+use App\Http\Resources\UserResource;
 use App\Models\Institution;
 use App\Models\Master\Year;
 use App\Models\User;
@@ -26,11 +27,10 @@ class AuthController extends Controller
                     'status' => 'success',
                     'statusMessage' => 'Berhasil masuk, anda akan dialihkan dalam 2 detik.',
                     'statusCode' => 200,
-                    'result' => Arr::collapse([$request->user()->toArray(), [
-                        'token' => $request->user()->createToken($request->user()->email)->plainTextToken,
-                        'yearId' => Year::whereActive(true)->first()?->id,
-                        'institutionId' => $user->institutions()->first()?->id,
-                    ]])
+                    'result' => [
+                        'user' => $request->user()->toArray(),
+                        'token' => $request->user()->createToken($request->user()->email)->plainTextToken
+                    ]
                 ]);
             } else {
                 $user = User::whereUsername($request->username)->first();
@@ -92,6 +92,23 @@ class AuthController extends Controller
                 'statusMessage' => $exception->getMessage(),
                 'statusCode' => $exception->getCode(),
             ]);
+        }
+    }
+
+    public function profile(Request $request)
+    {
+        try {
+            $request->merge(['type' => 'profile']);
+            return response([
+                'status' => 'success',
+                'statusMessage' => '',
+                'result' => new UserResource($request->user('sanctum')),
+            ]);
+        } catch (Exception $e) {
+            return response([
+                'status' => 'error',
+                'statusMessage' => $e->getMessage(),
+            ], 401);
         }
     }
 }

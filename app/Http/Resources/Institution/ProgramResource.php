@@ -48,8 +48,12 @@ class ProgramResource extends JsonResource
                     'institutionId' => $this->institutionId,
                     'name' => $this->name,
                     'alias' => $this->alias,
-                    'yearName' => $this->year->name,
-                    'institutionAlias' => $this->institution->alias
+                    'year' => [
+                        'name' => $this->year->name,
+                    ],
+                    'institution' => [
+                        'alias' => $this->institution->alias,
+                    ]
                 ];
             }
         }

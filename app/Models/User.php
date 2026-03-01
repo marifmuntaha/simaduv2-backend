@@ -53,6 +53,7 @@ class User extends Authenticatable
     {
         return [
             'password' => 'hashed',
+            'role' => 'int'
         ];
     }
 

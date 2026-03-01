@@ -16,6 +16,7 @@ class YearController extends Controller
     {
         try {
             $years = new Year();
+            $years = $request->has('active') ? $years->whereActive(true) : $years;
             $years = $years->orderBy('created_at', 'desc');
             return response([
                 'status' => 'success',

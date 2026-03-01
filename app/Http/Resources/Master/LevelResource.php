@@ -46,7 +46,9 @@ class LevelResource extends JsonResource
                     'name' => $this->name,
                     'alias' => $this->alias,
                     'description' => $this->description,
-                    'ladderAlias' => $this->ladder->alias
+                    'ladder' => [
+                        'alias' => $this->ladder->alias,
+                    ]
                 ];
             }
         }
