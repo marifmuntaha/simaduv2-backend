@@ -26,6 +26,9 @@ return new class extends Migration {
             $table->boolean('status')->default(true);
             $table->timestamps();
         });
+        Schema::table('teachers', function ($table) {
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
+        });
         Schema::create('teacher_activities', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('yearId');
@@ -50,6 +53,9 @@ return new class extends Migration {
             $table->dropForeign('teacher_activities_teacherid_foreign');
         });
         Schema::dropIfExists('teacher_activities');
+        Schema::table('teachers', function (Blueprint $table) {
+            $table->dropForeign('teachers_userId_foreign');
+        });
         Schema::dropIfExists('teachers');
     }
 };

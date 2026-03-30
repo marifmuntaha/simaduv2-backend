@@ -44,7 +44,14 @@ class UserResource extends JsonResource
         }
         if ($request->has('list')) {
             if ($request->list === 'table') {
-                $institution = $this->institutions()->get();
+                $institutions = $this->institutions()->get();
+                $institution = $institutions->map(function ($institution) {
+                    return [
+                        'id' => $institution->id,
+                        'name' => $institution->ladder->alias .'. '. $institution->name,
+                        'alias' => $institution->alias,
+                    ];
+                });
                 $resources = [
                     'id' => $this->id,
                     'name' => $this->name,

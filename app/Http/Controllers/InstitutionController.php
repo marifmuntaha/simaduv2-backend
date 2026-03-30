@@ -19,9 +19,9 @@ class InstitutionController extends Controller
             $institutions = $request->has('institutionId')
                 ? $institutions->whereId($request->institutionId)
                 : $institutions;
-            return response()->success(new InstitutionResource($institutions));
+            return response()->success(InstitutionResource::collection($institutions->get()));
         } catch (Exception $e) {
-            return response()->error($e, 500);
+            return response()->error($e->getMessage(), 500);
         }
     }
 

@@ -6,9 +6,11 @@ use App\Models\Teacher\Activity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
 
 class Teacher extends Model
 {
+    use LogsActivity;
     protected $fillable = [
         'userId',
         'name',

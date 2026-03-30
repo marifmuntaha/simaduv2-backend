@@ -20,103 +20,48 @@ class TeacherController extends Controller
                     $query->whereInstitutionid($request->institutionId)->whereStatus(1);
                 }) : $teachers;
             $teachers = $request->has('pegId') ? $teachers->wherePegid($request->pegId) : $teachers;
-            return response([
-                'status' => 'success',
-                'statusMessage' => '',
-                'statusCode' => 200,
-                'result' => TeacherResource::collection($teachers->get()),
-            ]);
+            return response()->success(TeacherResource::collection($teachers->get()));
         } catch (Exception $e) {
-            return response([
-                'status' => 'error',
-                'statusMessage' => $e->getMessage(),
-                'statusCode' => $e->getCode(),
-            ]);
+            return response()->error($e->getMessage(), 500);
         }
     }
 
     public function store(StoreTeacherRequest $request)
     {
         try {
-            $teacher = Teacher::create($request->all());
-            if ($teacher) {
-                return response([
-                    'status' => 'success',
-                    'statusMessage' => 'Data Guru berhasil ditambahkan.',
-                    'statusCode' => 201,
-                    'result' => new TeacherResource($teacher),
-                ], 201);
-            } else {
-                throw new Exception('Data Guru gagal ditambahkan.', 422);
-            }
+            $teacher = Teacher::create($request->validated());
+            return response()->success(new TeacherResource($teacher), 'Data Guru berhasil ditambahkan.', 201);
         } catch (Exception $e) {
-            return response([
-                'status' => 'error',
-                'statusMessage' => $e->getMessage(),
-                'statusCode' => $e->getCode(),
-            ]);
+            return response()->error($e->getMessage(), $e->getCode());
         }
     }
 
     public function show(Teacher $teacher)
     {
         try {
-            return response([
-                'status' => 'success',
-                'statusMessage' => '',
-                'statusCode' => 200,
-                'result' => new TeacherResource($teacher),
-            ]);
+            return response()->success(new TeacherResource($teacher));
         } catch (Exception $e) {
-            return response([
-                'status' => 'error',
-                'statusMessage' => $e->getMessage(),
-                'statusCode' => $e->getCode(),
-            ]);
+            return response()->error($e->getMessage(), 500);
         }
     }
 
     public function update(UpdateTeacherRequest $request, Teacher $teacher)
     {
         try {
-            if ($teacher->update($request->all())) {
-                return response([
-                    'status' => 'success',
-                    'statusMessage' => 'Data Guru berhasil disimpan.',
-                    'statusCode' => 200,
-                    'result' => new TeacherResource($teacher),
-                ]);
-            } else {
-                throw new Exception("Data Guru gagal disimpan.", 422);
-            }
+            $teacher->update($request->validated());
+            return response()->success(new TeacherResource($teacher), 'Data Guru berhasil diubah.');
         } catch (Exception $e) {
-            return response([
-                'status' => 'error',
-                'statusMessage' => $e->getMessage(),
-                'statusCode' => $e->getCode(),
-            ]);
+            return response()->error($e->getMessage(), $e->getCode());
         }
     }
 
     public function destroy(Teacher $teacher)
     {
         try {
-            if ($teacher->delete()) {
-                return response([
-                    'status' => 'success',
-                    'statusMessage' => 'Data Guru berhasil dihapus.',
-                    'statusCode' => 200,
-                    'result' => new TeacherResource($teacher),
-                ]);
-            } else {
-                throw new Exception("Data Guru gagal dihapus.", 422);
-            }
+            $teacher->delete();
+            return response()->success(new TeacherResource($teacher), 'Data Guru berhasil dihapus.');
         } catch (Exception $e) {
-            return response([
-                'status' => 'error',
-                'statusMessage' => $e->getMessage(),
-                'statusCode' => $e->getCode(),
-            ]);
+            return response()->error($e->getMessage(), $e->getCode());
         }
     }
 }

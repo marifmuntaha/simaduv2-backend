@@ -23,8 +23,8 @@ class UserController extends Controller
                 $users = $users->get();
             }
             return response()->success(UserResource::collection($users));
-        } catch (Throwable $th) {
-            return response()->error($th, 500);
+        } catch (Exception $e) {
+            return response()->error($e->getMessage(), 500);
         }
     }
 
@@ -32,6 +32,12 @@ class UserController extends Controller
     {
         try {
             $user = User::create($request->validated());
+            if (!$request->isNotFilled('institution')) {
+                $institution = collect($request->institution)->map(function ($item) {
+                    return $item['id'];
+                });
+                $user->institutions()->attach($institution);
+            }
             return response()->success(new UserResource($user), 'Data Pengguna berhasil ditambahkan', 201);
         } catch (Throwable $th) {
             return response()->error($th, $th->getCode());
@@ -60,6 +66,7 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         try {
+            $user->institutions()->detach();
             $user->delete();
             return response()->success(new UserResource($user), 'Data Pengguna berhasil dihapus');
         } catch (Throwable $th) {

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Institution extends Model
 {
-    protected $fillable = ['ladderId', 'name', 'alias', 'nsm', 'npsn', 'address', 'phone', 'email', 'website', 'logo'];
+    protected $fillable = ['id', 'ladderId', 'name', 'alias', 'nsm', 'npsn', 'address', 'phone', 'email', 'website', 'logo'];
     protected function logo(): Attribute
     {
         return Attribute::make(

@@ -30,7 +30,7 @@ class StoreUserRequest extends FormRequest
             'username' => 'required|string|unique:users,username',
             'password' => 'required|string',
             'phone' => 'required|string',
-            'role' => 'required|string',
+            'role' => 'required|integer',
         ];
     }
 

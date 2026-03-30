@@ -26,13 +26,12 @@ return Application::configure(basePath: dirname(__DIR__))
             return response()->json([
                 'status' => 'error',
                 'statusMessage' => $e->validator->errors()->first(),
-            ], 442);
+            ], 422);
         });
         $exceptions->render(function (NotFoundHttpException $e, Request $request) {
             return response()->json([
                 'status' => 'error',
                 'statusMessage' => 'Sumber Daya atau Rute tidak ditemukan.',
-                'result' => null,
             ], 404);
         });
         $exceptions->render(function (Throwable $e) {

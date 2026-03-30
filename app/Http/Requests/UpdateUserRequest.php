@@ -30,7 +30,7 @@ class UpdateUserRequest extends FormRequest
             'username' => 'required|string',
             'password' => 'nullable|string',
             'phone' => 'required|string',
-            'role' => 'required|string',
+            'role' => 'required|integer',
         ];
     }
 
