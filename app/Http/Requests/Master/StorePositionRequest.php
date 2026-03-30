@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Master;
 
-use App\Rules\Recaptha;
 use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
-class StoreLoginRequest extends FormRequest
+class StorePositionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,16 +23,18 @@ class StoreLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|string',
-            'password' => 'required|string',
+            'name' => 'required|string',
+            'description' => 'nullable|string',
+            'alias' => 'required|string',
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'username' => 'Nama Pengguna',
-            'password' => 'Kata Sandi',
+            'name' => 'Nama',
+            'description' => 'Deskripsi',
+            'alias' => 'Alias',
         ];
     }
 }

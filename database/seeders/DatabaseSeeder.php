@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'marifmuntaha',
             'password' => Hash::make('password'),
             'phone' => '6282229366506',
-            'role' => '1',
+            'role' => 1,
         ]);
         $this->call(LadderDatabaseSeeder::class);
         $this->call(LevelDatabaseSeeder::class);

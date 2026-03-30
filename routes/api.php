@@ -14,8 +14,10 @@ use App\Http\Controllers\LetterController;
 use App\Http\Controllers\Master\LadderController;
 use App\Http\Controllers\Master\LevelController;
 use App\Http\Controllers\Master\MajorController;
+use App\Http\Controllers\Master\PositionController;
 use App\Http\Controllers\Master\YearController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PublicController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\Student\ActivityController as StudentActivityController;
 use App\Http\Controllers\Student\AddressController;
@@ -37,6 +39,9 @@ Route::prefix('auth')->group(function () {
     Route::post('/reset-password', [AuthController::class, 'resetPassword']);
     Route::get('/profile', [AuthController::class, 'profile'])->middleware('auth:sanctum');
 });
+Route::prefix('public')->group(function() {
+    Route::get('/year', [PublicController::class, 'year']);
+});
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::group(['prefix' => 'master'], function () {
@@ -44,6 +49,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::apiResource('level', LevelController::class);
         Route::apiResource('major', MajorController::class);
         Route::apiResource('year', YearController::class);
+        Route::apiResource('position', PositionController::class);
     });
     Route::group(['prefix' => 'institution'], function () {
         Route::apiResource('rombel', RombelController::class);

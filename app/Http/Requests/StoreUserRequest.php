@@ -45,13 +45,4 @@ class StoreUserRequest extends FormRequest
             'role' => 'Hak Akses',
         ];
     }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'status' => 'error',
-            'statusMessage' => $validator->errors()->first(),
-            'statusCode' => 422,
-        ], 422));
-    }
 }

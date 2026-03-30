@@ -28,7 +28,7 @@ class UpdateUserRequest extends FormRequest
             'name' => 'required|string',
             'email' => 'required|string',
             'username' => 'required|string',
-            'password' => 'required|string',
+            'password' => 'nullable|string',
             'phone' => 'required|string',
             'role' => 'required|string',
         ];
@@ -44,14 +44,5 @@ class UpdateUserRequest extends FormRequest
             'phone' => 'Nomor HP',
             'role' => 'Hak Akses',
         ];
-    }
-
-    protected function failedValidation(Validator $validator)
-    {
-        throw new HttpResponseException(response()->json([
-            'status' => 'error',
-            'statusMessage' => $validator->errors()->first(),
-            'statusCode' => 422,
-        ], 422));
     }
 }

@@ -28,6 +28,7 @@ use App\Observers\Master\YearObserver;
 use App\Observers\Student\ActivityObserver;
 use App\Observers\Student\MutationObserver;
 use App\Observers\StudentObserver;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -45,6 +46,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Response::macro('success', function ($data = null, $message = '', $code = 200) {
+            return response()->json([
+                'status' => 'success',
+                'statusMessage' => $message,
+                'result' => $data,
+            ], $code);
+        });
+
+        Response::macro('error', function ($message = 'An error occurred', $code = 400) {
+            return response()->json([
+                'status' => 'error',
+                'statusMessage' => $message,
+            ], $code);
+        });
+
         Ladder::observe(LadderObserver::class);
         Level::observe(LevelObserver::class);
         Major::observe(MajorObserver::class);

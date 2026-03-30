@@ -5,14 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreLoginRequest;
 use App\Http\Requests\StorePasswordRequest;
 use App\Http\Resources\UserResource;
-use App\Models\Institution;
-use App\Models\Master\Year;
-use App\Models\User;
-use App\Notifications\AuthLoginNotification;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -22,27 +16,15 @@ class AuthController extends Controller
         try {
             if (Auth::attempt($request->only(['username', 'password']))) {
                 $user = Auth::user();
-                $user->notify(new AuthLoginNotification($user, 'Berhasil masuk ke aplikasi.'));
-                return response([
-                    'status' => 'success',
-                    'statusMessage' => 'Berhasil masuk, anda akan dialihkan dalam 2 detik.',
-                    'statusCode' => 200,
-                    'result' => [
-                        'user' => $request->user()->toArray(),
-                        'token' => $request->user()->createToken($request->user()->email)->plainTextToken
-                    ]
-                ]);
+                return response()->success([
+                    'user' => $user->toArray(),
+                    'token' => $user->createToken($request->user()->email)->plainTextToken,
+                ], 'Berhasil masuk, anda akan dialihkan dalam 2 detik.');
             } else {
-                $user = User::whereUsername($request->username)->first();
-                $user?->notify(new AuthLoginNotification($user, 'Gagal masuk ke aplikasi.'));
                 throw new Exception('Nama pengguna/kata sandi salah.', 401);
             }
         } catch (Exception $e) {
-            return response([
-                'status' => 'error',
-                'statusMessage' => $e->getMessage(),
-                'statusCode' => $e->getCode(),
-            ], $e->getCode());
+            return response()->error($e->getMessage(), $e->getCode());
         }
     }
 

@@ -15,7 +15,7 @@ class Institution extends Model
     protected function logo(): Attribute
     {
         return Attribute::make(
-            get: fn (string $value) => url(Storage::url($value)),
+            get: fn (string|null $value) => $value !== null ?? url(Storage::url($value)),
         );
     }
     public function ladder(): HasOne

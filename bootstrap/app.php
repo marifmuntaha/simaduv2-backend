@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -20,5 +22,28 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
-    })->create();
+        $exceptions->render(function (ValidationException $e) {
+            return response()->json([
+                'status' => 'error',
+                'statusMessage' => $e->validator->errors()->first(),
+            ], 442);
+        });
+        $exceptions->render(function (NotFoundHttpException $e, Request $request) {
+            return response()->json([
+                'status' => 'error',
+                'statusMessage' => 'Sumber Daya atau Rute tidak ditemukan.',
+                'result' => null,
+            ], 404);
+        });
+        $exceptions->render(function (Throwable $e) {
+            return response()->json([
+                'status' => 'error',
+                'statusMessage' => $e->getMessage() ?: 'Internal Server Error',
+                'result' => config('app.debug') ? $e->getTrace() : null, // Trace hanya muncul saat mode debug
+            ], 500);
+        });
+    })
+    ->withEvents(discover: [
+        __DIR__ . '/../app/Listeners'
+    ])
+    ->create();

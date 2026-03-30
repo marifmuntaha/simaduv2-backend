@@ -18,7 +18,10 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->string('phone');
-            $table->enum('role', [1, 2, 3, 4, 5, 6, 7, 8, 9])->comment('1. Administrator, 2. Operator, 3. Bendahara, 4. Guru, 5. Siswa, 6. Kepala Madrasah');
+            $table->enum('role', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])->comment(
+                '1. Administrator, 2. Operator Lembaga, 3. Bendahara Lembaga, 4. Guru, 5. Siswa, 6. Orang Tua,
+                7. Operator Yayasan, 8. Bendahara Yayasan, 9. Operator Boarding, 10. Teller'
+            );
             $table->rememberToken();
             $table->timestamps();
         });

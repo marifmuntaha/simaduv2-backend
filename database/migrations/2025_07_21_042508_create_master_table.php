@@ -41,6 +41,16 @@ return new class extends Migration
             $table->boolean('active')->default(false);
             $table->timestamps();
         });
+
+        Schema::create('master_positions', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('description')->nullable();
+            $table->string('alias');
+            $table->timestamps();
+            $table->unsignedBigInteger('createdBy')->nullable();
+            $table->unsignedBigInteger('updatedBy')->nullable();
+        });
     }
 
     /**
@@ -48,6 +58,7 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('master_positions');
         Schema::dropIfExists('master_years');
         Schema::dropIfExists('master_majors');
         Schema::dropIfExists('master_levels');

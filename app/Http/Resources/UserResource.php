@@ -42,6 +42,20 @@ class UserResource extends JsonResource
                 ];
             }
         }
+        if ($request->has('list')) {
+            if ($request->list === 'table') {
+                $institution = $this->institutions()->get();
+                $resources = [
+                    'id' => $this->id,
+                    'name' => $this->name,
+                    'email' => $this->email,
+                    'username' => $this->username,
+                    'phone' => $this->phone,
+                    'role' => $this->role,
+                    'institution' => $institution
+                ];
+            }
+        }
         return $resources;
     }
 }
