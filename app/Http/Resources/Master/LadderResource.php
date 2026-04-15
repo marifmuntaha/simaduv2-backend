@@ -33,9 +33,7 @@ class LadderResource extends JsonResource
                     'label' => $this->name,
                 ];
             }
-        }
-        if ($request->has('list')) {
-            if ($request->list == 'table'){
+            if ($request->type == 'datatable'){
                 $resource = [
                     'id' => $this->id,
                     'name' => $this->name,

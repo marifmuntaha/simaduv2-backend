@@ -37,9 +37,7 @@ class LevelResource extends JsonResource
                     'label' => $this->name,
                 ];
             }
-        }
-        if ($request->has('list')) {
-            if ($request->list == 'table') {
+            if($request->type == "datatable"){
                 $resource = [
                     'id' => $this->id,
                     'ladderId' => $this->ladderId,
