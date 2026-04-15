@@ -27,6 +27,7 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Teacher\ActivityController as TeacherActivityController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WhatsappController;
 use Illuminate\Support\Facades\Route;
 //use Illuminate\Http\Request;
 
@@ -80,4 +81,5 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('letter', LetterController::class);
     Route::post('letter/print/{letter}', [LetterController::class, 'print']);
     Route::apiResource('setting', SettingController::class);
+    Route::apiResource('whatsapp', WhatsappController::class);
 });
